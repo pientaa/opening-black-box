@@ -1,0 +1,94 @@
+version: '2.1'
+
+services:
+  postgres:
+    container_name: postgres
+    image: pienta/black-box-db
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./database/measurements.csv:/var/lib/postgresql/data/measurements.csv
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    ports:
+      - "5432:5432/tcp"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=black-box
+    networks:
+      - sparkconfig_spark-network
+    healthcheck:
+      test: nc -z postgres 5432
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  black-box:
+    container_name: black-box
+    image: pienta/black-box
+    build:
+      context: .
+      dockerfile: Dockerfile
+#    depends_on:
+#      postgres:
+#        condition: service_healthy
+    ports:
+#      - "4567:4567"
+      - "8084:8081"
+    networks:
+      sparkconfig_spark-network:
+        ipv4_address: 10.5.0.7
+    volumes:
+      - ./spark-config/mnt/spark-apps:/opt/spark-apps
+      - ./spark-config/mnt/spark-data:/opt/spark-data
+    environment:
+      - "SPARK_LOCAL_IP=black-box"
+
+#  spark-worker-3:
+#    image: pienta/spark-worker:2.4.7
+#    container_name: spark-worker-3
+#    build:
+#      context: ./docker/spark-worker
+#      dockerfile: Dockerfile
+#    hostname: spark-worker-3
+#    depends_on:
+#      - spark-master
+#    ports:
+#      - "8083:8081"
+#    env_file: ./env/spark-worker.sh
+#    environment:
+#      - "SPARK_LOCAL_IP=spark-worker-3"
+#    networks:
+#      spark-network:
+#        ipv4_address: 10.5.0.5
+#    volumes:
+#      - /mnt/spark-apps:/opt/spark-apps
+#      - /mnt/spark-data:/opt/spark-data
+  ##!/bin/bash
+  #SPARK_APPLICATION_JAR_LOCATION="/opt/spark-apps/black-box-assembly.jar"
+  #SPARK_APPLICATION_MAIN_CLASS="BlackBox"
+  #SPARK_SUBMIT_ARGS="--conf spark.executor.extraJavaOptions='-Dconfig-path=/opt/spark-apps/dev/config.conf'"
+  #
+  #docker run --network sparkconfig_spark-network -p 4567:4567 -v /mnt/spark-apps:/opt/spark-apps --env SPARK_APPLICATION_JAR_LOCATION=$SPARK_APPLICATION_JAR_LOCATION --env SPARK_APPLICATION_MAIN_CLASS=$SPARK_APPLICATION_MAIN_CLASS spark-submit:2.4.7
+
+#  experiment-executor:
+#    container_name: experiment-executor
+#    image: pienta/experiment-executor
+#    build:
+#      context: ./../udf-detector
+#      dockerfile: Dockerfile
+#    depends_on:
+#      #      - postgres
+#      postgres:
+#        condition: service_healthy
+#    ports:
+#      - "8090:8090"
+#    networks:
+#      - black-box-network
+networks:
+  sparkconfig_spark-network:
+    external: true
+#networks:
+#  black-box-network:
+#    driver: bridge
