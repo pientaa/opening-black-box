@@ -6,7 +6,7 @@ curl -X POST http://localhost:6066/v1/submissions/create --header "Content-Type:
     "spark.executor.memory": "4g",
     "spark.master": "spark://spark-master:7077",
     "spark.driver.memory": "4g",
-    "spark.driver.cores": "6",
+    "spark.driver.cores": "4",
     "spark.app.name": "BlackBox",
     "spark.submit.deployMode": "cluster",
     "spark.driver.supervise": "true"
@@ -21,3 +21,5 @@ curl -X POST http://localhost:6066/v1/submissions/create --header "Content-Type:
     "postgres"
   ]
 }'
+
+#        "spark.master": "spark://localhost:6066",

@@ -1,6 +1,8 @@
 package udf
 
 object Consts {
+  val LOCALHOST = "localhost"
+
   val FILTER_FROM_MONDAY_TO_THURSDAY = "filterFromMondayToThursday"
   val SELECT_ID_ENERGY_OUTSIDE_TEMPERATURE_SEASON = "selectIdEnergyOutsideTemperatureSeason"
   val FILTER_ENERGY_GREATER_THAN_10 = "filterEnergyGreaterThan10"
