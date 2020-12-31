@@ -1,6 +1,10 @@
 # opening-black-box
 
 
+## Get data
+
+In order to get data go to `black-box/database` and run `get_data.sh`.
+
 ### [UPDATE] 
 `start.sh` will build artifact and start containers for both db and black-box
 
