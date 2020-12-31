@@ -1,6 +1,3 @@
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.scala.DefaultScalaModule
-import com.fasterxml.jackson.module.scala.experimental.ScalaObjectMapper
 import org.apache.spark.sql.SparkSession
 import udf.Consts.{FILTER_FROM_MONDAY_TO_THURSDAY, LOCALHOST}
 import udf.{UDF, UDFFactory}
@@ -12,6 +9,7 @@ object BlackBox {
     .appName("Black-box")
     .master("spark://spark-master:7077")
     .config("spark.submit.deployMode", "cluster")
+    .config("spark.cores.max", "4")
     .getOrCreate()
 
   val udfFactory = new UDFFactory(ss)
@@ -21,9 +19,6 @@ object BlackBox {
 
   val myListener = new CustomListener()
   ss.sparkContext.addSparkListener(myListener)
-
-  val mapper = new ObjectMapper() with ScalaObjectMapper
-  mapper.registerModule(DefaultScalaModule)
 
   val connectionProperties = new Properties()
   connectionProperties.put("user", "postgres")
