@@ -1,4 +1,4 @@
-# opening-black-box
+# Opening a black-box
 
 
 ## Get data
