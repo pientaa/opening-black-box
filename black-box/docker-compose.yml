@@ -17,7 +17,8 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=black-box
     networks:
-      - sparkconfig_spark-network
+      sparkconfig_spark-network:
+        ipv4_address: 10.5.0.6
     healthcheck:
       test: nc -z postgres 5432
       interval: 10s

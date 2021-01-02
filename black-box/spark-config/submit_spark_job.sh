@@ -21,5 +21,3 @@ curl -X POST http://localhost:6066/v1/submissions/create --header "Content-Type:
     "postgres"
   ]
 }'
-
-#        "spark.master": "spark://localhost:6066",
