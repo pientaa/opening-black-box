@@ -26,7 +26,7 @@ services:
     build:
       context: ./docker/spark-worker
       dockerfile: Dockerfile
-    hostname: spark-worker-1
+    hostname: 10.5.0.3
     depends_on:
       - spark-master
     ports:
@@ -46,7 +46,7 @@ services:
     build:
       context: ./docker/spark-worker
       dockerfile: Dockerfile
-    hostname: spark-worker-2
+    hostname: 10.5.0.4
     depends_on:
       - spark-master
     ports:
@@ -66,7 +66,7 @@ services:
     build:
       context: ./docker/spark-worker
       dockerfile: Dockerfile
-    hostname: spark-worker-3
+    hostname: 10.5.0.5
     depends_on:
       - spark-master
     ports:
