@@ -1,3 +1,4 @@
+import org.apache.log4j.LogManager
 import org.apache.spark.sql.SparkSession
 import udf.Consts.{FILTER_FROM_MONDAY_TO_THURSDAY, LOCALHOST}
 import udf.{UDF, UDFFactory}
@@ -5,6 +6,8 @@ import udf.{UDF, UDFFactory}
 import java.util.Properties
 
 object BlackBox {
+  private val logger = LogManager.getLogger("BlackBox")
+
   val ss: SparkSession = SparkSession.builder()
     .appName("Black-box")
     .master("spark://spark-master:7077")
@@ -26,19 +29,19 @@ object BlackBox {
   connectionProperties.put("password", "postgres")
 
   def main(args: Array[String]): Unit = {
-    val host = if (args.length > 0) "10.5.0.6" else LOCALHOST
+    val host = if (args.length > 0) "postgres" else LOCALHOST
     val url = s"jdbc:postgresql://$host:5432/black-box"
 
     val udf = if (args.length > 1) args(1) else FILTER_FROM_MONDAY_TO_THURSDAY
 
     ss.udf.register(FILTER_FROM_MONDAY_TO_THURSDAY, UDF.filterFromMondayToThursday _)
 
-//    val inputDF = ss.read.jdbc(url, s"public.test_input_1000", connectionProperties).toDF()
-    val inputDF = ss.read.jdbc(url, s"public.test_input_1000", connectionProperties).repartition(3)
+    val inputDF = ss.read.jdbc(url, s"public.test_input_1000", connectionProperties).toDF()
+    val length = inputDF.rdd.partitions.length
     inputDF.createOrReplaceTempView("input_table")
 
     val outputDF = udfFactory.executeFunction(FILTER_FROM_MONDAY_TO_THURSDAY, inputDF)
-    outputDF.write.jdbc(s"jdbc:postgresql://$host:5432/black-box", s"public.${"test_input_1000".replace("input", "output")}", connectionProperties)
+//    outputDF.write.jdbc(s"jdbc:postgresql://$host:5432/black-box", s"public.${"test_input_1000".replace("input", "output")}", connectionProperties)
 
     outputDF.show()
   }

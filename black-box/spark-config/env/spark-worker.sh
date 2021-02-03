@@ -2,7 +2,7 @@
 #Do not touch this unless you modify the compose master
 SPARK_MASTER=spark://spark-master:7077
 #Allocation Parameters
-SPARK_WORKER_CORES=4
+SPARK_WORKER_CORES=2
 SPARK_WORKER_MEMORY=4G
 SPARK_DRIVER_MEMORY=4G
 SPARK_EXECUTOR_MEMORY=4G
