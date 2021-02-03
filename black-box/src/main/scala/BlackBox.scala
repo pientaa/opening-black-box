@@ -33,7 +33,8 @@ object BlackBox {
 
     ss.udf.register(FILTER_FROM_MONDAY_TO_THURSDAY, UDF.filterFromMondayToThursday _)
 
-    val inputDF = ss.read.jdbc(url, s"public.test_input_1000", connectionProperties).toDF()
+//    val inputDF = ss.read.jdbc(url, s"public.test_input_1000", connectionProperties).toDF()
+    val inputDF = ss.read.jdbc(url, s"public.test_input_1000", connectionProperties).repartition(3)
     inputDF.createOrReplaceTempView("input_table")
 
     val outputDF = udfFactory.executeFunction(FILTER_FROM_MONDAY_TO_THURSDAY, inputDF)
