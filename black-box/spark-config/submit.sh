@@ -23,6 +23,7 @@ curl -X POST http://localhost:6066/v1/submissions/create --header "Content-Type:
   },
   "action": "CreateSubmissionRequest",
   "appArgs": [
-    "postgres"
+    "postgres",
+    "averageTemperatureByDeviceIdSeason"
   ]
 }'
