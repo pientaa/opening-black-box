@@ -3,7 +3,7 @@ lazy val root = (project in file(".")).
   settings(
     name := "black-box",
     version := "1.0",
-    scalaVersion := "2.12.4",
+    scalaVersion := "2.11.2",
     mainClass in Compile := Some("src.main.scala")
   )
 

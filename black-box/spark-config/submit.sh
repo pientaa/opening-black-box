@@ -4,7 +4,7 @@ echo -e "Building black-box ..."
 cd ..
 sbt assembly
 
-cp ./target/scala-2.12/black-box-assembly-1.0.jar ./spark-config/mnt/spark-apps/black-box-assembly-1.0.jar
+cp ./target/scala-2.11/black-box-assembly-1.0.jar ./spark-config/mnt/spark-apps/black-box-assembly-1.0.jar
 
 curl -X POST http://localhost:6066/v1/submissions/create --header "Content-Type:application/json;charset=UTF-8" --data '{
   "appResource": "/opt/spark-apps/black-box-assembly-1.0.jar",
