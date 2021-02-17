@@ -28,11 +28,16 @@ object BlackBox {
   connectionProperties.put("user", "postgres")
   connectionProperties.put("password", "postgres")
 
+  var functionName: String = "variable uninitialized"
+  var host: String = LOCALHOST
+  var url: String = s"jdbc:postgresql://$host:5432/black-box"
+
   def main(args: Array[String]): Unit = {
-    val host = if (args.length > -1) args(0) else LOCALHOST
-    val url = s"jdbc:postgresql://$host:5432/black-box"
+    host = if (args.length > -1) args(0) else LOCALHOST
+    url = s"jdbc:postgresql://$host:5432/black-box"
 
     val udfName = if (args.length > 0) args(1) else FILTER_FROM_MONDAY_TO_THURSDAY
+    functionName = udfName
 
     val inputDF = ss.read.jdbc(url, s"public.test_input_10000", connectionProperties).toDF()
     inputDF.createOrReplaceTempView("input_table")

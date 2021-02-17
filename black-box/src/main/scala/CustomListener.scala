@@ -31,12 +31,10 @@ class CustomListener extends SparkListener {
     logger.warn(s"Application time: ${applicationEnd.time}")
   }
 
-//  override def onTaskEnd(taskEnd: SparkListenerTaskEnd): Unit = {
-//    logger.warn(s"TaskId: ${taskEnd.taskInfo.taskId}, resultSize: ${taskEnd.taskMetrics.resultSize}")
-//  }
-
   override def onStageCompleted(stageCompleted: SparkListenerStageCompleted): Unit = {
     logger.warn(s"Stage: ${stageCompleted.stageInfo.stageId} COMPLETED")
+
+    new JdbcConnect().connect().insert(stageCompleted.stageInfo).close()
 
     logger.warn("ParentIds: ")
     stageCompleted.stageInfo.parentIds.foreach(logger.warn(_))

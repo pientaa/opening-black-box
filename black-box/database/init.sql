@@ -24,11 +24,12 @@ CREATE OR REPLACE FUNCTION generateTestTables(n integer)
 $$
 DECLARE
     number_of_records integer := 10;
-    test_table_name text    := 'test_input_';
+    test_table_name   text    := 'test_input_';
 BEGIN
     LOOP
         test_table_name := test_table_name || number_of_records::text;
-        EXECUTE 'CREATE VIEW ' || test_table_name || ' AS SELECT * FROM measurements_input WHERE device_measurement_id <= ' || number_of_records;
+        EXECUTE 'CREATE VIEW ' || test_table_name ||
+                ' AS SELECT * FROM measurements_input WHERE device_measurement_id <= ' || number_of_records;
         number_of_records := number_of_records * 10;
         test_table_name := 'test_input_';
         EXIT WHEN number_of_records = n;
@@ -38,14 +39,23 @@ $$ language plpgsql;
 
 -- 1585135
 -- +/- połowa
-CREATE VIEW test_input_one_half AS SELECT * FROM measurements_input WHERE device_measurement_id <= 15788;
+CREATE VIEW test_input_one_half AS
+SELECT *
+FROM measurements_input
+WHERE device_measurement_id <= 15788;
 
 -- 792567
 -- +/- 1/4
-CREATE VIEW test_input_one_quarter AS SELECT * FROM measurements_input WHERE device_measurement_id <= 7749;
+CREATE VIEW test_input_one_quarter AS
+SELECT *
+FROM measurements_input
+WHERE device_measurement_id <= 7749;
 
 -- 1/8
-CREATE VIEW test_input_one_eighth AS SELECT * FROM measurements_input WHERE device_measurement_id <= 4014;
+CREATE VIEW test_input_one_eighth AS
+SELECT *
+FROM measurements_input
+WHERE device_measurement_id <= 4014;
 
 SELECT generateTestTables(100000);
 --- ***** ---
@@ -130,3 +140,23 @@ select create_table_one_half_without_column('date_time');
 select create_table_one_half_without_column('device_measurement_id');
 select create_table_one_half_without_column('device_id');
 select create_table_one_half_without_column('id');
+
+create table metrics
+(
+    id                    serial  not null
+        constraint metrics_pkey primary key,
+
+    function_name         text,
+    stage_id              integer not null,
+    details               text,
+    num_tasks             integer not null,
+    name                  text,
+    submission_time       bigint,
+    completion_time       bigint,
+    executor_run_time     bigint  not null,
+    result_size           bigint  not null,
+    jvm_gc_time           bigint  not null,
+    peak_execution_memory bigint  not null,
+    disk_bytes_spilled    bigint  not null
+);
+
