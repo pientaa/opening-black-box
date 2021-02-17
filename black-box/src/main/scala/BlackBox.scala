@@ -1,7 +1,7 @@
 import org.apache.log4j.LogManager
 import org.apache.spark.sql.SparkSession
-import udf.Consts.{AVERAGE_TEMPERATURE_BY_DEVICE_ID_SEASON, FILTER_FROM_MONDAY_TO_THURSDAY, LOCALHOST}
-import udf.{UDF, UDFFactory}
+import udf.Consts.{FILTER_FROM_MONDAY_TO_THURSDAY, LOCALHOST}
+import udf.UDFFactory
 
 import java.util.Properties
 
@@ -29,21 +29,14 @@ object BlackBox {
   connectionProperties.put("password", "postgres")
 
   def main(args: Array[String]): Unit = {
-    val host = if (args.length > 0) "postgres" else LOCALHOST
+    val host = if (args.length > -1) args(0) else LOCALHOST
     val url = s"jdbc:postgresql://$host:5432/black-box"
 
-    val udf = if (args.length > 1) args(1) else FILTER_FROM_MONDAY_TO_THURSDAY
-
-    ss.udf.register(FILTER_FROM_MONDAY_TO_THURSDAY, UDF.filterFromMondayToThursday _)
-    ss.udf.register(AVERAGE_TEMPERATURE_BY_DEVICE_ID_SEASON, new UDF.Average)
+    val udfName = if (args.length > 0) args(1) else FILTER_FROM_MONDAY_TO_THURSDAY
 
     val inputDF = ss.read.jdbc(url, s"public.test_input_10000", connectionProperties).toDF()
     inputDF.createOrReplaceTempView("input_table")
 
-    ss.sqlContext.sql("SELECT device_id, season, avg(outside_temperature) AS avg_temp FROM input_table GROUP BY device_id, season").show()
-
-    logger.warn("ANOTHER UDF STARTING !!!!!!!!!!!!!")
-
-    udfFactory.executeFunction(AVERAGE_TEMPERATURE_BY_DEVICE_ID_SEASON, inputDF).show()
+    udfFactory.executeFunction(udfName, inputDF).show()
   }
 }
