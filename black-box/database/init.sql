@@ -58,88 +58,6 @@ FROM measurements_input
 WHERE device_measurement_id <= 4014;
 
 SELECT generateTestTables(100000);
---- ***** ---
-
-CREATE OR REPLACE FUNCTION create_table_one_half_without_column(
-    column_name text default 'day_type'
-) RETURNS void AS
-$$
-DECLARE
-    name text := 'test_input_one_half_' || column_name;
-BEGIN
-    --     return name;
-    EXECUTE format('CREATE TABLE %I AS SELECT * FROM test_input_one_half', name);
-    EXECUTE format('ALTER TABLE %I DROP COLUMN %I', name, column_name);
-END;
-$$
-    language plpgsql;
-
-CREATE OR REPLACE FUNCTION create_table_one_quarter_without_column(
-    column_name text default 'day_type'
-) RETURNS void AS
-$$
-DECLARE
-    name text := 'test_input_one_quarter_' || column_name;
-BEGIN
-    --     return name;
-    EXECUTE format('CREATE TABLE %I AS SELECT * FROM test_input_one_quarter', name);
-    EXECUTE format('ALTER TABLE %I DROP COLUMN %I', name, column_name);
-END;
-$$
-    language plpgsql;
-
-CREATE OR REPLACE FUNCTION create_table_one_eighth_without_column(
-    column_name text default 'day_type'
-) RETURNS void AS
-$$
-DECLARE
-    name text := 'test_input_one_eighth_' || column_name;
-BEGIN
-    --     return name;
-    EXECUTE format('CREATE TABLE %I AS SELECT * FROM test_input_one_eighth', name);
-    EXECUTE format('ALTER TABLE %I DROP COLUMN %I', name, column_name);
-END;
-$$
-    language plpgsql;
-
-select create_table_one_eighth_without_column('season');
-select create_table_one_eighth_without_column('day_type');
-select create_table_one_eighth_without_column('day_length');
-select create_table_one_eighth_without_column('sky_condition');
-select create_table_one_eighth_without_column('humidity');
-select create_table_one_eighth_without_column('wind');
-select create_table_one_eighth_without_column('outside_temperature');
-select create_table_one_eighth_without_column('energy');
-select create_table_one_eighth_without_column('date_time');
-select create_table_one_eighth_without_column('device_measurement_id');
-select create_table_one_eighth_without_column('device_id');
-select create_table_one_eighth_without_column('id');
-
-select create_table_one_quarter_without_column('season');
-select create_table_one_quarter_without_column('day_type');
-select create_table_one_quarter_without_column('day_length');
-select create_table_one_quarter_without_column('sky_condition');
-select create_table_one_quarter_without_column('humidity');
-select create_table_one_quarter_without_column('wind');
-select create_table_one_quarter_without_column('outside_temperature');
-select create_table_one_quarter_without_column('energy');
-select create_table_one_quarter_without_column('date_time');
-select create_table_one_quarter_without_column('device_measurement_id');
-select create_table_one_quarter_without_column('device_id');
-select create_table_one_quarter_without_column('id');
-
-select create_table_one_half_without_column('season');
-select create_table_one_half_without_column('day_type');
-select create_table_one_half_without_column('day_length');
-select create_table_one_half_without_column('sky_condition');
-select create_table_one_half_without_column('humidity');
-select create_table_one_half_without_column('wind');
-select create_table_one_half_without_column('outside_temperature');
-select create_table_one_half_without_column('energy');
-select create_table_one_half_without_column('date_time');
-select create_table_one_half_without_column('device_measurement_id');
-select create_table_one_half_without_column('device_id');
-select create_table_one_half_without_column('id');
 
 create table metrics
 (
@@ -157,6 +75,7 @@ create table metrics
     result_size           bigint  not null,
     jvm_gc_time           bigint  not null,
     peak_execution_memory bigint  not null,
-    disk_bytes_spilled    bigint  not null
+    disk_bytes_spilled    bigint  not null,
+    memory_bytes_spilled  bigint  not null
 );
 
