@@ -59,18 +59,30 @@ WHERE device_measurement_id <= 4014;
 
 SELECT generateTestTables(100000);
 
-create table metrics
+create table stage_metrics
 (
     id                    serial  not null
-        constraint metrics_pkey primary key,
-
+        constraint stage_metrics_pkey primary key,
     function_name         text,
     stage_id              integer not null,
-    details               text,
     num_tasks             integer not null,
-    name                  text,
     submission_time       bigint,
     completion_time       bigint,
+    executor_run_time     bigint  not null,
+    result_size           bigint  not null,
+    jvm_gc_time           bigint  not null,
+    peak_execution_memory bigint  not null,
+    disk_bytes_spilled    bigint  not null,
+    memory_bytes_spilled  bigint  not null
+);
+
+create table task_metrics
+(
+    id                    serial  not null
+        constraint task_metrics_pkey primary key,
+    function_name         text,
+    stage_id              integer not null,
+    task_type             text,
     executor_run_time     bigint  not null,
     result_size           bigint  not null,
     jvm_gc_time           bigint  not null,
