@@ -9,7 +9,7 @@ else
   echo "No containers found ..."
 fi
 
-docker-compose up -d
+docker-compose -p sparkconfig up -d
 
 cd ../database
 ./run_database.sh
