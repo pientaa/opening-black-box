@@ -44,4 +44,4 @@ select_master
 select_number_of_workers
 echo $master_node_index
 echo ${all_nodes["${master_node_index}"]}
-echo $all_nodes
+echo ${all_nodes[@]}
