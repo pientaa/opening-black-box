@@ -24,24 +24,35 @@ function select_master() {
         6) master_node=192.168.55.17 ;;
         7) master_node=192.168.55.18 ;;
         8) master_node=192.168.55.19 ;;
-        *) # local mode
+        *) # local mode - don't use on prod
            master_node=$(hostname -I | awk '{print $1}')
            master_node_index=0
            all_nodes=("${master_node}")
           ;;
     esac
-    echo $master_node
 }
 
 function select_number_of_workers() {
     echo "Select number of workers: (default 3)"
     read num_of_workers
     num_of_workers="${num_of_workers:=3}"
-    echo $num_of_workers
+}
+
+function trim_all_nodes() {
+    all_nodes_size=${#all_nodes[@]}
+    n=$((all_nodes_size - master_node_index))
+    if [[ $n -gt $num_of_workers ]]; then
+      n=$((${num_of_workers} + 1))
+    fi
+    available_nodes=${all_nodes[@]:${master_node_index}:${n}}
+    num_of_available_workers=$(( ${#available_nodes[@]} - 1))
+    echo ${num_of_available_workers}
 }
 
 select_master
 select_number_of_workers
+trim_all_nodes
 echo $master_node_index
 echo ${all_nodes["${master_node_index}"]}
+echo ${available_nodes[@]}
 echo ${all_nodes[@]}
