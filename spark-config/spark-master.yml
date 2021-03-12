@@ -22,5 +22,9 @@ services:
       - "SPARK_LOCAL_IP=spark-master"
 
 networks:
-  sparkconfig_spark-network:
-    external: true
+  spark-network:
+    driver: overlay
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.5.0.0/16
