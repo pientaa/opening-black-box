@@ -1,0 +1,9 @@
+version: "3"
+
+networks:
+  spark-network:
+    driver: overlay
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.5.0.0/16
