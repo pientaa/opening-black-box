@@ -3,10 +3,10 @@ version: "3"
 services:
   spark-master:
     image: pienta/spark-master:2.4.7
-    container_name: spark-master
-    build:
-      context: docker/spark-master
-      dockerfile: docker/spark-master/Dockerfile
+#    container_name: spark-master
+#    build:
+#      context: docker/spark-master
+#      dockerfile: docker/spark-master/Dockerfile
     hostname: spark-master
     ports:
       - "8080:8080"
