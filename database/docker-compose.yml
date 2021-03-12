@@ -19,11 +19,11 @@ services:
     networks:
       sparkconfig_spark-network:
         ipv4_address: 10.5.0.7
-    healthcheck:
-      test: nc -z postgres 5432
-      interval: 10s
-      timeout: 5s
-      retries: 5
+#    healthcheck:
+#      test: nc -z postgres 5432
+#      interval: 10s
+#      timeout: 5s
+#      retries: 5
 
 networks:
   sparkconfig_spark-network:
