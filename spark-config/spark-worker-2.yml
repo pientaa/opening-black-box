@@ -7,7 +7,7 @@ services:
     #    build:
     #      context: docker/spark-worker
     #      dockerfile: docker/spark-worker/Dockerfile
-    hostname: 10.255.1.4
+    hostname: 10.5.0.4
     depends_on:
       - spark-master
     ports:
@@ -16,12 +16,12 @@ services:
     environment:
       - "SPARK_LOCAL_IP=spark-worker-1"
     networks:
-      ingress:
-        ipv4_address: 10.255.1.4
+      spark-network:
+        ipv4_address: 10.5.0.4
     volumes:
       - ./mnt/spark-apps:/opt/spark-apps
       - ./mnt/spark-data:/opt/spark-data
 
 networks:
-  ingress:
+  spark-network:
     external: true

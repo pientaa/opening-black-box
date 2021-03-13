@@ -13,8 +13,8 @@ services:
       - "6066:6066"
       - "7077:7077"
     networks:
-      ingress:
-        ipv4_address: 10.255.1.2
+      spark-network:
+        ipv4_address: 10.5.0.2
     volumes:
       - ./mnt/spark-apps:/opt/spark-apps
       - ./mnt/spark-data:/opt/spark-data
@@ -22,5 +22,5 @@ services:
       - "SPARK_LOCAL_IP=spark-master"
 
 networks:
-  ingress:
+  spark-network:
     external: true
