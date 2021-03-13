@@ -8,24 +8,19 @@
 - `192.168.55.16` (worker)
 - `192.168.55.17` (worker)
 
-1. Make sure that you have pulled following images
-```
-docker pull pienta/spark-master:2.4.7
-docker pull pienta/spark-worker:2.4.7
-```
-2. On master node:
+1. On master node:
 ```
 cd ~/opening-black-box/spark-config
 docker swarm init
 docker network create -d overlay --attachable --ipam-driver=default --subnet=10.5.0.0/16 spark-network
 docker-compose -f spark-master.yml up -d
 ```
-3. On each worker node join docker swarm
-4. Make sure nodes are connected (execute on master)
+2. On each worker node join docker swarm
+3. Make sure nodes are connected (execute on master)
 ```
 docker node ls
 ```
-5. On worker 1
+4. On worker 1
 ```
 cd ~/opening-black-box/spark-config
 docker-compose -f spark-worker-1.yml up -d
@@ -35,14 +30,38 @@ Make sure worker connected to master
 ```
 docker logs -f spark-worker-1 --tail 100
 ```
-6. On worker 2
+5. On worker 2
 ```
 cd ~/opening-black-box/spark-config
 docker-compose -f spark-worker-2.yml up -d
 docker network connect --ip 10.5.0.4 spark-network spark-worker-2
 ```
 
-Proof that it actually works:
+6. Clean up cluster
+
+- on worker 1
+```
+docker rm -f $(docker ps -aq)
+docker network rm sparkconfig_default
+docker swarm leave --force
+```
+
+- on worker 2
+```
+docker rm -f $(docker ps -aq)
+docker network rm sparkconfig_default 
+docker swarm leave --force
+```
+
+- on master
+```
+docker rm -f $(docker ps -aq)
+docker network rm spark-network
+docker swarm leave --force
+```
+
+
+### Proof that it actually works:
 ```
 $ docker exec -it spark-master /bin/bash
 bash-4.3# ping 10.5.0.3
