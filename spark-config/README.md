@@ -48,19 +48,19 @@ docker network connect --ip 10.5.0.6 spark-network spark-worker-2
 
 6. Clean up cluster
 
-- on worker 1
-
-```
-docker rm -f $(docker ps -aq)
-docker network rm sparkconfig_default
-docker swarm leave --force
-```
-
-- on worker 2
+- on worker 1 and 2
 
 ```
 docker rm -f $(docker ps -aq)
 docker network rm sparkconfig_default 
+docker swarm leave --force
+```
+
+- on node with db
+
+```
+docker rm -f $(docker ps -aq)
+docker network rm database_default 
 docker swarm leave --force
 ```
 
@@ -69,6 +69,7 @@ docker swarm leave --force
 ```
 docker rm -f $(docker ps -aq)
 docker network rm spark-network
+docker network rm sparkconfig_spark-network-bridge
 docker swarm leave --force
 ```
 
@@ -135,6 +136,7 @@ curl -X POST http://10.5.0.2:6066/v1/submissions/create --header "Content-Type:a
 ```
 
 Then you can curl for driver state
+
 ```
 curl http://10.5.0.2:6066/v1/submissions/status/driver-20210314163705-0004
 ```
