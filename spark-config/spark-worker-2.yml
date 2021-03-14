@@ -1,0 +1,15 @@
+version: "2"
+
+services:
+  spark-worker-2:
+    image: pienta/spark-worker:2.4.7
+    container_name: spark-worker-2
+    hostname: 10.5.0.4
+    ports:
+      - "8083:8081"
+    env_file: env/spark-worker.sh
+    environment:
+      - "SPARK_LOCAL_IP=spark-worker-2"
+    volumes:
+      - ./mnt/spark-apps:/opt/spark-apps
+      - ./mnt/spark-data:/opt/spark-data
