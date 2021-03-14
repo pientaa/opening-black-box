@@ -13,7 +13,6 @@
 cd ~/opening-black-box/spark-config
 docker swarm init
 docker network create -d overlay --attachable --ipam-driver=default --subnet=10.5.0.0/16 spark-network
-docker network create -d bridge --ipam-driver=default --subnet=10.5.0.0/16 spark-network-bridge
 docker-compose -f spark-master.yml up -d
 ```
 2. On each worker node join docker swarm

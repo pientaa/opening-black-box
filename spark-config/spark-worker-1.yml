@@ -6,7 +6,7 @@ services:
     container_name: spark-worker-1
     hostname: 10.5.0.3
     ports:
-      - "8082:8081"
+      - "8080:8081"
     env_file: env/spark-worker.sh
     environment:
       - "SPARK_LOCAL_IP=spark-worker-1"
