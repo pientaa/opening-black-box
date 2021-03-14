@@ -24,7 +24,7 @@ docker node ls
 ```
 cd ~/opening-black-box/spark-config
 docker-compose -f spark-worker-1.yml up -d
-docker network connect --ip 10.5.0.3 spark-network spark-worker-1 
+docker network connect --ip 10.5.0.4 spark-network spark-worker-1 
 ```
 Make sure worker connected to master
 ```
@@ -34,7 +34,7 @@ docker logs -f spark-worker-1 --tail 100
 ```
 cd ~/opening-black-box/spark-config
 docker-compose -f spark-worker-2.yml up -d
-docker network connect --ip 10.5.0.4 spark-network spark-worker-2
+docker network connect --ip 10.5.0.6 spark-network spark-worker-2
 ```
 
 6. Clean up cluster

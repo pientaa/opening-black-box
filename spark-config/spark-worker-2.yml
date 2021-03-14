@@ -4,7 +4,7 @@ services:
   spark-worker-2:
     image: pienta/spark-worker:2.4.7
     container_name: spark-worker-2
-    hostname: 10.5.0.5
+    hostname: 10.5.0.6
     ports:
       - "8080:8081"
     env_file: env/spark-worker.sh
