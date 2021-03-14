@@ -12,6 +12,7 @@ services:
     networks:
       spark-network:
         ipv4_address: 10.5.0.2
+      - spark-network-bridge
     volumes:
       - ./mnt/spark-apps:/opt/spark-apps
       - ./mnt/spark-data:/opt/spark-data
@@ -21,3 +22,5 @@ services:
 networks:
   spark-network:
     external: true
+  spark-network-bridge:
+    driver: bridge
