@@ -16,10 +16,4 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=black-box
-    networks:
-      spark-network:
-        ipv4_address: 10.5.0.8
 
-networks:
-  spark-network:
-    external: true
