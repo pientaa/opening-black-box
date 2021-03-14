@@ -46,13 +46,11 @@ function trim_all_nodes() {
     fi
     available_nodes=${all_nodes[@]:${master_node_index}:${n}}
     num_of_available_workers=$(( ${#available_nodes[@]} - 1))
-    echo ${num_of_available_workers}
 }
 
 select_master
 select_number_of_workers
 trim_all_nodes
-echo $master_node_index
 echo ${all_nodes["${master_node_index}"]}
 echo ${available_nodes[@]}
 echo ${all_nodes[@]}
