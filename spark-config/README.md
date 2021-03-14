@@ -14,8 +14,6 @@
 cd ~/opening-black-box/spark-config
 docker swarm init
 docker network create -d overlay --attachable --ipam-driver=default --subnet=10.5.0.0/16 spark-network
-docker network create -d bridge spark-network-bridge
-docker network connect spark-network-bridge spark-master
 docker-compose -f spark-master.yml up -d
 ```
 

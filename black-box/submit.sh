@@ -4,6 +4,24 @@ sbt assembly
 
 sudo cp ./target/scala-2.11/black-box-assembly-1.0.jar ./../spark-config/mnt/spark-apps/black-box-assembly-1.0.jar
 
-#ssh magisterka@192.168.55.15
-curl -vX POST http://localhost:6066/v1/submissions/create -d @submit.json \
- --header "Content-Type: application/json"
+curl -X POST http://10.5.0.2:6066/v1/submissions/create --header "Content-Type:application/json;charset=UTF-8" --data '{
+  "appResource": "/opt/spark-apps/black-box-assembly-1.0.jar",
+  "sparkProperties": {
+    "spark.master": "spark://spark-master:7077",
+    "spark.driver.memory": "4g",
+    "spark.driver.cores": "2",
+    "spark.app.name": "BlackBox",
+    "spark.submit.deployMode": "cluster",
+    "spark.driver.supervise": "true"
+  },
+  "clientSparkVersion": "2.4.7",
+  "mainClass": "BlackBox",
+  "environmentVariables": {
+    "SPARK_ENV_LOADED": "1"
+  },
+  "action": "CreateSubmissionRequest",
+  "appArgs": [
+    "10.5.0.8",
+    "averageTemperatureByDeviceIdSeason"
+  ]
+}'
