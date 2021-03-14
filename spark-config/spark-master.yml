@@ -15,7 +15,7 @@ services:
     networks:
       spark-network:
         ipv4_address: 10.5.0.2
-      spark-network-bridge:
+      sparkconfig_spark-network-bridge:
         ipv4_address: 10.5.0.2
     volumes:
       - ./mnt/spark-apps:/opt/spark-apps
