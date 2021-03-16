@@ -4,17 +4,16 @@ services:
   spark-master:
     image: pienta/spark-master:2.4.7
     container_name: spark-master
-    #    build:
-    #      context: docker/spark-master
-    #      dockerfile: docker/spark-master/Dockerfile
     hostname: spark-master
     ports:
-      - "8081:8080"
+      - "8080:8080"
       - "6066:6066"
       - "7077:7077"
     networks:
       spark-network:
         ipv4_address: 10.5.0.2
+      spark-network-bridge:
+        ipv4_address: 10.6.0.2
     volumes:
       - ./mnt/spark-apps:/opt/spark-apps
       - ./mnt/spark-data:/opt/spark-data
@@ -24,3 +23,9 @@ services:
 networks:
   spark-network:
     external: true
+  spark-network-bridge:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.6.0.0/16
