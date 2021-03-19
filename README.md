@@ -1,27 +1,14 @@
 # Opening a black-box
 
 
-## Get data
+## Run cluster remotely
 
-In order to get the data go to `black-box/database` and run `get_data.sh`.
-
-## Build cluster
-
-```bash
-cd spark-config
-./build_cluster.sh
+In order to configure spark cluster remotely, run on master node (192.168.55.20)
 ```
-
-## Run cluster locally
-
-```bash
-cd spark-config
-./run_cluster_locally.sh
+docker swarm init
 ```
-
-## Submit black-box
-
-```bash
-cd black-box
-./submit.sh
+and join docker swarm on other nodes. Then use following scripts to run `spark-master` and `n` number of `spark-worker`s.
+```
+start_master.sh
+start_workers.sh
 ```
