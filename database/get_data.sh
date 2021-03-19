@@ -1,5 +1,5 @@
 #!/bin/bash
-#Change this directory if want to run locally
+#Change this directory if you want to run locally
 filename=~/opening-black-box/database/measurements.csv
 
 if [ ! -f $filename ]
