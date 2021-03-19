@@ -13,12 +13,20 @@ monitor_thread = None
 
 @delete('/monitor')
 def stop_monitor():
-    data = request.json
-    if not data['monitor']:
-        global monitor_thread
-        monitor_thread.stop()
+    try:
+        try:
+            data = request.json
+            if not data['monitor']:
+                global monitor_thread
+                monitor_thread.stop()
+                
+        except:
+            raise ValueError
 
-
+    except ValueError:
+        response.status = 400
+        return 'No request body / No active monitoring'
+        
 # {
 #     "container_name": 'name',
 #     "monitor": false
@@ -26,7 +34,6 @@ def stop_monitor():
 
 @post('/monitor')
 def system_monitor():
-    print("Here")
     try:
         try:
             data = request.json
@@ -55,20 +62,19 @@ def system_monitor():
     pids_bytes, pids_err = pids_col.communicate()
     pids = pids_bytes.decode()
 
-    pref_str = "-p "
-    suf_str = " "
-
     pids = pids.split('\n')
-    pids = [pref_str + sub + suf_str for sub in pids]
-    del pids[-1]
-    pids = ''.join(pids)
+    pids = ','.join(pids)
+    pids = pids[:-1]
+
+    print("M | pids ", pids)
 
     global monitor_thread
     monitor_thread = MonitorThread()
+    monitor_thread.set_pids(pids)
     monitor_thread.start()
 
 
-    print('Terminating subprocesses!')
+    print('M | Terminating subprocesses!')
     response_docker_top.stdout.close()
     response_docker_top.kill()
     response_docker_top.wait()
