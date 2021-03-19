@@ -20,27 +20,27 @@ class MonitorThread(threading.Thread):
 
     def run(self):
         top_cmd = ['top','-b', '-p', self.pids]
-        tail_cmd = ['tail', '-n+8']
+        
         top_process = subprocess.Popen(top_cmd, stdout=subprocess.PIPE)
+        tail_process = subprocess.Popen()
+
         while True:
             if self.stopped():
-                print("T | Stopped!")
+                print("TH | Thread stopping!")
                 top_process.stdout.close()
                 top_process.kill()
                 top_process.wait()
                 return
-            
-            print("TH | Here!")
-            output = top_process.stdout.readlines()
 
+            output = top_process.stdout.readline()
             if output == '' and top_process.poll() is not None:
-                print("TH |  Killing top!")
                 break
-            
-            print("TH | Here 2 !")
+
             if output:
-                print("TH | Here 3 !")
-                print(output.strip())           
+                print(output)
+
+        return
+ 
 
 
 
