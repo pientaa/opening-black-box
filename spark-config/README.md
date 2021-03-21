@@ -60,7 +60,7 @@ docker swarm leave --force
 
 ```
 docker rm -f $(docker ps -aq)
-docker network rm database_default 
+docker network prune
 docker swarm leave --force
 ```
 
@@ -68,8 +68,7 @@ docker swarm leave --force
 
 ```
 docker rm -f $(docker ps -aq)
-docker network rm spark-network
-docker network rm sparkconfig_spark-network-bridge
+docker network prune
 docker swarm leave --force
 ```
 

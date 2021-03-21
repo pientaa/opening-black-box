@@ -1,4 +1,4 @@
-version: "2"
+version: "3"
 
 services:
   spark-master:
@@ -12,8 +12,6 @@ services:
     networks:
       spark-network:
         ipv4_address: 10.5.0.2
-      spark-network-bridge:
-        ipv4_address: 10.6.0.2
     volumes:
       - ./mnt/spark-apps:/opt/spark-apps
       - ./mnt/spark-data:/opt/spark-data
@@ -23,9 +21,3 @@ services:
 networks:
   spark-network:
     external: true
-  spark-network-bridge:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 10.6.0.0/16
