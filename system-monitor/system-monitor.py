@@ -30,6 +30,7 @@ def stop_monitor():
 # {
 #     "container_name": 'name',
 #     "monitor": false
+#     "function_name": 'name'
 # }
 
 @post('/monitor')
@@ -50,6 +51,7 @@ def system_monitor():
     global monitor
     container_name = data["container_name"]
     monitor = data["monitor"]
+    function_name = data["function_name"]
 
     first_cmd = ['docker', 'top', container_name]
     second_cmd = ['awk', '{print $2}']
@@ -71,6 +73,7 @@ def system_monitor():
     global monitor_thread
     monitor_thread = MonitorThread()
     monitor_thread.set_pids(pids)
+    monitor_thread.set_function_name(function_name)
     monitor_thread.start()
 
 

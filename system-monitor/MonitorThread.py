@@ -1,5 +1,6 @@
 import threading
 import time
+from datetime import datetime
 from subprocess import Popen, PIPE
 
 class MonitorThread(threading.Thread):
@@ -17,6 +18,9 @@ class MonitorThread(threading.Thread):
 
     def set_pids(self, pids):
         self.pids = pids
+    
+    def set_function_name(self, name):
+        self.function_name = name
 
     def run(self):
         top_cmd = ['top','-b','-n 1', '-p', self.pids]
@@ -24,6 +28,9 @@ class MonitorThread(threading.Thread):
         # PID CPU RAM
         awk_cmd = ['awk', '{print $1 "\t" $9 "\t" $10}']
         
+        # function_name, timestamp, PID, CPU, RAM
+        # ['3662\t0,0\t0,1', '3735\t0,0\t0,0', '3736\t0,0\t0,0', '3737\t0,0\t0,0', '3738\t0,0\t0,0', '3739\t0,0\t0,0', '']
+
         while True:
             top_process = Popen(top_cmd, stdout=PIPE)
             tail_process = Popen(tail_cmd, stdin=top_process.stdout, stdout=PIPE)
@@ -32,10 +39,16 @@ class MonitorThread(threading.Thread):
             output = awk_process.communicate()[0]
             output = output.decode()
 
+
             if output:
-                print(time.time())
-                output = output.split("\n")
-                print(output)
+                # 
+                output = [i.replace(",",".").replace("\t",",") for i in output.split("\n")]
+                timestamp = datetime.now()
+                for x in output:
+                    
+                    row = self.function_name + "," + str(timestamp) + "," + x
+                    print(row)
+
 
             top_process.stdout.close()
             top_process.kill()
