@@ -2,8 +2,10 @@ import subprocess
 import sys 
 import time
 import threading
-from bottle import run, post, delete, get, response, request
+from flask import Flask, request
 from MonitorThread import MonitorThread
+
+app = Flask(__name__)
 
 monitor_thread = None
 
@@ -11,11 +13,11 @@ monitor_thread = None
 #     "monitor": false
 # }
 
-@delete('/monitor')
+@app.route('/monitor', methods=['delete'])
 def stop_monitor():
     try:
         try:
-            data = request.json
+            data = request.get_json()
             if not data['monitor']:
                 global monitor_thread
                 monitor_thread.stop()
@@ -24,8 +26,9 @@ def stop_monitor():
             raise ValueError
 
     except ValueError:
-        response.status = 400
-        return 'No request body / No active monitoring'
+        return 'No request body / No active monitoring', 400
+    
+    return 'Monitoring stopped', 200
         
 # {
 #     "container_name": 'name',
@@ -33,11 +36,11 @@ def stop_monitor():
 #     "function_name": 'name'
 # }
 
-@post('/monitor')
+@app.route('/monitor', methods=['post'])
 def system_monitor():
     try:
         try:
-            data = request.json
+            data = request.get_json()
         except:
             raise ValueError
 
@@ -45,8 +48,7 @@ def system_monitor():
             raise ValueError
 
     except ValueError:
-        response.status = 400
-        return 'Request data is not in json or is null'
+        return 'Request data is not in json or is null', 400
 
     global monitor
     container_name = data["container_name"]
@@ -90,9 +92,10 @@ def system_monitor():
     pids_col.kill()
     pids_col.wait()
 
-    response.status = 202
-    return 'Monitoring started'
+    
+    return 'Monitoring started', 202
 
     # top "${pids[@]/#/-p }" -b -n 1 | tail -n+8
-run(host='localhost', port=8063, debug=True, reloader=True)
+# run(host='localhost', port=8063, debug=True, reloader=True)
+app.run(port=8063)
 

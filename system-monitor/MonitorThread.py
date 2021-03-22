@@ -1,5 +1,6 @@
 import threading
 import time
+import os
 from datetime import datetime
 from subprocess import Popen, PIPE
 
@@ -25,14 +26,14 @@ class MonitorThread(threading.Thread):
     def run(self):
         top_cmd = ['top','-b','-n 1', '-p', self.pids]
         tail_cmd = ['tail', '-n+8']
-        # PID CPU RAM
         awk_cmd = ['awk', '{print $1 "\t" $9 "\t" $10}']
         
-        # function_name, timestamp, PID, CPU, RAM
-        # ['3662\t0,0\t0,1', '3735\t0,0\t0,0', '3736\t0,0\t0,0', '3737\t0,0\t0,0', '3738\t0,0\t0,0', '3739\t0,0\t0,0', '']
-        experiment_datetime = datetime.now()
-        experiment_datetime = experiment_datetime.strftime("%d_%m_%Y_%H_%M_%S")
-        file = open(self.function_name + "_" + experiment_datetime + ".csv", "a")
+        date_time = datetime.now()
+        experiment_datetime = date_time.strftime("%d_%m_%Y_%H_%M_%S")
+        path = "experiments/"+ self.function_name + "_" + experiment_datetime
+        os.mkdir(path)
+
+        file = open(path + "/" + self.function_name + "_" + experiment_datetime + ".csv", "a")
         file.write("function_name,timestamp,PID,CPU,RAM\n")
         while True:
             top_process = Popen(top_cmd, stdout=PIPE)
