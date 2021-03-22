@@ -30,7 +30,10 @@ class MonitorThread(threading.Thread):
         
         # function_name, timestamp, PID, CPU, RAM
         # ['3662\t0,0\t0,1', '3735\t0,0\t0,0', '3736\t0,0\t0,0', '3737\t0,0\t0,0', '3738\t0,0\t0,0', '3739\t0,0\t0,0', '']
-
+        experiment_datetime = datetime.now()
+        experiment_datetime = experiment_datetime.strftime("%d_%m_%Y_%H_%M_%S")
+        file = open(self.function_name + "_" + experiment_datetime + ".csv", "a")
+        file.write("function_name,timestamp,PID,CPU,RAM\n")
         while True:
             top_process = Popen(top_cmd, stdout=PIPE)
             tail_process = Popen(tail_cmd, stdin=top_process.stdout, stdout=PIPE)
@@ -41,14 +44,12 @@ class MonitorThread(threading.Thread):
 
 
             if output:
-                # 
                 output = [i.replace(",",".").replace("\t",",") for i in output.split("\n")]
+                output  = output[:-1]
                 timestamp = datetime.now()
                 for x in output:
-                    
-                    row = self.function_name + "," + str(timestamp) + "," + x
-                    print(row)
-
+                    row = self.function_name + "," + str(timestamp) + "," + x + "\n"
+                    file.write(row)
 
             top_process.stdout.close()
             top_process.kill()
@@ -64,13 +65,7 @@ class MonitorThread(threading.Thread):
 
             if self.stopped():
                 print("TH | Thread stopping!")
+                file.close()
                 return
 
         return
- 
-
-
-
-            # data_bytes = response_top.communicate()[0]
-            # data = data_bytes.decode()
-            # print('TH | Data from top: ', data)
