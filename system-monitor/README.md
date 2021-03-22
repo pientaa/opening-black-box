@@ -2,11 +2,6 @@
 
 Python program monitoring docker container CPU and MEMORY usage.
 
-## Run monitor
-
-```bash
-python system-monitor.py
-```
 ## Load env
 
 ```bash
@@ -14,6 +9,11 @@ conda env create -f env.yml
 conda activate env
 ```
 
+## Run monitor
+
+```bash
+python system-monitor.py
+```
 
 ## Start monitoring
 Send ```POST``` request to endpoint ```http://localhost:8063/monitor```. Pass the container name to monitor and function name into request body:
