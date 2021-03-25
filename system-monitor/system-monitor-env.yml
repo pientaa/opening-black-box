@@ -1,4 +1,4 @@
-name: env
+name: system-monitor-env
 channels:
   - defaults
 dependencies:
@@ -28,4 +28,3 @@ dependencies:
     - jinja2==2.11.3
     - markupsafe==1.1.1
     - werkzeug==1.0.1
-prefix: /home/hubert/miniconda3/envs/env
