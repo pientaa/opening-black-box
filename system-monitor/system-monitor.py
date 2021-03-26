@@ -66,10 +66,9 @@ def start_monitor():
 
     pids_col.stdout.close() 
     pids_col.kill()
-
     
     return 'Monitoring started', 202
-    
+
 if __name__ == "__main__":
     serve(app, host="0.0.0.0", port=8063)
 
