@@ -19,19 +19,14 @@ python system-monitor.py
 Send ```POST``` request to endpoint ```http://localhost:8063/monitor```. Pass the container name to monitor and function name into request body:
 ```json
 {
-     "container_name": 'postgres',
-     "monitor": true,
-     "function_name": 'average'
+     "container_name": "postgres",
+     "function_name": "average"
 }
 ```
-## Stop monitoring
-Send ```DELETE``` request to ```http://localhost:8063/monitor```. Request body:
 
-```json
-{
-    "monitor": false
-}
-```
+## Stop monitoring
+Send ```DELETE``` request to ```http://localhost:8063/monitor```. 
+
 
 ## Results
 Monitoring result is saved to file ```average_timestamp.csv```.
