@@ -5,8 +5,8 @@ Python program monitoring docker container CPU and MEMORY usage.
 ## Load env
 
 ```bash
-conda env create -f env.yml
-conda activate env
+conda env create -f system-monitor-env.yml
+conda activate system-monitor
 ```
 
 ## Run monitor

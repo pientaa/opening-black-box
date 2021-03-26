@@ -14,7 +14,7 @@ class MonitorThread(threading.Thread):
         print('TH | Stopping thread!')
         self._stop.set()
 
-    def stopped(self):
+    def is_stopped(self):
         return self._stop.isSet()
 
     def set_pids(self, pids):
@@ -30,7 +30,7 @@ class MonitorThread(threading.Thread):
         
         date_time = datetime.now()
         experiment_datetime = date_time.strftime("%d_%m_%Y_%H_%M_%S")
-        path = "experiments/"+ self.function_name + "_" + experiment_datetime
+        path = "experiments/"+ self.function_name
         os.mkdir(path)
 
         file = open(path + "/" + self.function_name + "_" + experiment_datetime + ".csv", "a")
@@ -43,7 +43,6 @@ class MonitorThread(threading.Thread):
             output = awk_process.communicate()[0]
             output = output.decode()
 
-
             if output:
                 output = [i.replace(",",".").replace("\t",",") for i in output.split("\n")]
                 output  = output[:-1]
@@ -54,17 +53,14 @@ class MonitorThread(threading.Thread):
 
             top_process.stdout.close()
             top_process.kill()
-            top_process.wait()
 
             tail_process.stdout.close()
             tail_process.kill()
-            tail_process.wait()
 
             awk_process.stdout.close()
             awk_process.kill()
-            awk_process.wait()
 
-            if self.stopped():
+            if self.is_stopped():
                 print("TH | Thread stopping!")
                 file.close()
                 return

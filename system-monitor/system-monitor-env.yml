@@ -1,4 +1,4 @@
-name: system-monitor-env
+name: system-monitor
 channels:
   - defaults
 dependencies:

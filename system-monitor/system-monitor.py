@@ -3,41 +3,22 @@ import sys
 import time
 import threading
 from flask import Flask, request
+from waitress import serve
 from MonitorThread import MonitorThread
 
 app = Flask(__name__)
 
 monitor_thread = None
 
-# {
-#     "monitor": false
-# }
-
 @app.route('/monitor', methods=['delete'])
 def stop_monitor():
-    try:
-        try:
-            data = request.get_json()
-            if not data['monitor']:
-                global monitor_thread
-                monitor_thread.stop()
-                
-        except:
-            raise ValueError
-
-    except ValueError:
-        return 'No request body / No active monitoring', 400
+    global monitor_thread
+    monitor_thread.stop()
     
     return 'Monitoring stopped', 200
-        
-# {
-#     "container_name": 'name',
-#     "monitor": false
-#     "function_name": 'name'
-# }
 
 @app.route('/monitor', methods=['post'])
-def system_monitor():
+def start_monitor():
     try:
         try:
             data = request.get_json()
@@ -52,7 +33,6 @@ def system_monitor():
 
     global monitor
     container_name = data["container_name"]
-    monitor = data["monitor"]
     function_name = data["function_name"]
 
     first_cmd = ['docker', 'top', container_name]
@@ -70,8 +50,6 @@ def system_monitor():
     pids = ','.join(pids)
     pids = pids[:-1]
 
-    print("M | pids ", pids)
-
     global monitor_thread
     monitor_thread = MonitorThread()
     monitor_thread.set_pids(pids)
@@ -82,20 +60,16 @@ def system_monitor():
     print('M | Terminating subprocesses!')
     response_docker_top.stdout.close()
     response_docker_top.kill()
-    response_docker_top.wait()
 
     response_awk.stdout.close()
     response_awk.kill()
-    response_awk.wait()
 
     pids_col.stdout.close() 
     pids_col.kill()
-    pids_col.wait()
 
     
     return 'Monitoring started', 202
-
-    # top "${pids[@]/#/-p }" -b -n 1 | tail -n+8
-# run(host='localhost', port=8063, debug=True, reloader=True)
-app.run(port=8063)
+    
+if __name__ == "__main__":
+    serve(app, host="0.0.0.0", port=8063)
 
