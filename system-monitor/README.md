@@ -30,6 +30,12 @@ Send ```DELETE``` request to ```http://localhost:8063/monitor```.
 
 ## Results
 Monitoring result is saved to file ```average_timestamp.csv```.
+Where: 
+* function_name - name of the function run in the container,
+* timestamp - monitoring start time,
+* PID - process ID,
+* CPU - the percentage of CPU that is being used by the process. By default 'top' displays this as a percentage of a single CPU. On multi-core systems, percentages are greater than 100%,
+* RAM - process currently resident share of available physical memory.
 
 | function_name   | timestamp                  | PID   | CPU  | RAM  |
 | --------------- |:--------------------------:| -----:| ----:|-----:|
