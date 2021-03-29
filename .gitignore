@@ -105,3 +105,4 @@ spark-warehouse/
 /database/measurements.csv
 /spark-config/mnt/spark-apps/
 password.env
+.yml
