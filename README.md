@@ -5,7 +5,7 @@
 
 ### Configure ssh connection
 
-It's recommended to use aliases for connection to cluster. Otherwise, some scripts require modification.
+It's recommended to use aliases for connection to cluster. Otherwise, some scripts won't work.
 Modify `~/.ssh/config` following the pattern:
 
 ```bash
