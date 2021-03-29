@@ -96,6 +96,8 @@ function run_containers() {
       ip_addr='10.5.0.'${last_ip_index}
       echo $ip_addr
       echo ${available_workers[$i]}
+      token=$(sshpass -f "password.env" ssh 20 "docker swarm join-token -q worker;")
+      sshpass -f "password.env" ssh magisterka@${available_workers[$i]} "docker swarm join --token ${token} 192.168.55.20:2377"
       sshpass -f "password.env" ssh magisterka@${available_workers[$i]}  "docker-compose -f ~/opening-black-box/spark-config/spark-worker-${index}.yml up -d; docker network connect --ip ${ip_addr} spark-network spark-worker-${index}"
     done
 }
