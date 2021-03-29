@@ -104,3 +104,4 @@ spark-warehouse/
 .jvmopts
 /database/measurements.csv
 /spark-config/mnt/spark-apps/
+password.env
