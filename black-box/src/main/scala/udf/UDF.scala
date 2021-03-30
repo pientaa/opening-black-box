@@ -10,22 +10,6 @@ import java.sql.Timestamp
 object UDF {
 
   /**
-   * Find the index of the minimum value
-   */
-  def indexOfMinimumValue(args: Double*): Integer = {
-    var minimumValue = Double.PositiveInfinity
-    var minimumValueIndex: Int = null
-
-    for (i <- 0 until args.length) {
-      if (args(i) != null && args(i) < minimumValue) {
-        minimumValue = args(i)
-        minimumValueIndex = i
-      }
-    }
-    minimumValueIndex
-  }
-
-  /**
    * Returns DayOfWeek in String from a given date
    */
   val dayOfWeek: UserDefinedFunction = udf((date: Timestamp) => date.toLocalDateTime.getDayOfWeek.toString)

@@ -9,7 +9,6 @@ import scala.util.Try
 class UDFFactory(val ss: SparkSession) {
 
   import ss.implicits._
-  ss.udf.register("indexOfMinimumValue", UDF.indexOfMinimumValue _)
 
   ss.udf.register(FILTER_FROM_MONDAY_TO_THURSDAY, UDF.filterFromMondayToThursday _)
   ss.udf.register(FILTER_ENERGY_GREATER_THAN_10, UDF.filterEnergyGreaterThan10 _)
