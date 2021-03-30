@@ -33,8 +33,8 @@ class MonitorThread(threading.Thread):
         path = "experiments/"+ self.function_name
         os.mkdir(path)
 
-        file = open(path + "/" + self.function_name + "_" + experiment_datetime + ".csv", "a")
-        file.write("function_name,timestamp,PID,CPU,RAM\n")
+        file = open(path + "/" + experiment_datetime + ".csv", "a")
+        file.write("timestamp,PID,CPU,RAM\n")
         while True:
             top_process = Popen(top_cmd, stdout=PIPE)
             tail_process = Popen(tail_cmd, stdin=top_process.stdout, stdout=PIPE)
@@ -48,7 +48,7 @@ class MonitorThread(threading.Thread):
                 output  = output[:-1]
                 timestamp = datetime.now()
                 for x in output:
-                    row = self.function_name + "," + str(timestamp) + "," + x + "\n"
+                    row = str(timestamp) + "," + x + "\n"
                     file.write(row)
 
             top_process.stdout.close()
