@@ -39,17 +39,17 @@ function select_number_of_workers() {
 function stop_master() {
       sshpass -f "password.env" ssh magisterka@192.168.55.20 "docker rm -f postgres;"
       sshpass -f "password.env" ssh magisterka@192.168.55.20 "docker rm -f spark-master;"
-      sshpass -f "password.env" ssh magisterka@192.168.55.20  "docker network prune --force;"
-      sshpass -f "password.env" ssh magisterka@192.168.55.20  "docker swarm leave --force;"
+      sshpass -f "password.env" ssh magisterka@192.168.55.20 "docker network prune --force;"
+      sshpass -f "password.env" ssh magisterka@192.168.55.20 "docker swarm leave --force;"
 }
 
 function stop_workers() {
     for i in "${!available_workers[@]}"
     do
       index=$(($i +1))
-      sshpass -f "password.env" ssh magisterka@${available_workers[$i]}  "docker rm -f spark-worker-${index};"
-      sshpass -f "password.env" ssh magisterka@${available_workers[$i]}  "docker network prune --force;"
-      sshpass -f "password.env" ssh magisterka@${available_workers[$i]}  "docker swarm leave --force;"
+      sshpass -f "password.env" ssh magisterka@${available_workers[$i]} "docker rm -f spark-worker-${index};"
+      sshpass -f "password.env" ssh magisterka@${available_workers[$i]} "docker network prune --force;"
+      sshpass -f "password.env" ssh magisterka@${available_workers[$i]} "docker swarm leave --force;"
     done
 }
 
