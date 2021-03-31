@@ -106,3 +106,6 @@ spark-warehouse/
 /spark-config/mnt/spark-apps/
 password.env
 .yml
+
+# System Monitor
+system-monitor/experiments
