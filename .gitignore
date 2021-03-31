@@ -104,3 +104,6 @@ spark-warehouse/
 .jvmopts
 /database/measurements.csv
 /spark-config/mnt/spark-apps/
+
+# System Monitor
+system-monitor/experiments
