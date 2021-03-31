@@ -21,6 +21,6 @@ docker exec -t spark-master curl -X POST http://10.5.0.2:6066/v1/submissions/cre
   "action": "CreateSubmissionRequest",
   "appArgs": [
     "postgres",
-    "'$functionName'"
+    "averageTemperatureByDeviceIdSeason"
   ]
 }'
