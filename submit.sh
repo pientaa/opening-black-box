@@ -1,9 +1,5 @@
 #!/bin/bash
-functionName=${1:-averageTemperatureByDeviceIdSeason}
-# Get driver status
-#docker exec -it spark-master curl http://10.5.0.2:6066/v1/submissions/status/<driver-id>
-
-docker exec -t spark-master curl -X POST http://10.5.0.2:6066/v1/submissions/create --header $header --data '{
+docker exec spark-master curl -X POST http://10.5.0.2:6066/v1/submissions/create --header "Content-Type:application/json;charset=UTF-8" --data '{
   "appResource": "/opt/spark-apps/black-box-assembly-1.0.jar",
   "sparkProperties": {
     "spark.master": "spark://spark-master:7077",
