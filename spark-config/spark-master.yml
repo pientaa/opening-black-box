@@ -10,8 +10,8 @@ services:
       - "6066:6066"
       - "7077:7077"
     networks:
-      - default
       - spark-network
+      - default
     volumes:
       - ./mnt/spark-apps:/opt/spark-apps
       - ./mnt/spark-data:/opt/spark-data
