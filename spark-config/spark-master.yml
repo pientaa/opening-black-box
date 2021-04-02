@@ -20,3 +20,5 @@ services:
 networks:
   spark-network:
     external: true
+  default:
+    driver: bridge
