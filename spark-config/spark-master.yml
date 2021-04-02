@@ -10,7 +10,8 @@ services:
       - "6066:6066"
       - "7077:7077"
     networks:
-      - spark-network
+      spark-network:
+        - ipv4_address: 10.5.0.2
     volumes:
       - ./mnt/spark-apps:/opt/spark-apps
       - ./mnt/spark-data:/opt/spark-data
@@ -20,5 +21,3 @@ services:
 networks:
   spark-network:
     external: true
-  default:
-    driver: bridge
