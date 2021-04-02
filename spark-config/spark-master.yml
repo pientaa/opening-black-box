@@ -11,8 +11,7 @@ services:
       - "7077:7077"
     networks:
       - spark-network-bridge
-      spark-network:
-        ipv4_address: 10.5.0.2
+      - spark-network
     volumes:
       - ./mnt/spark-apps:/opt/spark-apps
       - ./mnt/spark-data:/opt/spark-data
