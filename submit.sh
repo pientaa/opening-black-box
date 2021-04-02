@@ -21,4 +21,6 @@ data='{
     "'$functionName'"
   ]
 }'
-docker exec spark-master curl -X POST http://10.5.0.2:6066/v1/submissions/create --header "Content-Type:application/json;charset=UTF-8" --data $data
+
+header="Content-Type:application/json;charset=UTF-8"
+docker exec spark-master curl -X POST http://10.5.0.2:6066/v1/submissions/create --header $header --data $data
