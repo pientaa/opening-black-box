@@ -1,6 +1,6 @@
 #!/bin/bash
 functionName=${1:-averageTemperatureByDeviceIdSeason}
-docker exec spark-master curl -X POST http://10.5.0.2:6066/v1/submissions/create --header "Content-Type:application/json;charset=UTF-8" --data '{
+data='{
   "appResource": "/opt/spark-apps/black-box-assembly-1.0.jar",
   "sparkProperties": {
     "spark.master": "spark://spark-master:7077",
@@ -21,3 +21,4 @@ docker exec spark-master curl -X POST http://10.5.0.2:6066/v1/submissions/create
     "'$functionName'"
   ]
 }'
+docker exec spark-master curl -X POST http://10.5.0.2:6066/v1/submissions/create --header "Content-Type:application/json;charset=UTF-8" --data $data
