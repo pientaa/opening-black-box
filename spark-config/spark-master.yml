@@ -10,6 +10,7 @@ services:
       - "6066:6066"
       - "7077:7077"
     networks:
+      - spark-network-bridge
       spark-network:
         ipv4_address: 10.5.0.2
     volumes:
@@ -20,4 +21,6 @@ services:
 
 networks:
   spark-network:
+    external: true
+  spark-network-bridge:
     external: true
