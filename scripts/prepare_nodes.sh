@@ -6,6 +6,7 @@ path=$(pwd)
 cd black-box
 sbt assembly
 cd $path
+cd scripts
 
 for i in "${!all_nodes[@]}"
 do
