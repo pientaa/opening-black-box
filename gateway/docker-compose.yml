@@ -6,4 +6,10 @@ services:
     image: pienta/gateway:1.0.0
     build: .
     ports:
-      - 5000:5000
+      - "5000:5000"
+    networks:
+      - gateway-network
+
+networks:
+  gateway-network:
+    driver: bridge
