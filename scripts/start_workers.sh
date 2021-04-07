@@ -39,8 +39,8 @@ function select_number_of_workers() {
 }
 
 function create_worker_yml() {
-#  master: 10.5.0.2, worker-1: 10.5.0.4, ...
-  last_ip_index=$(($1 * 2 + 2))
+#  master: 10.5.0.2, worker-1: 10.5.0.5, worker-2: 10.5.0.7, ...
+  last_ip_index=$(($1 * 2 + 3))
 
   filename=spark-worker-${1}.yml
   if [ ! -f $filename ]
@@ -94,7 +94,7 @@ function run_containers() {
     do
       index=$(($i +1))
       echo $index
-      last_ip_index=$(($index * 2 + 2))
+      last_ip_index=$(($index * 2 + 3))
       ip_addr='10.5.0.'${last_ip_index}
       echo $ip_addr
       echo ${available_workers[$i]}
