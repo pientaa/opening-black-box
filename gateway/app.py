@@ -49,7 +49,7 @@ def get_status():
 
 
 @app.route('/')
-def hello_world():
+def health_check():
     return jsonify({'status': 'api working'})
 
 
