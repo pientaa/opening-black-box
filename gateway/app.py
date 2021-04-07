@@ -7,14 +7,7 @@ app = Flask(__name__)
 @app.route('/submit', methods=['post'])
 def submit():
     try:
-        try:
-            data = request.get_json()
-        except:
-            raise ValueError
-
-        if data is None:
-            raise ValueError
-
+        data = get_data()
     except ValueError:
         return 'Request data is not in json or is null', 400
 
@@ -44,9 +37,32 @@ def submit():
     return response.json()
 
 
+@app.route('/status')
+def get_status():
+    try:
+        data = get_data()
+    except ValueError:
+        return 'Request data is not in json or is null', 400
+
+    response = requests.get('http://10.5.0.2:6066/v1/submissions/status/' + data['driver_id'])
+    return response.json()
+
+
 @app.route('/')
 def hello_world():
     return jsonify({'status': 'api working'})
+
+
+def get_data():
+    try:
+        data = request.get_json()
+    except:
+        raise ValueError
+
+    if data is None:
+        raise ValueError
+
+    return data
 
 
 if __name__ == '__main__':
