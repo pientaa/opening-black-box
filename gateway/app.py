@@ -39,7 +39,7 @@ def submit():
             data['function_name']
         ]
     }
-    response = requests.post('http://spark-master:6066/v1/submissions/create', json=json_to_send)
+    response = requests.post('http://10.5.0.2:6066/v1/submissions/create', json=json_to_send)
     print('response from server:', response.text)
     return response.json()
 
