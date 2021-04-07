@@ -35,13 +35,13 @@ scripts/start_workers.sh
 scripts/prepare_nodes.sh
 ```
 
-### Submit jar to cluster
+### Submit jar to the cluster with script
 
 ```bash
 scripts/sumbit.sh <function_name>
 ```
 
-Expect output:
+Expected output:
 ```
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
@@ -52,6 +52,48 @@ Expect output:
   "submissionId" : "driver-20210402161642-0000",
   "success" : true
 100   779  100   223  100   556    888   2215 --:--:-- --:--:-- --:--:--  3103
+```
+
+### Submit jar to the cluster via REST API
+```bash
+curl --location --request POST '192.168.55.20:5000/submit' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "function_name": "averageTemperatureByDeviceIdSeason"
+}'
+```
+
+Expected response:
+```json
+{
+    "action": "CreateSubmissionResponse",
+    "message": "Driver successfully submitted as driver-20210407145229-0000",
+    "serverSparkVersion": "2.4.7",
+    "submissionId": "driver-20210407145229-0000",
+    "success": true
+}
+```
+
+### Get the driver status via REST API
+```bash
+curl --location --request GET '192.168.55.20:5000/status' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "driver_id": "driver-20210407145229-0000"
+}'
+```
+
+Expected response:
+```json
+{
+    "action": "SubmissionStatusResponse",
+    "driverState": "FINISHED",
+    "serverSparkVersion": "2.4.7",
+    "submissionId": "driver-20210407145229-0000",
+    "success": true,
+    "workerHostPort": "10.5.0.6:40829",
+    "workerId": "worker-20210407145657-10.5.0.6-40829"
+}
 ```
 
 ### Stop cluster

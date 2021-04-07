@@ -40,6 +40,7 @@ function select_number_of_workers() {
 
 function stop_master() {
       sshpass -f "password.env" ssh magisterka@192.168.55.20 "docker rm -f postgres;"
+      sshpass -f "password.env" ssh magisterka@192.168.55.20 "docker rm -f gateway;"
       sshpass -f "password.env" ssh magisterka@192.168.55.20 "docker rm -f spark-master;"
       sshpass -f "password.env" ssh magisterka@192.168.55.20 "docker network prune --force;"
       sshpass -f "password.env" ssh magisterka@192.168.55.20 "docker swarm leave --force;"
