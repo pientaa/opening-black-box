@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd scripts
+
 echo 'Init docker swarm, create spark-network, run spark master and set up database'
 sshpass -f "password.env" ssh 20 "docker swarm init;"
 sshpass -f "password.env" ssh 20 "docker network create -d overlay --attachable --ipam-driver=default --subnet=10.5.0.0/16 spark-network;"
