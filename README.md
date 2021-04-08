@@ -114,3 +114,19 @@ Inspect docker network (`spark-network`) on the master node and make sure that i
 
 - 10.5.0.2
 - 10.5.0.3
+
+## Run experiments
+
+Make sure you have _hosts_info.csv_ file in working directory.
+
+### Create experiments plan csv file
+| function_name              | table_name   |
+|:--------------------------:| ------------:|
+| average  | input_100  | 
+| filter   | input_1000 |
+
+### Run manager
+
+```python
+python monitor-manager/monitor-manager.py
+```
