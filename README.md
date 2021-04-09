@@ -37,7 +37,6 @@ scripts/sumbit.sh <function_name>
 ```
 
 Expected output:
-
 ```
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
@@ -51,7 +50,6 @@ Expected output:
 ```
 
 ### Submit jar to the cluster via REST API
-
 ```bash
 curl --location --request POST '192.168.55.20:5000/submit' \
 --header 'Content-Type: application/json' \
@@ -69,11 +67,8 @@ Expected response:
   "serverSparkVersion": "2.4.7",
   "submissionId": "driver-20210407145229-0000",
   "success": true
-}
-```
 
 ### Get the driver status via REST API
-
 ```bash
 curl --location --request GET '192.168.55.20:5000/status' \
 --header 'Content-Type: application/json' \
@@ -83,7 +78,6 @@ curl --location --request GET '192.168.55.20:5000/status' \
 ```
 
 Expected response:
-
 ```json
 {
   "action": "SubmissionStatusResponse",
