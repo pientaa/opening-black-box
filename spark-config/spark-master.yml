@@ -17,7 +17,18 @@ services:
       - ./mnt/spark-data:/opt/spark-data
     environment:
       - "SPARK_LOCAL_IP=spark-master"
+  gateway:
+    container_name: gateway
+    image: pienta/gateway:1.0.0
+    ports:
+      - "5000:5000"
+    networks:
+      - gateway-network
+      - spark-network
+
 
 networks:
   spark-network:
     external: true
+  gateway-network:
+    driver: bridge

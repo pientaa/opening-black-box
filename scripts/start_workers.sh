@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd scripts
+
 all_nodes=(192.168.55.11 192.168.55.12 192.168.55.13 192.168.55.14 192.168.55.15 192.168.55.16 192.168.55.17 192.168.55.18 192.168.55.19)
 
 function select_node_to_start() {
@@ -37,8 +39,8 @@ function select_number_of_workers() {
 }
 
 function create_worker_yml() {
-#  master: 10.5.0.2, worker-1: 10.5.0.4, ...
-  last_ip_index=$(($1 * 2 + 2))
+#  master: 10.5.0.2, worker-1: 10.5.0.5, worker-2: 10.5.0.7, ...
+  last_ip_index=$(($1 * 2 + 3))
 
   filename=spark-worker-${1}.yml
   if [ ! -f $filename ]
@@ -92,13 +94,28 @@ function run_containers() {
     do
       index=$(($i +1))
       echo $index
-      last_ip_index=$(($index * 2 + 2))
+      last_ip_index=$(($index * 2 + 3))
       ip_addr='10.5.0.'${last_ip_index}
       echo $ip_addr
       echo ${available_workers[$i]}
       token=$(sshpass -f "password.env" ssh 20 "docker swarm join-token -q worker;")
       sshpass -f "password.env" ssh magisterka@${available_workers[$i]} "docker swarm join --token ${token} 192.168.55.20:2377"
-      sshpass -f "password.env" ssh magisterka@${available_workers[$i]}  "docker-compose -f ~/opening-black-box/spark-config/spark-worker-${index}.yml up -d; docker network connect --ip ${ip_addr} spark-network spark-worker-${index}"
+      sshpass -f "password.env" ssh magisterka@${available_workers[$i]} "docker-compose -f ~/opening-black-box/spark-config/spark-worker-${index}.yml up -d; docker network connect --ip ${ip_addr} spark-network spark-worker-${index}"
+    done
+}
+
+function run_system_monitor() {
+    for i in "${!available_workers[@]}"
+    do
+      index=$(($i +1))
+      echo $index
+      last_ip_index=$(($index * 2 + 3))
+      ip_addr='10.5.0.'${last_ip_index}
+      echo $ip_addr
+      echo ${available_workers[$i]}
+
+      sshpass -f "password.env" ssh magisterka@${available_workers[$i]} "~/miniconda3/bin/conda env create -f  ~/opening-black-box/system-monitor/system-monitor-env.yml;"
+      nohup sshpass -f "password.env" ssh magisterka@${available_workers[$i]} "~/miniconda3/envs/system-monitor/bin/python3 ~/opening-black-box/system-monitor/system-monitor.py ;" &
     done
 }
 
@@ -114,3 +131,4 @@ echo 'All nodes: '${all_nodes[@]}
 
 prepare_composes
 run_containers
+run_system_monitor

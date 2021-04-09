@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd scripts
+
 all_nodes=(192.168.55.11 192.168.55.12 192.168.55.13 192.168.55.14 192.168.55.15 192.168.55.16 192.168.55.17 192.168.55.18 192.168.55.19)
 
 function select_node_to_start() {
@@ -38,9 +40,11 @@ function select_number_of_workers() {
 
 function stop_master() {
       sshpass -f "password.env" ssh magisterka@192.168.55.20 "docker rm -f postgres;"
+      sshpass -f "password.env" ssh magisterka@192.168.55.20 "docker rm -f gateway;"
       sshpass -f "password.env" ssh magisterka@192.168.55.20 "docker rm -f spark-master;"
       sshpass -f "password.env" ssh magisterka@192.168.55.20 "docker network prune --force;"
       sshpass -f "password.env" ssh magisterka@192.168.55.20 "docker swarm leave --force;"
+      sshpass -f "password.env" ssh magisterka@192.168.55.20 "ps aux | grep system-monitor.py | head -n 1 | awk '{print $2}' | xargs kill ;"
 }
 
 function stop_workers() {
@@ -50,6 +54,8 @@ function stop_workers() {
       sshpass -f "password.env" ssh magisterka@${available_workers[$i]} "docker rm -f spark-worker-${index};"
       sshpass -f "password.env" ssh magisterka@${available_workers[$i]} "docker network prune --force;"
       sshpass -f "password.env" ssh magisterka@${available_workers[$i]} "docker swarm leave --force;"
+#      There is a problem with awk in this line - actually it does the job (kills the process) but somehow awk doesn't work
+      sshpass -f "password.env" ssh magisterka@${available_workers[$i]} 'kill $(ps aux | grep system-monitor.py | head -n 1 | awk '"'{print $2}'"') ;'
     done
 }
 
