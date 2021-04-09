@@ -104,6 +104,21 @@ function run_containers() {
     done
 }
 
+function run_system_monitor() {
+    for i in "${!available_workers[@]}"
+    do
+      index=$(($i +1))
+      echo $index
+      last_ip_index=$(($index * 2 + 3))
+      ip_addr='10.5.0.'${last_ip_index}
+      echo $ip_addr
+      echo ${available_workers[$i]}
+
+      sshpass -f "password.env" ssh magisterka@${available_workers[$i]} "~/miniconda3/bin/conda env create -f  ~/opening-black-box/system-monitor/system-monitor-env.yml;"
+      nohup sshpass -f "password.env" ssh magisterka@${available_workers[$i]} "~/miniconda3/envs/system-monitor/bin/python3 ~/opening-black-box/system-monitor/system-monitor.py ;" &
+    done
+}
+
 initial_path=$(pwd)
 echo $initial_path
 
@@ -116,3 +131,4 @@ echo 'All nodes: '${all_nodes[@]}
 
 prepare_composes
 run_containers
+run_system_monitor
