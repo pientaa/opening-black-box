@@ -71,5 +71,5 @@ def start_monitor():
 
 
 if __name__ == "__main__":
-    logging.basicConfig(filename='system-monitor.log', encoding='utf-8', level=logging.DEBUG)
+    logging.basicConfig(filename='example.log', level=logging.DEBUG)
     serve(app, host="0.0.0.0", port=8063)
