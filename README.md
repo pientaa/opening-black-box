@@ -1,5 +1,11 @@
 # Opening a black-box
 
+## Run cluster locally 
+
+1. Go to `spark-config` directory.
+2. Run `run_cluster_locally.sh`.
+3. Access spark-master UI at http://localhost:8080/
+
 ## Run cluster remotely
 
 ### Configure ssh connection
