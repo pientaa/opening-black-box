@@ -32,7 +32,6 @@ def start_monitor():
     except ValueError:
         return 'Request data is not in json or is null', 400
 
-    global monitor
     container_name = data["container_name"]
     function_name = data["function_name"]
 
@@ -71,5 +70,5 @@ def start_monitor():
 
 
 if __name__ == "__main__":
-    logging.basicConfig(filename='example.log', level=logging.DEBUG)
+    logging.basicConfig(filename='./opening-black-box/system-monitor.log', level=logging.DEBUG)
     serve(app, host="0.0.0.0", port=8063)
