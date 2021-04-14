@@ -1,4 +1,4 @@
-ARG SPARK_IMAGE=pienta/spark-submit:2.4.7
+ARG SPARK_IMAGE=pienta/spark-submit:3.0.2
 
 FROM ${SPARK_IMAGE} AS run
 

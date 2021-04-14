@@ -1,9 +1,9 @@
 FROM java:8-jdk-alpine
 
 ENV DAEMON_RUN=true
-ENV SPARK_VERSION=2.4.7
+ENV SPARK_VERSION=3.0.2
 ENV HADOOP_VERSION=2.7
-ENV SCALA_VERSION=2.11.2
+ENV SCALA_VERSION=2.12.13
 ENV SCALA_HOME=/usr/share/scala
 
 RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
@@ -28,7 +28,7 @@ RUN wget --no-verbose http://apache.mirror.iphh.net/spark/spark-${SPARK_VERSION}
       && rm spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz
 
 
-ENV POST_URL https://jdbc.postgresql.org/download/postgresql-42.2.12.jar
+ENV POSTGRES_URL https://repo1.maven.org/maven2/org/postgresql/postgresql/42.2.19/postgresql-42.2.19.jar
 ENV SPARKJAVA_URL https://repo1.maven.org/maven2/com/sparkjava/spark-core/1.0/spark-core-1.0.jar
 ENV JETTY_SERVER_URL https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-server/9.0.2.v20130417/jetty-server-9.0.2.v20130417.jar
 ENV JETTY_UTIL_URL https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util/9.0.2.v20130417/jetty-util-9.0.2.v20130417.jar
@@ -41,8 +41,8 @@ ENV JETTY_XML_URL https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-xml/9.0
 ENV SPARK_MEASURE_URL https://repo1.maven.org/maven2/ch/cern/sparkmeasure/spark-measure_2.11/0.17/spark-measure_2.11-0.17.jar
 
 RUN apk update \
-     && wget ${POST_URL} \
-     && mv postgresql-42.2.12.jar /spark/jars \
+     && wget ${POSTGRES_URL} \
+     && mv postgresql-42.2.19.jar /spark/jars \
      && wget ${SPARKJAVA_URL} \
      && mv spark-core-1.0.jar /spark/jars \
      && wget ${JETTY_SERVER_URL} \

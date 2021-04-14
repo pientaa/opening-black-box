@@ -1,4 +1,4 @@
-FROM pienta/spark-base:2.4.7
+FROM pienta/spark-base:3.0.2
 
 COPY start-worker.sh /
 

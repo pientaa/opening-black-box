@@ -21,7 +21,7 @@ def submit():
             "spark.submit.deployMode": "cluster",
             "spark.driver.supervise": "true"
         },
-        "clientSparkVersion": "2.4.7",
+        "clientSparkVersion": "3.0.2",
         "mainClass": "BlackBox",
         "environmentVariables": {
             "SPARK_ENV_LOADED": "1"

@@ -2,7 +2,7 @@ version: "3"
 
 services:
   spark-master:
-    image: pienta/spark-master:2.4.7
+    image: pienta/spark-master:3.0.2
     container_name: spark-master
     hostname: spark-master
     ports:
