@@ -1,5 +1,5 @@
 import subprocess
-
+import logging
 from flask import Flask, request
 from waitress import serve
 
@@ -71,4 +71,5 @@ def start_monitor():
 
 
 if __name__ == "__main__":
+    logging.basicConfig(filename='~/opening-black-box/system-monitor.log', encoding='utf-8', level=logging.DEBUG)
     serve(app, host="0.0.0.0", port=8063)
