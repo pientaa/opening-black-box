@@ -31,12 +31,12 @@ class MonitorThread(threading.Thread):
 
         date_time = datetime.now()
         experiment_datetime = date_time.strftime("%d_%m_%Y_%H_%M_%S")
-        path = "experiments/" + self.function_name
+        path = "./opening-black-box/experiments/" + self.function_name
         try:
-            os.mkdir("./experiments")
-        except Exception:
+            os.mkdir("./opening-black-box/experiments")
+            os.mkdir(path)
+        except:
             print("Dir already exists")
-        os.mkdir(path)
 
         file = open(path + "/" + experiment_datetime + ".csv", "a")
         file.write("timestamp,PID,CPU,RAM\n")
