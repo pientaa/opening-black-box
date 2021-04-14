@@ -1,7 +1,7 @@
 import org.apache.log4j.LogManager
 import org.apache.spark.sql.SparkSession
 import udf.Consts.{FILTER_FROM_MONDAY_TO_THURSDAY, LOCALHOST}
-import udf.UDF.dayOfWeek
+import udf.UDF.{dayOfWeek, durationBetween}
 import udf.UDFFactory
 
 import java.util.Properties
@@ -44,7 +44,7 @@ object BlackBox {
     inputDF.createOrReplaceTempView("input_table")
 
     import org.apache.spark.sql.functions.col
-    inputDF.select(col("id"), dayOfWeek(col("date_time"))).show()
+    inputDF.select(col("id"), dayOfWeek(col("date_time")).as("day_of_week"), durationBetween(col("date_time"), col("date_time"))).show()
 
     //    udfFactory.executeFunction(udfName, inputDF).show()
   }
