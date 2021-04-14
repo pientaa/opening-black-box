@@ -20,7 +20,6 @@ def start_experiments():
     is_spark_node, host_ip = check_if_spark_node(hosts_info)
 
     for function_name, table in experiments_plan:
-        # if is_spark_node:
         print("Task submitting")
         submit_response = requests.post("http://192.168.55.20:5000/submit", json={"function_name": function_name})
         submit_response = json.loads(submit_response.text)
