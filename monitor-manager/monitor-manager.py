@@ -15,7 +15,6 @@ def health_check():
 
 @app.route('/experiments', methods=['post'])
 def start_experiments():
-
     experiments_plan = read_csv("experiments-plan.csv")
     hosts_info = read_csv("hosts-info.csv")
     is_spark_node, host_ip = check_if_spark_node(hosts_info)
