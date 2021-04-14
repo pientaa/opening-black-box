@@ -4,6 +4,7 @@ import os
 from datetime import datetime
 from subprocess import Popen, PIPE
 
+
 class MonitorThread(threading.Thread):
 
     def __init__(self, *args, **kwargs):
@@ -19,18 +20,22 @@ class MonitorThread(threading.Thread):
 
     def set_pids(self, pids):
         self.pids = pids
-    
+
     def set_function_name(self, name):
         self.function_name = name
 
     def run(self):
-        top_cmd = ['top','-b','-n 1', '-p', self.pids]
+        top_cmd = ['top', '-b', '-n 1', '-p', self.pids]
         tail_cmd = ['tail', '-n+8']
         awk_cmd = ['awk', '{print $1 "\t" $9 "\t" $10}']
-        
+
         date_time = datetime.now()
         experiment_datetime = date_time.strftime("%d_%m_%Y_%H_%M_%S")
-        path = "experiments/"+ self.function_name
+        path = "experiments/" + self.function_name
+        try:
+            os.mkdir("./experiments")
+        except Exception:
+            print("Dir already exists")
         os.mkdir(path)
 
         file = open(path + "/" + experiment_datetime + ".csv", "a")
@@ -44,8 +49,8 @@ class MonitorThread(threading.Thread):
             output = output.decode()
 
             if output:
-                output = [i.replace(",",".").replace("\t",",") for i in output.split("\n")]
-                output  = output[:-1]
+                output = [i.replace(",", ".").replace("\t", ",") for i in output.split("\n")]
+                output = output[:-1]
                 timestamp = datetime.now()
                 for x in output:
                     row = str(timestamp) + "," + x + "\n"
