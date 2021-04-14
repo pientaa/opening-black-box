@@ -25,14 +25,9 @@ echo <your_password> > password.env
 ### Configure and run cluster
 
 ```bash
+scripts/prepare_nodes.sh <git_branch_to_checkout:-main>
 scripts/start_master.sh
 scripts/start_workers.sh
-```
-
-### Build black box and update cluster nodes
-
-```bash
-scripts/prepare_nodes.sh
 ```
 
 ### Submit jar to the cluster with script
@@ -42,6 +37,7 @@ scripts/sumbit.sh <function_name>
 ```
 
 Expected output:
+
 ```
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
@@ -55,6 +51,7 @@ Expected output:
 ```
 
 ### Submit jar to the cluster via REST API
+
 ```bash
 curl --location --request POST '192.168.55.20:5000/submit' \
 --header 'Content-Type: application/json' \
@@ -64,17 +61,19 @@ curl --location --request POST '192.168.55.20:5000/submit' \
 ```
 
 Expected response:
+
 ```json
 {
-    "action": "CreateSubmissionResponse",
-    "message": "Driver successfully submitted as driver-20210407145229-0000",
-    "serverSparkVersion": "2.4.7",
-    "submissionId": "driver-20210407145229-0000",
-    "success": true
+  "action": "CreateSubmissionResponse",
+  "message": "Driver successfully submitted as driver-20210407145229-0000",
+  "serverSparkVersion": "2.4.7",
+  "submissionId": "driver-20210407145229-0000",
+  "success": true
 }
 ```
 
 ### Get the driver status via REST API
+
 ```bash
 curl --location --request GET '192.168.55.20:5000/status' \
 --header 'Content-Type: application/json' \
@@ -84,15 +83,16 @@ curl --location --request GET '192.168.55.20:5000/status' \
 ```
 
 Expected response:
+
 ```json
 {
-    "action": "SubmissionStatusResponse",
-    "driverState": "FINISHED",
-    "serverSparkVersion": "2.4.7",
-    "submissionId": "driver-20210407145229-0000",
-    "success": true,
-    "workerHostPort": "10.5.0.6:40829",
-    "workerId": "worker-20210407145657-10.5.0.6-40829"
+  "action": "SubmissionStatusResponse",
+  "driverState": "FINISHED",
+  "serverSparkVersion": "2.4.7",
+  "submissionId": "driver-20210407145229-0000",
+  "success": true,
+  "workerHostPort": "10.5.0.6:40829",
+  "workerId": "worker-20210407145657-10.5.0.6-40829"
 }
 ```
 
