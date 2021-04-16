@@ -3,6 +3,7 @@ import time
 import os
 from datetime import datetime
 from subprocess import Popen, PIPE
+import logging
 
 
 class MonitorThread(threading.Thread):
@@ -36,7 +37,7 @@ class MonitorThread(threading.Thread):
             os.mkdir("./opening-black-box/experiments")
             os.mkdir(path)
         except:
-            print("Dir already exists")
+            logging.warning("Directory already exists")
 
         file = open(path + "/" + experiment_datetime + ".csv", "a")
         file.write("timestamp,PID,CPU,RAM\n")
@@ -66,7 +67,7 @@ class MonitorThread(threading.Thread):
             awk_process.kill()
 
             if self.is_stopped():
-                print("TH | Thread stopping!")
+                logging.info("Thread stoppping")
                 file.close()
                 return
 

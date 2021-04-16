@@ -15,7 +15,7 @@ def stop_monitor():
     global monitor_thread
     monitor_thread.stop()
 
-    return 'Monitoring stopped', 200
+    return 'monitoring stopped', 200
 
 
 @app.route('/monitor', methods=['post'])
@@ -56,7 +56,7 @@ def start_monitor():
     monitor_thread.set_function_name(function_name)
     monitor_thread.start()
 
-    print('M | Terminating subprocesses!')
+    logging.info('Terminating subprocesses')
     response_docker_top.stdout.close()
     response_docker_top.kill()
 
@@ -70,5 +70,5 @@ def start_monitor():
 
 
 if __name__ == "__main__":
-    logging.basicConfig(filename='./opening-black-box/system-monitor.log', level=logging.DEBUG)
+    logging.basicConfig(filename='./opening-black-box/system-monitor.log', level=logging.DEBUG, format='%(asctime)s:%(message)s')
     serve(app, host="0.0.0.0", port=8063)
