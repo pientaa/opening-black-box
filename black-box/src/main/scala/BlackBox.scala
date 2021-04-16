@@ -46,7 +46,7 @@ object BlackBox {
     import org.apache.spark.sql.functions.col
     inputDF.select(col("id"), dayOfWeek(col("date_time")).as("day_of_week"), durationBetween(col("date_time"), col("date_time")))
       .write
-      .mode("override")
+      .mode("overwrite")
       .format("noop")
       .save()
   }
