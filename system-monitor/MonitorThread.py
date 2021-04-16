@@ -1,5 +1,4 @@
 import threading
-import time
 import os
 from datetime import datetime
 from subprocess import Popen, PIPE
@@ -13,7 +12,7 @@ class MonitorThread(threading.Thread):
         self._stop = threading.Event()
 
     def stop(self):
-        print('TH | Stopping thread!')
+        logging.info("Thread stopping")
         self._stop.set()
 
     def is_stopped(self):
@@ -67,7 +66,7 @@ class MonitorThread(threading.Thread):
             awk_process.kill()
 
             if self.is_stopped():
-                logging.info("Thread stoppping")
+                logging.info("Thread stopping")
                 file.close()
                 return
 
