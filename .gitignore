@@ -109,3 +109,6 @@ scripts/password.env
 
 # System Monitor
 system-monitor/experiments
+
+experiments-plan.csv
+hosts-info.csv
