@@ -6,7 +6,7 @@ echo $function
 echo -e "Building black-box ..."
 sbt assembly
 
-sudo cp ./target/scala-2.11/black-box-assembly-1.0.jar ./../spark-config/mnt/spark-apps/black-box-assembly-1.0.jar
+sudo cp ./target/scala-2.12/black-box-assembly-1.0.jar ./../spark-config/mnt/spark-apps/black-box-assembly-1.0.jar
 
 # Get driver status
 #docker exec -it spark-master curl http://10.5.0.2:6066/v1/submissions/status/<driver-id>

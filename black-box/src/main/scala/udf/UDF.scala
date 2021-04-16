@@ -24,65 +24,7 @@ object UDF {
     Duration.between(end.toLocalDateTime, start.toLocalDateTime).getSeconds
   })
 
-  def filterFromMondayToThursday(r: Row): Boolean = r.getDecimal(r.fieldIndex("day_type")).intValueExact().equals(1)
-
-  def selectIdEnergyTemperatureSeason(r: Row) =
-    (
-      r.getInt(r.fieldIndex("id")),
-      r.getDecimal(r.fieldIndex("energy")),
-      r.getDecimal(r.fieldIndex("outside_temperature")),
-      r.getDecimal(r.fieldIndex("season")).intValueExact()
-    )
-
-  def filterEnergyGreaterThan10(r: Row): Boolean = r.getDecimal(r.fieldIndex("energy")).doubleValue().>(10)
-
-  def filterFromMondayToThursdayAndEnergyGreaterThan10(r: Row): Boolean =
-    r.getDecimal(r.fieldIndex("energy")).doubleValue().>(10) &&
-      r.getDecimal(r.fieldIndex("day_type")).intValueExact().equals(1)
-
-  def filterFromMondayToThursdayAndEnergyGreaterThan10AndDayLengthBetween10And11(r: Row): Boolean =
-    r.getDecimal(r.fieldIndex("energy")).doubleValue().>(10) &&
-      r.getDecimal(r.fieldIndex("day_type")).intValueExact().equals(1) && {
-      val dayLength = r.getDecimal(r.fieldIndex("day_length")).doubleValue()
-      dayLength >= 10.0 && dayLength <= 11.0
-    }
-
-  def filterFromMondayToThursdayOrEnergyGreaterThan10AndDayLengthBetween10And11(r: Row): Boolean =
-    r.getDecimal(r.fieldIndex("energy")).doubleValue().>(10) ||
-      r.getDecimal(r.fieldIndex("day_type")).intValueExact().equals(1) && {
-        val dayLength = r.getDecimal(r.fieldIndex("day_length")).doubleValue()
-        dayLength >= 10.0 && dayLength <= 11.0
-      }
-
-  def filterFromMondayToThursdayOrEnergyGreaterThan10(r: Row): Boolean =
-    r.getDecimal(r.fieldIndex("energy")).doubleValue().>(10) ||
-      r.getDecimal(r.fieldIndex("day_type")).intValueExact().equals(1)
-
-  //  select * from test_input_1000 where device_id = 5019 and season = 3 or day_type = 2
-  def filterDeviceId5019AndAutumnOrFriday(r: Row): Boolean =
-    r.getInt(r.fieldIndex("device_id")).equals(5019) &&
-      r.getDecimal(r.fieldIndex("season")).intValueExact().equals(3) ||
-      r.getDecimal(r.fieldIndex("day_type")).intValueExact().equals(2)
-
-  //  select * from test_input_1000 where energy >= 30 or day_length > 12 or day_type = 4
-  def filterSundayBankHolidaysOrEnergyGreaterThan30OrDayLengthGreaterThan12(r: Row): Boolean =
-    r.getDecimal(r.fieldIndex("day_type")).intValueExact().equals(4) ||
-      r.getDecimal(r.fieldIndex("energy")).doubleValue().>(30) ||
-      r.getDecimal(r.fieldIndex("day_length")).doubleValue().>(12)
-
-  //  select * from test_input_1000 where energy >= 30 and day_length > 12 and day_type = 4
-  def filterSundayBankHolidaysAndEnergyGreaterThan30AndDayLengthGreaterThan12(r: Row): Boolean =
-    r.getDecimal(r.fieldIndex("day_type")).intValueExact().equals(4) &&
-      r.getDecimal(r.fieldIndex("energy")).doubleValue().>(30) &&
-      r.getDecimal(r.fieldIndex("day_length")).doubleValue().>(12)
-
-  //  select * from test_input_1000 where energy >= 30 or day_length > 12 or day_type = 4 or device_id > 5026
-  def filterSundayBankHolidaysOrEnergyGreaterThan30OrDayLengthGreaterThan12OrDeviceIdGreaterThan5026(r: Row): Boolean =
-    r.getDecimal(r.fieldIndex("day_type")).intValueExact().equals(4) ||
-      r.getDecimal(r.fieldIndex("energy")).doubleValue().>(30) ||
-      r.getDecimal(r.fieldIndex("day_length")).doubleValue().>(12) ||
-      r.getInt(r.fieldIndex("device_id")).>(5026)
-
+  //  I'm not sure if average makes sense as far as this function already exists in spark SQL
   class Average extends UserDefinedAggregateFunction {
 
     override def inputSchema: StructType = StructType(
