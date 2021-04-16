@@ -11,7 +11,7 @@ docker exec spark-master curl -X POST http://10.5.0.2:6066/v1/submissions/create
     "spark.submit.deployMode": "cluster",
     "spark.driver.supervise": "true"
   },
-  "clientSparkVersion": "2.4.7",
+  "clientSparkVersion": "3.0.2",
   "mainClass": "BlackBox",
   "environmentVariables": {
     "SPARK_ENV_LOADED": "1"

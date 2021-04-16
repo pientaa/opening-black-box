@@ -12,4 +12,4 @@ fi
 docker-compose -p sparkconfig up -d
 
 cd ../database
-./run_database.sh
+./run_database_locally.sh

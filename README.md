@@ -1,5 +1,11 @@
 # Opening a black-box
 
+## Run cluster locally 
+
+1. Go to `spark-config` directory.
+2. Run `run_cluster_locally.sh`.
+3. Access spark-master UI at http://localhost:8080/
+
 ## Run cluster remotely
 
 ### Configure ssh connection
@@ -44,7 +50,7 @@ Expected output:
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0{
   "action" : "CreateSubmissionResponse",
   "message" : "Driver successfully submitted as driver-20210402161642-0000",
-  "serverSparkVersion" : "2.4.7",
+  "serverSparkVersion" : "3.0.2",
   "submissionId" : "driver-20210402161642-0000",
   "success" : true
 100   779  100   223  100   556    888   2215 --:--:-- --:--:-- --:--:--  3103
@@ -66,7 +72,7 @@ Expected response:
 {
   "action": "CreateSubmissionResponse",
   "message": "Driver successfully submitted as driver-20210407145229-0000",
-  "serverSparkVersion": "2.4.7",
+  "serverSparkVersion": "3.0.2",
   "submissionId": "driver-20210407145229-0000",
   "success": true
 }
@@ -88,7 +94,7 @@ Expected response:
 {
   "action": "SubmissionStatusResponse",
   "driverState": "FINISHED",
-  "serverSparkVersion": "2.4.7",
+  "serverSparkVersion": "3.0.2",
   "submissionId": "driver-20210407145229-0000",
   "success": true,
   "workerHostPort": "10.5.0.6:40829",

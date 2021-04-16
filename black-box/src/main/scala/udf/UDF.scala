@@ -1,10 +1,28 @@
 package udf
 
 import org.apache.spark.sql.Row
-import org.apache.spark.sql.expressions.{MutableAggregationBuffer, UserDefinedAggregateFunction}
+import org.apache.spark.sql.expressions.{MutableAggregationBuffer, UserDefinedAggregateFunction, UserDefinedFunction}
+import org.apache.spark.sql.functions.udf
 import org.apache.spark.sql.types._
 
+import java.sql.Timestamp
+import java.time._
+import java.time.format._
+
 object UDF {
+  val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+
+  /**
+   * Returns DayOfWeek in String from a given date
+   */
+  val dayOfWeek: UserDefinedFunction = udf((date: Timestamp) => date.toLocalDateTime.getDayOfWeek.toString)
+
+  /**
+   * Returns duration between two timestamps
+   */
+  val durationBetween: UserDefinedFunction = udf((start: Timestamp, end: Timestamp) => {
+    Duration.between(end.toLocalDateTime, start.toLocalDateTime).getSeconds
+  })
 
   def filterFromMondayToThursday(r: Row): Boolean = r.getDecimal(r.fieldIndex("day_type")).intValueExact().equals(1)
 
@@ -25,14 +43,14 @@ object UDF {
   def filterFromMondayToThursdayAndEnergyGreaterThan10AndDayLengthBetween10And11(r: Row): Boolean =
     r.getDecimal(r.fieldIndex("energy")).doubleValue().>(10) &&
       r.getDecimal(r.fieldIndex("day_type")).intValueExact().equals(1) && {
-      val dayLength: Double = r.getDecimal(r.fieldIndex("day_length")).doubleValue()
+      val dayLength = r.getDecimal(r.fieldIndex("day_length")).doubleValue()
       dayLength >= 10.0 && dayLength <= 11.0
     }
 
   def filterFromMondayToThursdayOrEnergyGreaterThan10AndDayLengthBetween10And11(r: Row): Boolean =
     r.getDecimal(r.fieldIndex("energy")).doubleValue().>(10) ||
       r.getDecimal(r.fieldIndex("day_type")).intValueExact().equals(1) && {
-        val dayLength: Double = r.getDecimal(r.fieldIndex("day_length")).doubleValue()
+        val dayLength = r.getDecimal(r.fieldIndex("day_length")).doubleValue()
         dayLength >= 10.0 && dayLength <= 11.0
       }
 
@@ -78,7 +96,7 @@ object UDF {
 
     override def dataType: DataType = DoubleType
 
-    override def deterministic: Boolean = true
+    override def deterministic = true
 
     override def initialize(buffer: MutableAggregationBuffer): Unit = {
       buffer(0) = 0L

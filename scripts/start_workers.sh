@@ -50,7 +50,7 @@ function create_worker_yml() {
   fi
 
   echo $'version: "3" \nservices:\n  'spark-worker-${1}:\
-  $'\n    image: pienta/spark-worker:2.4.7'\
+  $'\n    image: pienta/spark-worker:3.0.2'\
   $'\n    container_name: spark-worker-'${1}\
   $'\n    hostname: 10.5.0.'${last_ip_index}\
   $'\n    ports:'\
