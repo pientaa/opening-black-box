@@ -60,46 +60,6 @@ services:
     volumes:
       - ./mnt/spark-apps:/opt/spark-apps
       - ./mnt/spark-data:/opt/spark-data
-  spark-worker-3:
-    image: pienta/spark-worker:3.0.2
-    container_name: spark-worker-3
-    build:
-      context: docker/spark-worker
-      dockerfile: docker/spark-worker/Dockerfile
-    hostname: 10.5.0.5
-    depends_on:
-      - spark-master
-    ports:
-      - "8083:8081"
-    env_file: env/spark-worker.sh
-    environment:
-      - "SPARK_LOCAL_IP=spark-worker-3"
-    networks:
-      spark-network:
-        ipv4_address: 10.5.0.5
-    volumes:
-      - ./mnt/spark-apps:/opt/spark-apps
-      - ./mnt/spark-data:/opt/spark-data
-  spark-worker-4:
-    image: pienta/spark-worker:3.0.2
-    container_name: spark-worker-4
-    build:
-      context: docker/spark-worker
-      dockerfile: docker/spark-worker/Dockerfile
-    hostname: 10.5.0.6
-    depends_on:
-      - spark-master
-    ports:
-      - "8084:8081"
-    env_file: env/spark-worker.sh
-    environment:
-      - "SPARK_LOCAL_IP=spark-worker-4"
-    networks:
-      spark-network:
-        ipv4_address: 10.5.0.6
-    volumes:
-      - ./mnt/spark-apps:/opt/spark-apps
-      - ./mnt/spark-data:/opt/spark-data
 networks:
   spark-network:
     driver: bridge

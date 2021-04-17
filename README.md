@@ -1,10 +1,12 @@
 # Opening a black-box
 
-## Run cluster locally 
+## Run cluster locally
 
-1. Go to `spark-config` directory.
-2. Run `run_cluster_locally.sh`.
-3. Access spark-master UI at http://localhost:8080/
+1. If first time here -> download data with `getdata.sh` in `database` directory.
+2. Go to `spark-config` directory.
+4. Run `run_cluster_locally.sh`.
+4. Access spark-master UI at http://localhost:8080/
+5. Submit jar with `submit.sh` in `black-box` directory.
 
 ## Run cluster remotely
 

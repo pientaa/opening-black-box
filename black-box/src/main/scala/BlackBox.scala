@@ -1,9 +1,7 @@
 import org.apache.log4j.LogManager
 import org.apache.spark.sql.{Encoders, SparkSession}
-import org.apache.spark.sql.functions.expr
 import udf.Consts.{FILTER_FROM_MONDAY_TO_THURSDAY, LOCALHOST}
-import udf.UDF.{dayOfWeek, durationBetween}
-import udf.UDFFactory
+import udf.{UDF, UDFFactory}
 
 import java.util.Properties
 
@@ -49,19 +47,22 @@ object BlackBox {
     import udf.MyMedian
     val myMedian = new MyMedian
     ss.udf.register("myMedian", functions.udaf(myMedian, Encoders.scalaDouble))
+    val tempAvg = new UDF.Average
+    inputDF.groupBy(col("device_id"), col("season")).agg(tempAvg(col("energy")))
+      .show()
 
-//     myMedian(energy) as median_value,
-    ss.sql("SELECT avg(energy) as average_value FROM input_table").show()
-//    inputDF
-//      .select(
-//        col("id"),
-//        col("energy"),
-//        col("season"),
-//        dayOfWeek(col("date_time")).as("day_of_week"),
-//        durationBetween(col("date_time"), col("date_time")))
-//      .groupBy(col("season"))
-//      .agg(expr("myMedian(energy) as my_median"))
-//      .show(100)
+    //     myMedian(energy) as median_value,
+    //    ss.sql("SELECT avg(energy) as average_value FROM input_table").show()
+    //    inputDF
+    //      .select(
+    //        col("id"),
+    //        col("energy"),
+    //        col("season"),
+    //        dayOfWeek(col("date_time")).as("day_of_week"),
+    //        durationBetween(col("date_time"), col("date_time")))
+    //      .groupBy(col("season"))
+    //      .agg(expr("myMedian(energy) as my_median"))
+    //      .show(100)
     //      .write
     //      .mode("override")
     //      .format("noop")
