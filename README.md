@@ -122,3 +122,26 @@ Inspect docker network (`spark-network`) on the master node and make sure that i
 
 - 10.5.0.2
 - 10.5.0.3
+
+## Run experiments
+
+Make sure you have _hosts_info.csv_ file in working directory.
+
+| host_ip              | container_name   |
+|:--------------------------:| ------------:|
+| 192.168.55.20  | spark-master  |
+| 192.168.55.11  | spark-worker-1  |
+| 192.168.55.12  | spark-worker-2  |
+| 192.168.55.13  | spark-worker-3  |
+
+
+### Create experiments plan csv file
+| function_name              | table_name   |
+|:--------------------------:| ------------:|
+| averageTemperatureByDeviceIdSeason  | input_100  |
+
+### Run manager
+
+```python
+python monitor-manager/monitor-manager.py
+```

@@ -1,5 +1,5 @@
 import subprocess
-
+import logging
 from flask import Flask, request
 from waitress import serve
 
@@ -15,7 +15,7 @@ def stop_monitor():
     global monitor_thread
     monitor_thread.stop()
 
-    return 'Monitoring stopped', 200
+    return 'monitoring stopped', 200
 
 
 @app.route('/monitor', methods=['post'])
@@ -32,7 +32,6 @@ def start_monitor():
     except ValueError:
         return 'Request data is not in json or is null', 400
 
-    global monitor
     container_name = data["container_name"]
     function_name = data["function_name"]
 
@@ -57,7 +56,7 @@ def start_monitor():
     monitor_thread.set_function_name(function_name)
     monitor_thread.start()
 
-    print('M | Terminating subprocesses!')
+    logging.info('Terminating subprocesses')
     response_docker_top.stdout.close()
     response_docker_top.kill()
 
@@ -67,8 +66,9 @@ def start_monitor():
     pids_col.stdout.close()
     pids_col.kill()
 
-    return 'Monitoring started', 202
+    return 'monitoring started', 202
 
 
 if __name__ == "__main__":
+    logging.basicConfig(filename='./opening-black-box/system-monitor.log', level=logging.DEBUG, format='%(asctime)s:%(message)s')
     serve(app, host="0.0.0.0", port=8063)
