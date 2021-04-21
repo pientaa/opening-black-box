@@ -1,3 +1,5 @@
+package udf
+
 import org.apache.spark.sql.SparkSession
 
 trait SparkSessionTestWrapper {
@@ -8,5 +10,4 @@ trait SparkSessionTestWrapper {
       .appName("spark test example")
       .getOrCreate()
   }
-
 }
