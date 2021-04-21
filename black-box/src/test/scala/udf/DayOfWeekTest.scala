@@ -18,6 +18,7 @@ class DayOfWeekTest extends FunSuite with Matchers with DataFrameComparer {
   }
 
   test("Single row test") {
+    import spark.implicits._
     val sourceDF = MeasurementStub.foo
       .toDS()
       .select(dayOfWeek(col("date_time")).as("day_of_week"))
