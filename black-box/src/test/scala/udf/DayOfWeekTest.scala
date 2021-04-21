@@ -7,9 +7,6 @@ import org.scalatest.{FunSuite, Matchers}
 import udf.UDF.dayOfWeek
 import udf.stubs.MeasurementStub
 
-import java.sql.Timestamp
-import java.time.LocalDateTime
-
 class DayOfWeekTest extends FunSuite with Matchers with DataFrameComparer {
   val spark: SparkSession = {
     SparkSession
