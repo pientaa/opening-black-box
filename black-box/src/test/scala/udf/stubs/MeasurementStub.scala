@@ -10,9 +10,21 @@ object MeasurementStub {
   private val rnd = new scala.util.Random
 
   val singleMeasurement = Seq(
+    nextMeasurement()
+  )
+
+  val fiveMeasurements = Seq(
+    nextMeasurement(deviceId = 1),
+    nextMeasurement(deviceId = 1),
+    nextMeasurement(deviceId = 1),
+    nextMeasurement(deviceId = 1),
+    nextMeasurement(deviceId = 1)
+  )
+
+  private def nextMeasurement(deviceId: Int = randomDeviceId()) =
     Measurement(
       id = nextId(),
-      device_id = randomDeviceId(),
+      device_id = deviceId,
       device_measurement_id = nextDeviceMeasurementIdSeq(),
       date_time = getTimestamp(),
       energy = randomBigDecimal(),
@@ -24,7 +36,6 @@ object MeasurementStub {
       day_type = rnd.nextInt(5),
       season = 1 + rnd.nextInt(4)
     )
-  )
 
   private def randomBigDecimal(): BigDecimal = {
     BigDecimal.valueOf(rnd.nextFloat() * 15.0)

@@ -1,12 +1,11 @@
 package udf
 
 import com.github.mrpowers.spark.fast.tests.DataFrameComparer
-import org.apache.spark.sql.functions.col
 import org.scalatest.{FunSuite, Matchers}
-import udf.UDF.dayOfWeek
+import udf.model.DistinctDeviceIdCount
 import udf.stubs.MeasurementStub
 
-class DayOfWeekTest
+class DistinctDeviceIdCountTest
     extends FunSuite
     with Matchers
     with DataFrameComparer
@@ -14,14 +13,14 @@ class DayOfWeekTest
 
   test("Single row test") {
     import spark.implicits._
-    val sourceDF = MeasurementStub.singleMeasurement
-      .toDS()
-      .select(dayOfWeek(col("date_time")).as("day_of_week"))
+
+    val sourceDF = UDAF
+      .countDistinctEnergy(MeasurementStub.fiveMeasurements.toDS())
       .toDF()
 
     val expectedDF = Seq(
-      ("THURSDAY")
-    ).toDF("day_of_week")
+      DistinctDeviceIdCount(1, 5)
+    ).toDF()
 
     assertSmallDataFrameEquality(sourceDF, expectedDF)
   }
