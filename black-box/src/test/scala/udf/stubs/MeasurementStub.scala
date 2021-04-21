@@ -7,28 +7,50 @@ import java.sql.Timestamp
 import java.time.LocalDateTime
 
 object MeasurementStub {
+  private val rnd = new scala.util.Random
 
-  val foo = Seq(
+  val singleMeasurement = Seq(
     Measurement(
       id = nextId(),
-      device_id = 1,
-      device_measurement_id = nextId(),
-      date_time = Timestamp.valueOf(LocalDateTime.of(2021, 4, 21, 8, 0)),
-      energy = BigDecimal.valueOf(12.4),
-      outside_temperature = BigDecimal.valueOf(3.1),
-      wind = BigDecimal.valueOf(10.3),
-      humidity = BigDecimal.valueOf(2.04),
-      sky_condition = 0,
-      day_length = BigDecimal.valueOf(12.5),
-      day_type = 1,
-      season = 1
+      device_id = randomDeviceId(),
+      device_measurement_id = nextDeviceMeasurementIdSeq(),
+      date_time = getTimestamp(),
+      energy = randomBigDecimal(),
+      outside_temperature = randomBigDecimal(),
+      wind = randomBigDecimal(),
+      humidity = randomBigDecimal(),
+      sky_condition = rnd.nextInt(5),
+      day_length = randomBigDecimal(),
+      day_type = rnd.nextInt(5),
+      season = 1 + rnd.nextInt(4)
     )
   )
 
-  var idSeq = 0
+  private def randomBigDecimal(): BigDecimal = {
+    BigDecimal.valueOf(rnd.nextFloat() * 15.0)
+  }
+
+  private def getTimestamp(): Timestamp = {
+    Timestamp.valueOf(
+      LocalDateTime
+        .of(2021, 4, 21, 8, 0)
+        .plusDays(idSeq)
+    )
+  }
+
+  private def randomDeviceId() = {
+    1 + rnd.nextInt(5000)
+  }
+  private def nextDeviceMeasurementIdSeq(): Int = {
+    deviceMeasurementIdSeq += 1
+    deviceMeasurementIdSeq
+  }
 
   private def nextId(): Int = {
     idSeq += 1
     idSeq
   }
+
+  var idSeq                  = 0
+  var deviceMeasurementIdSeq = 0
 }
