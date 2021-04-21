@@ -8,6 +8,7 @@ trait SparkSessionTestWrapper {
       .builder()
       .master("local")
       .appName("spark test example")
+      .config("spark.driver.bindAddress", "127.0.0.1")
       .getOrCreate()
   }
 }
