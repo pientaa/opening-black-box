@@ -25,7 +25,7 @@ class DayOfWeekTest extends FunSuite with Matchers with DataFrameComparer {
       .toDF()
 
     val expectedDF = Seq(
-      ("WEDNESDAY")
+      ("THURSDAY")
     ).toDF("day_of_week")
 
     assertSmallDataFrameEquality(sourceDF, expectedDF)
