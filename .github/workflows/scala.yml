@@ -19,4 +19,4 @@ jobs:
         java-version: '8'
         distribution: 'adopt'
     - name: Run tests
-      run: cd black-box && sbt -Dsbt.boot.directory=/tmp/boot1 -Dsbt.launcher.coursier=false --debug test
+      run: cd black-box && sbt -Dsbt.boot.directory=/tmp/boot1 -Dsbt.launcher.coursier=false test
