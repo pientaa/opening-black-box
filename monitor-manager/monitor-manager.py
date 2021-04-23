@@ -17,8 +17,8 @@ def health_check():
 
 @app.route('/experiments', methods=['post'])
 def start_experiments():
-    experiments_plan = pd.read_csv("~/opening-black-box/monitor-manager/experiments-plan.csv", delimiter=',')
-    hosts_info = pd.read_csv("~/opening-black-box/monitor-manager/hosts-info.csv", delimiter=',')
+    experiments_plan = pd.read_csv("opening-black-box/monitor-manager/experiments-plan.csv", delimiter=',')
+    hosts_info = pd.read_csv("opening-black-box/monitor-manager/hosts-info.csv", delimiter=',')
 
     for index, row in experiments_plan.iterrows():
         system_monitor(hosts_info, row['function_name'])
@@ -60,6 +60,6 @@ def system_monitor(hosts_info, function_name):
 
 
 if __name__ == "__main__":
-    logging.basicConfig(filename='~/opening-black-box/monitor-manager/monitor-manager.log', level=logging.INFO,
+    logging.basicConfig(filename='opening-black-box/monitor-manager/monitor-manager.log', level=logging.INFO,
                         format='%(asctime)s:%(message)s')
     app.run(debug=True, host='0.0.0.0', port=8888)
