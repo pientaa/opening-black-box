@@ -14,7 +14,7 @@ chmod 755 run_database.sh
 ./run_database.sh
 ```
 
-# Generate data
+# Generate data locally
 
 ## Setup
 
@@ -25,7 +25,7 @@ sudo apt install gcc make flex bison unzip
 
 ### Download TPC-DS
 
-1. Go to [TPC Downloads]: http://tpc.org/tpc_documents_current_versions/current_specifications5.asp
+1. Go to [TPC Downloads](http://tpc.org/tpc_documents_current_versions/current_specifications5.asp)
 2. Choose a version to download.
 3. Register free account to get TPC tool.
 4. Check mail for a link to download .
