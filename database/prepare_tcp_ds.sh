@@ -1,6 +1,6 @@
 #!/bin/bash
 
-unzip tcp-ds-tool.zip -d database/tcp-ds
-mkdir database/tpc-data
-cd database/tpc-ds/v3.0.0/tools
+unzip ~/opening-black-box/tcp-ds-tool.zip -d ~/opening-black-box/database/tcp-ds
+mkdir ~/opening-black-box/database/tpc-data
+cd ~/opening-black-box/database/tpc-ds/v3.0.0/tools
 make
