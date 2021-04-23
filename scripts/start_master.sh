@@ -13,4 +13,4 @@ nohup sshpass -f "password.env" ssh 20 "~/miniconda3/envs/system-monitor/bin/pyt
 nohup sshpass -f "password.env" ssh 20 "~/miniconda3/envs/system-monitor/bin/python3 ~/opening-black-box/monitor-manager/monitor-manager.py ;" &
 sshpass -f "password.env" scp ./../tpc-ds-tool.zip magisterka@$192.168.55.20:~/opening-black-box
 head -n 1 password.env | sshpass -f "password.env" ssh -tt 20 "sudo apt install gcc make flex bison"
-sshpass -f "password.env" ssh 20 "~/opening-black-box/database/prepare_tcp_ds.sh" &
+sshpass -f "password.env" ssh 20 "~/opening-black-box/database/prepare_tpc_ds.sh"
