@@ -1,0 +1,7 @@
+host_ip,container_name
+192.168.55.20,spark-master
+192.168.55.11,spark-worker-1
+192.168.55.12,spark-worker-2
+192.168.55.13,spark-worker-3
+192.168.55.14,spark-worker-4
+192.168.55.15,spark-worker-5
