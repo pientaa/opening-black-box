@@ -114,7 +114,7 @@ function run_system_monitor() {
       echo $ip_addr
       echo ${available_workers[$i]}
 
-      sshpass -f "password.env" ssh magisterka@${available_workers[$i]} "~/miniconda3/bin/conda env create -f  ~/opening-black-box/system-monitor/system-monitor-env.yml;"
+      sshpass -f "password.env" ssh magisterka@${available_workers[$i]} "~/miniconda3/bin/conda env update --name system-monitor -f ~/opening-black-box/system-monitor/system-monitor-env.yml;"
       nohup sshpass -f "password.env" ssh magisterka@${available_workers[$i]} "~/miniconda3/envs/system-monitor/bin/python3 ~/opening-black-box/system-monitor/system-monitor.py ;" &
     done
 }
