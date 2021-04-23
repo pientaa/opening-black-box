@@ -12,7 +12,7 @@ cd scripts
 for i in "${!all_nodes[@]}"
 do
   echo ${all_nodes[$i]}
-  sshpass -f "password.env" ssh magisterka@${all_nodes[$i]} "cd opening-black-box;git reset --hard; git checkout -f $branch; git fetch && git pull;"
+  sshpass -f "password.env" ssh magisterka@${all_nodes[$i]} "cd opening-black-box;git reset --hard; git fetch; git checkout -f $branch; git pull;"
   sshpass -f "password.env" scp ./../black-box/target/scala-2.12/black-box-assembly-1.0.jar magisterka@${all_nodes[$i]}:~/opening-black-box/black-box/target/scala-2.12/black-box-assembly-1.0.jar
   head -n 1 password.env | sshpass -f "password.env" ssh -tt magisterka@${all_nodes[$i]} "sudo cp ~/opening-black-box/black-box/target/scala-2.12/black-box-assembly-1.0.jar ~/opening-black-box/spark-config/mnt/spark-apps/black-box-assembly-1.0.jar;"
 done
