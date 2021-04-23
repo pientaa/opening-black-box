@@ -11,21 +11,30 @@ dependencies:
   - libgcc-ng=9.1.0=hdf63c60_0
   - libstdcxx-ng=9.1.0=hdf63c60_0
   - ncurses=6.2=he6710b0_1
-  - openssl=1.1.1k=h27cfd23_0
+  - openssl=1.1.1j=h27cfd23_0
   - pip=21.0.1=py37h06a4308_0
   - python=3.7.10=hdb3f193_0
   - readline=8.1=h27cfd23_0
   - setuptools=52.0.0=py37h06a4308_0
   - sqlite=3.33.0=h62c20be_0
   - tk=8.6.10=hbc83047_0
-  - waitress=2.0.0=pyhd3eb1b0_0
   - wheel=0.36.2=pyhd3eb1b0_0
   - xz=5.2.5=h7b6447c_0
   - zlib=1.2.11=h7b6447c_3
   - pip:
+    - chardet==4.0.0
     - click==7.1.2
     - flask==1.1.2
+    - idna==2.10
     - itsdangerous==1.1.0
     - jinja2==2.11.3
     - markupsafe==1.1.1
+    - numpy==1.20.2
+    - pandas==1.2.4
+    - python-dateutil==2.8.1
+    - pytz==2021.1
+    - requests==2.25.1
+    - six==1.15.0
+    - urllib3==1.26.4
+    - waitress==2.0.0
     - werkzeug==1.0.1
