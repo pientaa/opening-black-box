@@ -5,7 +5,7 @@ all_nodes=(192.168.55.20 192.168.55.11 192.168.55.12 192.168.55.13 192.168.55.14
 
 path=$(pwd)
 cd black-box
-sbt assembly
+sbt 'set test in Test := {}' clean assembly
 cd $path
 cd scripts
 

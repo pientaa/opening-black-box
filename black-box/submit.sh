@@ -4,7 +4,7 @@ echo $host
 echo $function
 
 echo -e "Building black-box ..."
-sbt assembly
+sbt 'set test in Test := {}' clean assembly
 
 sudo cp ./target/scala-2.12/black-box-assembly-1.0.jar ./../spark-config/mnt/spark-apps/black-box-assembly-1.0.jar
 

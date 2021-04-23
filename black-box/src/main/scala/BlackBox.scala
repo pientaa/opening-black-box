@@ -1,23 +1,23 @@
 import org.apache.log4j.LogManager
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.catalyst.encoders.ExpressionEncoder
+import org.apache.spark.sql.{Dataset, SparkSession}
 import udf.Consts.{FILTER_FROM_MONDAY_TO_THURSDAY, LOCALHOST}
-import udf.UDF.{dayOfWeek, durationBetween}
-import udf.UDFFactory
+import udf._
+import udf.model.Measurement
 
 import java.util.Properties
 
 object BlackBox {
   private val logger = LogManager.getLogger("BlackBox")
 
-  val ss: SparkSession = SparkSession.builder()
+  val ss: SparkSession = SparkSession
+    .builder()
     .appName("Black-box")
     .master("spark://spark-master:7077")
     .config("spark.jars", "/opt/spark-apps/black-box-assembly-1.0.jar")
     .config("spark.submit.deployMode", "cluster")
     .config("spark.cores.max", "4")
     .getOrCreate()
-
-  val udfFactory = new UDFFactory(ss)
 
   ss.sparkContext.setLogLevel("ERROR")
   ss.sparkContext.setLogLevel("WARN")
@@ -30,8 +30,8 @@ object BlackBox {
   connectionProperties.put("password", "postgres")
 
   var functionName: String = "variable uninitialized"
-  var host: String = LOCALHOST
-  var url: String = s"jdbc:postgresql://$host:5432/black-box"
+  var host: String         = LOCALHOST
+  var url: String          = s"jdbc:postgresql://$host:5432/black-box"
 
   def main(args: Array[String]): Unit = {
     host = if (args.length > -1) args(0) else LOCALHOST
@@ -40,14 +40,14 @@ object BlackBox {
     val udfName = if (args.length > 0) args(1) else FILTER_FROM_MONDAY_TO_THURSDAY
     functionName = udfName
 
-    val inputDF = ss.read.jdbc(url, s"public.test_input_10000", connectionProperties).toDF()
-    inputDF.createOrReplaceTempView("input_table")
+    val inputDF: Dataset[Measurement] =
+      ss.read
+        .jdbc(url, s"public.test_input_10000", connectionProperties)
+        .as[Measurement](implicitly(ExpressionEncoder[Measurement]))
 
-    import org.apache.spark.sql.functions.col
-    inputDF.select(col("id"), dayOfWeek(col("date_time")).as("day_of_week"), durationBetween(col("date_time"), col("date_time")))
-      .write
-      .mode("overwrite")
-      .format("noop")
-      .save()
+    UDAF
+      .countDistinctEnergy(inputDF)
+      .toDF()
+      .show()
   }
 }
