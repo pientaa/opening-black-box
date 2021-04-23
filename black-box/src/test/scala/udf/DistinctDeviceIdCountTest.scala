@@ -15,7 +15,7 @@ class DistinctDeviceIdCountTest
     import spark.implicits._
 
     val sourceDF = UDAF
-      .countDistinctEnergy(MeasurementStub.fiveMeasurements.toDS())
+      .countDistinctDeviceId(MeasurementStub.fiveMeasurements.toDS())
       .toDF()
 
     val expectedDF = Seq(
