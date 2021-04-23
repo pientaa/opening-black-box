@@ -17,7 +17,7 @@ def health_check():
 
 @app.route('/experiments', methods=['post'])
 def start_experiments():
-    experiments_plan = pd.read_csv("experiments-plan.csv", delimiter=',')
+    experiments_plan = pd.read_csv("~/opening-black-box/monitor-manager/experiments-plan.csv", delimiter=',')
     hosts_info = pd.read_csv("~/opening-black-box/monitor-manager/hosts-info.csv", delimiter=',')
 
     for index, row in experiments_plan.iterrows():
