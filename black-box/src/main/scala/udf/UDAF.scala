@@ -9,7 +9,7 @@ import java.math.BigDecimal
 
 object UDAF {
 
-  def countDistinctEnergy(df: Dataset[Measurement]): Dataset[DistinctDeviceIdCount] = {
+  def countDistinctDeviceId(df: Dataset[Measurement]): Dataset[DistinctDeviceIdCount] = {
     df.groupByKey(_.device_id)(Encoders.scalaInt)
       .agg(
         UDAF.distinctDeviceId.name("energyCount")

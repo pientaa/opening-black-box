@@ -46,7 +46,7 @@ object BlackBox {
         .as[Measurement](implicitly(ExpressionEncoder[Measurement]))
 
     UDAF
-      .countDistinctEnergy(inputDF)
+      .countDistinctDeviceId(inputDF)
       .toDF()
       .show()
   }
