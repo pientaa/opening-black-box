@@ -14,9 +14,9 @@ chmod 755 run_database.sh
 ./run_database.sh
 ```
 
-# Generate data locally
+# Setup TPC-DS
 
-## Setup
+## On local machine
 
 ### Install required packages
 ```
@@ -55,7 +55,7 @@ For example: "OS = LINUX".
 make
 ```
 
-## Generate data
+## Generate data locally
 The data is generated via `dsdgen`. 
 The data size can be specified with `-SCALE` option.
 The output directory (specified with `-DIR` option) must exist prior to running 
@@ -73,4 +73,12 @@ mkdir ./../../../data
 
 ```
 cp tpcds.sql ./../../..
+```
+
+## On a remote machine (via ssh)
+
+In working directory (`opening-black-box`) run below command.
+
+```bash
+database/prepare_tpc_ds.sh
 ```
