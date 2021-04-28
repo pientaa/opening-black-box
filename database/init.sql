@@ -133,16 +133,16 @@ create table task_metrics
 -- Contributors:
 -- Gradient Systems
 --
-create table dbgen_version
-(
-    dv_version      varchar(16),
-    dv_create_date  date,
-    dv_create_time  time,
-    dv_cmdline_args varchar(200)
-);
---
-copy dbgen_version(dv_version, dv_create_date, dv_create_time, dv_cmdline_args)
-    from '/var/lib/postgresql/data/dbgen_version.dat' delimiter ',' csv;
+-- create table dbgen_version
+-- (
+--     dv_version      varchar(16),
+--     dv_create_date  date,
+--     dv_create_time  time,
+--     dv_cmdline_args varchar(200)
+-- );
+-- --
+-- copy dbgen_version(dv_version, dv_create_date, dv_create_time, dv_cmdline_args)
+--     from '/var/lib/postgresql/data/dbgen_version.dat' delimiter ',' csv;
 
 create table customer_address
 (
