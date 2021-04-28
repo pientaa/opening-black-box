@@ -15,30 +15,36 @@ create table measurements_input
 );
 
 copy measurements_input (id, device_id, device_measurement_id, date_time, energy, outside_temperature, wind, humidity,
-                         sky_condition, day_length, day_type, season)
+    sky_condition, day_length, day_type, season)
     from '/var/lib/postgresql/data/measurements.csv' delimiter ';' csv header;
 
 --- ***** ---
-CREATE OR REPLACE FUNCTION generateTestTables(n integer)
+CREATE
+OR REPLACE FUNCTION generateTestTables(n integer)
     RETURNS VOID AS
 $$
 DECLARE
-    number_of_records integer := 10;
-    test_table_name   text    := 'test_input_';
+number_of_records integer := 10;
+    test_table_name
+text    := 'test_input_';
 BEGIN
     LOOP
-        test_table_name := test_table_name || number_of_records::text;
-        EXECUTE 'CREATE VIEW ' || test_table_name ||
-                ' AS SELECT * FROM measurements_input WHERE device_measurement_id <= ' || number_of_records;
-        number_of_records := number_of_records * 10;
-        test_table_name := 'test_input_';
-        EXIT WHEN number_of_records = n;
-    END LOOP;
+test_table_name := test_table_name || number_of_records::text;
+EXECUTE 'CREATE VIEW ' || test_table_name ||
+        ' AS SELECT * FROM measurements_input WHERE device_measurement_id <= ' || number_of_records;
+number_of_records
+:= number_of_records * 10;
+        test_table_name
+:= 'test_input_';
+        EXIT
+WHEN number_of_records = n;
+END LOOP;
 END
-$$ language plpgsql;
+$$
+language plpgsql;
 
 -- 1585135
--- +/- połowa
+-- +/- 1/2
 CREATE VIEW test_input_one_half AS
 SELECT *
 FROM measurements_input
