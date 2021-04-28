@@ -11,3 +11,4 @@ sshpass -f "password.env" ssh 20 "docker-compose -f  ~/opening-black-box/databas
 sshpass -f "password.env" ssh 20 "~/miniconda3/bin/conda env update --name system-monitor -f ~/opening-black-box/system-monitor/system-monitor-env.yml;"
 nohup sshpass -f "password.env" ssh 20 "~/miniconda3/envs/system-monitor/bin/python3 ~/opening-black-box/system-monitor/system-monitor.py ;" &
 nohup sshpass -f "password.env" ssh 20 "~/miniconda3/envs/system-monitor/bin/python3 ~/opening-black-box/monitor-manager/monitor-manager.py ;" &
+
