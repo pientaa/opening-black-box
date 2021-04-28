@@ -140,9 +140,9 @@ create table dbgen_version
     dv_create_time  time,
     dv_cmdline_args varchar(200)
 );
-
-copy dbgen_version(dv_version, dv_create_date, dv_create_time, dv_cmdline_args)
-    from '/var/lib/postgresql/data/dbgen_version.dat' delimiter '|';
+--
+-- copy dbgen_version(dv_version, dv_create_date, dv_create_time, dv_cmdline_args)
+--     from '/var/lib/postgresql/data/dbgen_version.dat' delimiter '|';
 
 create table customer_address
 (
