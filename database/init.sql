@@ -141,8 +141,8 @@ create table dbgen_version
     dv_cmdline_args varchar(200)
 );
 --
--- copy dbgen_version(dv_version, dv_create_date, dv_create_time, dv_cmdline_args)
---     from '/var/lib/postgresql/data/dbgen_version.dat' delimiter '|';
+copy dbgen_version(dv_version, dv_create_date, dv_create_time, dv_cmdline_args)
+    from '/var/lib/postgresql/data/dbgen_version.dat' format delimiter '|' csv;
 
 create table customer_address
 (
@@ -164,7 +164,7 @@ create table customer_address
 
 copy customer_address(ca_address_sk, ca_address_id, ca_street_number, ca_street_name, ca_street_type, ca_suite_number,
     ca_city, ca_county, ca_state, ca_zip, ca_country, ca_gmt_offset, ca_location_type)
-    from '/var/lib/postgresql/data/customer_address.dat' delimiter '|';
+    from '/var/lib/postgresql/data/customer_address.dat' delimiter '|' csv;
 
 create table customer_demographics
 (
