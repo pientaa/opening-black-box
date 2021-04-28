@@ -39,7 +39,7 @@ scripts/start_workers.sh
 ```
 
 ### Generate TPC-DS data
-Make sure that TPC-DS tool is available on master node, if not got to `database/README`. 
+Make sure that TPC-DS tool is available on master node - if not got to `database/README`. 
 Parametrize the script with desired data size.
 Default value is 1 GB. 
 TPC-DS enables to generate data from 1 GB to 10 TB.
