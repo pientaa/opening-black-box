@@ -4,8 +4,8 @@ branch=${1:-main}
 all_nodes=(192.168.55.20 192.168.55.11 192.168.55.12 192.168.55.13 192.168.55.14 192.168.55.15 192.168.55.16 192.168.55.17 192.168.55.18 192.168.55.19)
 
 path=$(pwd)
-#cd black-box
-#sbt 'set test in Test := {}' clean assembly
+cd black-box
+sbt 'set test in Test := {}' clean assembly
 cd $path
 cd scripts
 
