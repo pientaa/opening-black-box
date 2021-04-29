@@ -323,8 +323,8 @@ copy store(s_store_sk, s_store_id, s_rec_start_date,
     s_number_employees, s_floor_space, s_hours, s_manager,
     s_market_id, s_geography_class, s_market_desc, s_market_manager,
     s_division_id, s_division_name, s_company_id, s_company_name,
-    s_street_number, s_street_name, s_street_type, s_suite_number
-    s_city, s_county, s_state, s_zip
+    s_street_number, s_street_name, s_street_type, s_suite_number,
+    s_city, s_county, s_state, s_zip,
     s_country, s_gmt_offset, s_tax_precentage)
     from '/var/lib/postgresql/data/store.dat' delimiter '|' csv;
 
@@ -369,8 +369,8 @@ copy call_center(cc_call_center_sk, cc_call_center_id, cc_rec_start_date,
     cc_name, cc_class, cc_employees, cc_sq_ft,
     cc_hours, cc_manager, cc_mkt_id, cc_mkt_class,
     cc_mkt_desc, cc_market_manager, cc_division, cc_division_name,
-    cc_company, cc_company_name, cc_street_number, cc_street_name
-    cc_street_type, cc_suite_number, cc_city, cc_county
+    cc_company, cc_company_name, cc_street_number, cc_street_name,
+    cc_street_type, cc_suite_number, cc_city, cc_county,
     cc_state, cc_zip, cc_country, cc_gmt_offset, cc_tax_percentage)
     from '/var/lib/postgresql/data/call_center.dat' delimiter '|' csv;
 
