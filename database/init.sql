@@ -86,7 +86,7 @@ create table customer_address
 
 copy customer_address(ca_address_sk, ca_address_id, ca_street_number, ca_street_name, ca_street_type, ca_suite_number,
     ca_city, ca_county, ca_state, ca_zip, ca_country, ca_gmt_offset, ca_location_type)
-    from '/var/lib/postgresql/data/customer_address.dat' delimiter '|' csv encoding 'UTF16';
+    from '/var/lib/postgresql/data/customer_address.dat' delimiter '|' csv encoding 'LATIN1';
 
 create table customer_demographics
 (
@@ -104,7 +104,7 @@ create table customer_demographics
 
 copy customer_demographics(cd_demo_sk, cd_gender, cd_marital_status, cd_education_status, cd_purchase_estimate, cd_credit_rating,
     cd_dep_count, cd_dep_employed_count, cd_dep_college_count)
-    from '/var/lib/postgresql/data/customer_demographics.dat' delimiter '|' csv encoding 'UTF16';
+    from '/var/lib/postgresql/data/customer_demographics.dat' delimiter '|' csv encoding 'LATIN1';
 
 create table date_dim
 (
@@ -147,7 +147,7 @@ copy date_dim(d_date_sk, d_date_id, d_date,
     d_following_holiday, d_first_dom, d_last_dom,
     d_same_day_ly, d_same_day_lq, d_current_day,
     d_current_week, d_current_month, d_current_quarter, d_current_year)
-    from '/var/lib/postgresql/data/date_dim.dat' delimiter '|' csv encoding 'UTF16';
+    from '/var/lib/postgresql/data/date_dim.dat' delimiter '|' csv encoding 'LATIN1';
 
 
 create table warehouse
@@ -173,7 +173,7 @@ copy warehouse(w_warehouse_sk, w_warehouse_id, w_warehouse_name,
     w_warehouse_sq_ft, w_street_number, w_street_name,
     w_street_type, w_suite_number, w_city, w_county,
     w_state, w_zip, w_country, w_gmt_offset)
-    from '/var/lib/postgresql/data/warehouse.dat' delimiter '|' csv encoding 'UTF16';
+    from '/var/lib/postgresql/data/warehouse.dat' delimiter '|' csv encoding 'LATIN1';
 
 create table ship_mode
 (
@@ -188,7 +188,7 @@ create table ship_mode
 
 copy ship_mode(sm_ship_mode_sk, sm_ship_mode_id, sm_type,
     sm_code, sm_carrier, sm_contract)
-    from '/var/lib/postgresql/data/ship_mode.dat' delimiter '|' csv encoding 'UTF16';
+    from '/var/lib/postgresql/data/ship_mode.dat' delimiter '|' csv encoding 'LATIN1';
 
 create table time_dim
 (
@@ -208,7 +208,7 @@ create table time_dim
 copy time_dim(t_time_sk, t_time_id, t_time,
     t_hour, t_minute, t_second,
     t_am_pm, t_shift, t_sub_shift, t_meal_time)
-    from '/var/lib/postgresql/data/time_dim.dat' delimiter '|' csv encoding 'UTF16';
+    from '/var/lib/postgresql/data/time_dim.dat' delimiter '|' csv encoding 'LATIN1';
 
 create table reason
 (
@@ -219,7 +219,7 @@ create table reason
 );
 
 copy reason(r_reason_sk, r_reason_id, r_reason_desc)
-    from '/var/lib/postgresql/data/reason.dat' delimiter '|' csv encoding 'UTF16';
+    from '/var/lib/postgresql/data/reason.dat' delimiter '|' csv encoding 'LATIN1';
 
 create table income_band
 (
@@ -230,7 +230,7 @@ create table income_band
 );
 
 copy income_band(ib_income_band_sk, ib_lower_bound, ib_upper_bound)
-    from '/var/lib/postgresql/data/income_band.dat' delimiter '|' csv encoding 'UTF16';
+    from '/var/lib/postgresql/data/income_band.dat' delimiter '|' csv encoding 'LATIN1';
 
 create table item
 (
@@ -282,7 +282,7 @@ copy item(
     i_container ,
     i_manager_id ,
     i_product_name )
-    from '/var/lib/postgresql/data/item.dat' delimiter '|' csv encoding 'UTF16';
+    from '/var/lib/postgresql/data/item.dat' delimiter '|' csv encoding 'LATIN1';
 
 create table store
 (
@@ -326,7 +326,7 @@ copy store(s_store_sk, s_store_id, s_rec_start_date,
     s_street_number, s_street_name, s_street_type, s_suite_number,
     s_city, s_county, s_state, s_zip,
     s_country, s_gmt_offset, s_tax_precentage)
-    from '/var/lib/postgresql/data/store.dat' delimiter '|' csv encoding 'UTF16';
+    from '/var/lib/postgresql/data/store.dat' delimiter '|' csv encoding 'LATIN1';
 
 create table call_center
 (
@@ -372,7 +372,7 @@ copy call_center(cc_call_center_sk, cc_call_center_id, cc_rec_start_date,
     cc_company, cc_company_name, cc_street_number, cc_street_name,
     cc_street_type, cc_suite_number, cc_city, cc_county,
     cc_state, cc_zip, cc_country, cc_gmt_offset, cc_tax_percentage)
-    from '/var/lib/postgresql/data/call_center.dat' delimiter '|' csv encoding 'UTF16';
+    from '/var/lib/postgresql/data/call_center.dat' delimiter '|' csv encoding 'LATIN1';
 
 create table customer
 (
@@ -416,7 +416,7 @@ copy customer(
     c_login ,
     c_email_address ,
     c_last_review_date )
-    from '/var/lib/postgresql/data/customer.dat' delimiter '|' csv encoding 'UTF16';
+    from '/var/lib/postgresql/data/customer.dat' delimiter '|' csv encoding 'LATIN1';
 
 create table web_site
 (
@@ -476,7 +476,7 @@ copy web_site(
     web_country ,
     web_gmt_offset ,
     web_tax_percentage )
-    from '/var/lib/postgresql/data/web_site.dat' delimiter '|' csv encoding 'UTF16';
+    from '/var/lib/postgresql/data/web_site.dat' delimiter '|' csv encoding 'LATIN1';
 
 create table store_returns
 (
@@ -524,7 +524,7 @@ copy store_returns(
     sr_reversed_charge ,
     sr_store_credit ,
     sr_net_loss )
-    from '/var/lib/postgresql/data/store_returns.dat' delimiter '|' csv encoding 'UTF16';
+    from '/var/lib/postgresql/data/store_returns.dat' delimiter '|' csv encoding 'LATIN1';
 
 create table household_demographics
 (
@@ -542,7 +542,7 @@ copy household_demographics(
     hd_buy_potential ,
     hd_dep_count ,
     hd_vehicle_count )
-    from '/var/lib/postgresql/data/household_demographics.dat' delimiter '|' csv encoding 'UTF16';
+    from '/var/lib/postgresql/data/household_demographics.dat' delimiter '|' csv encoding 'LATIN1';
 
 create table web_page
 (
@@ -578,7 +578,7 @@ copy web_page(
     wp_link_count ,
     wp_image_count ,
     wp_max_ad_count )
-    from '/var/lib/postgresql/data/web_page.dat' delimiter '|' csv encoding 'UTF16';
+    from '/var/lib/postgresql/data/web_page.dat' delimiter '|' csv encoding 'LATIN1';
 
 create table promotion
 (
@@ -624,7 +624,7 @@ copy promotion(
     p_channel_details ,
     p_purpose ,
     p_discount_active )
-    from '/var/lib/postgresql/data/promotion.dat' delimiter '|' csv encoding 'UTF16';
+    from '/var/lib/postgresql/data/promotion.dat' delimiter '|' csv encoding 'LATIN1';
 
 create table catalog_page
 (
@@ -650,7 +650,7 @@ copy catalog_page(
     cp_catalog_page_number ,
     cp_description ,
     cp_type )
-    from '/var/lib/postgresql/data/catalog_page.dat' delimiter '|' csv encoding 'UTF16';
+    from '/var/lib/postgresql/data/catalog_page.dat' delimiter '|' csv encoding 'LATIN1';
 
 create table inventory
 (
@@ -666,7 +666,7 @@ copy inventory(
     inv_item_sk ,
     inv_warehouse_sk ,
     inv_quantity_on_hand )
-    from '/var/lib/postgresql/data/inventory.dat' delimiter '|' csv encoding 'UTF16';
+    from '/var/lib/postgresql/data/inventory.dat' delimiter '|' csv encoding 'LATIN1';
 
 create table catalog_returns
 (
@@ -728,7 +728,7 @@ copy catalog_returns(
     cr_reversed_charge ,
     cr_store_credit ,
     cr_net_loss )
-    from '/var/lib/postgresql/data/catalog_returns.dat' delimiter '|' csv encoding 'UTF16';
+    from '/var/lib/postgresql/data/catalog_returns.dat' delimiter '|' csv encoding 'LATIN1';
 
 create table web_returns
 (
@@ -784,7 +784,7 @@ copy web_returns(
     wr_reversed_charge ,
     wr_account_credit ,
     wr_net_loss )
-    from '/var/lib/postgresql/data/web_returns.dat' delimiter '|' csv encoding 'UTF16';
+    from '/var/lib/postgresql/data/web_returns.dat' delimiter '|' csv encoding 'LATIN1';
 
 create table web_sales
 (
@@ -860,7 +860,7 @@ copy web_sales(
     ws_net_paid_inc_ship ,
     ws_net_paid_inc_ship_tax ,
     ws_net_profit )
-    from '/var/lib/postgresql/data/web_sales.dat' delimiter '|' csv encoding 'UTF16';
+    from '/var/lib/postgresql/data/web_sales.dat' delimiter '|' csv encoding 'LATIN1';
 
 
 create table catalog_sales
@@ -937,7 +937,7 @@ copy catalog_sales(
     cs_net_paid_inc_ship ,
     cs_net_paid_inc_ship_tax ,
     cs_net_profit )
-    from '/var/lib/postgresql/data/catalog_sales.dat' delimiter '|' csv encoding 'UTF16';
+    from '/var/lib/postgresql/data/catalog_sales.dat' delimiter '|' csv encoding 'LATIN1';
 
 
 create table store_sales
@@ -992,4 +992,4 @@ copy store_sales(
     ss_net_paid ,
     ss_net_paid_inc_tax ,
     ss_net_profit )
-    from '/var/lib/postgresql/data/store_sales.dat' delimiter '|' csv encoding 'UTF16';
+    from '/var/lib/postgresql/data/store_sales.dat' delimiter '|' csv encoding 'LATIN1';
