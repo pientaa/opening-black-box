@@ -21,7 +21,8 @@ def start_experiments():
     hosts_info = pd.read_csv("opening-black-box/monitor-manager/hosts-info.csv", delimiter=',')
 
     for index, row in experiments_plan.iterrows():
-        system_monitor(hosts_info, row['function_name'])
+        for iteration in range(row["iterations"]):
+            system_monitor(hosts_info, row['function_name'])
 
     return "Monitoring finished", 200
 
