@@ -112,3 +112,5 @@ system-monitor/experiments
 
 experiments-plan.csv
 hosts-info.csv
+/scripts/password.env
+/database/tpc-data/

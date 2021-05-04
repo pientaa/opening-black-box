@@ -1,16 +1,19 @@
 # Run database
 
-## Get data
+## Get data locally
+
+If data is already generated on cluster (TPC-DS should be set up and used on cluster before), you can copy it to local
+with following command. (This script can take a while)
 
 ```
-chmod 755 get_data.sh
-./get_data.sh
+scripts/get_data.sh
 ```
 
 ## Run database
+
 Should be run on a separate node
+
 ```
-chmod 755 run_database.sh
 ./run_database.sh
 ```
 
@@ -19,6 +22,7 @@ chmod 755 run_database.sh
 ## On local machine
 
 ### Install required packages
+
 ```
 sudo apt install gcc make flex bison unzip
 ```
@@ -39,29 +43,33 @@ unzip <file name> -d tpc-ds
 ```
 
 ### Change `makefile`
+
 Go to `tools` directory
+
 ```
 cd tpc-ds/<version_dir>/tools
 ```
+
 Copy `Makefile.suite` to `makefile`
+
 ```
 cp Makefile.suite makefile
 ```
-Edit `makefile` line containing "OS = ". 
-For example: "OS = LINUX".
+
+Edit `makefile` line containing "OS = ". For example: "OS = LINUX".
 
 ## Compile binaries
+
 ```
 make
 ```
 
 ## Generate data locally
-The data is generated via `dsdgen`. 
-The data size can be specified with `-SCALE` option.
-The output directory (specified with `-DIR` option) must exist prior to running 
-   
-Below commands create a directory `database/data` and generate 1 GB of data.
-Run it in `tools` directory.
+
+The data is generated via `dsdgen`. The data size can be specified with `-SCALE` option. The output directory (specified
+with `-DIR` option) must exist prior to running
+
+Below commands create a directory `database/data` and generate 1 GB of data. Run it in `tools` directory.
 
 ```
 mkdir ./../../../data
@@ -69,6 +77,7 @@ mkdir ./../../../data
 ```
 
 ## Copy schema file
+
 `tools/tpcds.sql` file contains the schema of the generated data, which can be used to create tables in a database.
 
 ```
