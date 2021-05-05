@@ -34,6 +34,9 @@ class MonitorThread(threading.Thread):
         path = "./opening-black-box/experiments/" + self.function_name
         try:
             os.mkdir("./opening-black-box/experiments")
+        except:
+            logging.warning("Directory already exists")
+        try:
             os.mkdir(path)
         except:
             logging.warning("Directory already exists")

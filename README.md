@@ -146,12 +146,19 @@ Make sure you have _hosts_info.csv_ file in working directory.
 
 
 ### Create experiments plan csv file
-| function_name              | dataset_size   |
-|:--------------------------:| ------------:|
-| averageTemperatureByDeviceIdSeason  | input_100  |
+For example:
 
-### Run manager
+| function_name              | dataset_size   | iterations |
+|:--------------------------:| ------------:|  ------------:|
+| countDistinctTicketNumber  | 1GB  | 25 |
 
-```python
-python monitor-manager/monitor-manager.py
+### Check if monitor-manager is running
+```bash
+curl --location --request GET 'http://192.168.55.20:8888/'
+```
+
+### Start experiments
+
+```bash
+curl --location --request POST 'http://192.168.55.20:8888/experiments'
 ```
