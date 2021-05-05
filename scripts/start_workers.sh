@@ -119,7 +119,7 @@ function run_system_monitor() {
     done
 }
 
-function create_hosts_info_cs() {
+function create_hosts_info_csv() {
   hosts_filename="./../monitor-manager/hosts-info.csv"
   rm ${hosts_filename}
   echo "host_ip,container_name" >> $hosts_filename
@@ -146,4 +146,4 @@ prepare_composes
 run_containers
 run_system_monitor
 
-create_hosts_info_cs
+create_hosts_info_csv

@@ -12,7 +12,10 @@ exec < ./../monitor-manager/hosts-info.csv
 read header
 while IFS=, read host_ip container_name; do
   node_filename="${host_ip:(-2)}_${filename}"
-  sshpass -f "password.env" ssh magisterka@${host_ip} "cd ~/opening-black-box/experiments/ ; zip -r -D ${node_filename} . ; mv ./${node_filename} ./../../"
+  sshpass -f "password.env" ssh -n magisterka@${host_ip} "cd ~/opening-black-box/experiments/ ; zip -r -D ${node_filename} . ; mv ./${node_filename} ./../../ "
+  echo "${host_ip} data zipped"
   sshpass -f "password.env" scp magisterka@${host_ip}:~/${node_filename} ${path}/experiments_data
-  sshpass -f "password.env" ssh magisterka@${host_ip} "rm ${node_filename} ; rm -rf ~/opening-black-box/experiments/* ;"
+  echo "${host_ip} data copied"
+  sshpass -f "password.env" ssh -n magisterka@${host_ip} "rm ${node_filename} ;"
+#  sshpass -f "password.env" ssh magisterka@${host_ip} "rm ${node_filename} ; rm -rf ~/opening-black-box/experiments/* ;"
 done
