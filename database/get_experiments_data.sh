@@ -8,6 +8,11 @@ filename="experiments_data_${timestamp}.zip"
 mkdir experiments_data
 cd scripts
 
-sshpass -f "password.env" ssh 20 "cd ~/opening-black-box/experiments/ ; zip -r -D ${filename} . ; mv ./${filename} ./../../"
-sshpass -f "password.env" scp magisterka@192.168.55.20:~/${filename} ${path}/experiments_data
-sshpass -f "password.env" ssh 20 "rm ${filename} ; rm -rf ~/opening-black-box/experiments/* ;"
+exec < ./../monitor-manager/hosts-info.csv
+read header
+while IFS=, read host_ip container_name; do
+  node_filename="${host_ip:(-2)}_${filename}"
+  sshpass -f "password.env" ssh magisterka@${host_ip} "cd ~/opening-black-box/experiments/ ; zip -r -D ${node_filename} . ; mv ./${node_filename} ./../../"
+  sshpass -f "password.env" scp magisterka@${host_ip}:~/${node_filename} ${path}/experiments_data
+  sshpass -f "password.env" ssh magisterka@${host_ip} "rm ${node_filename} ; rm -rf ~/opening-black-box/experiments/* ;"
+done
