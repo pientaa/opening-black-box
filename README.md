@@ -146,7 +146,7 @@ Make sure you have _hosts_info.csv_ file in working directory.
 
 
 ### Create experiments plan csv file
-| function_name              | table_name   |
+| function_name              | dataset_size   |
 |:--------------------------:| ------------:|
 | averageTemperatureByDeviceIdSeason  | input_100  |
 
