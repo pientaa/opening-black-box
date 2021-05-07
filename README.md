@@ -137,7 +137,7 @@ Inspect docker network (`spark-network`) on the master node and make sure that i
 
 ## Run experiments
 
-Make sure you have _hosts_info.csv_ file in `monitor-manager` directory. File should end with an empty line.
+Make sure you have _hosts_info.csv_ file in `monitor-manager` directory. The file should end with an empty line.
 
 | host_ip              | container_name   |
 |:--------------------------:| ------------:|
