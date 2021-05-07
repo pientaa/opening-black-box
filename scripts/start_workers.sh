@@ -119,6 +119,19 @@ function run_system_monitor() {
     done
 }
 
+function create_hosts_info_csv() {
+  hosts_filename="./../monitor-manager/hosts-info.csv"
+  rm ${hosts_filename}
+  echo "host_ip,container_name" >> $hosts_filename
+  echo "192.168.55.20,spark-master" >> ${hosts_filename}
+  for i in "${!available_workers[@]}"
+  do
+    echo "${available_workers[$i]},spark-worker-$(($i +1))" >> ${hosts_filename}
+  done
+}
+
+
+
 initial_path=$(pwd)
 echo $initial_path
 
@@ -132,3 +145,5 @@ echo 'All nodes: '${all_nodes[@]}
 prepare_composes
 run_containers
 run_system_monitor
+
+create_hosts_info_csv
