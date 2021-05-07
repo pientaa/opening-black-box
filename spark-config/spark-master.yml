@@ -26,7 +26,6 @@ services:
       - gateway-network
       - spark-network
 
-
 networks:
   spark-network:
     external: true
