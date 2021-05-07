@@ -1,2 +1,2 @@
-function_name,table_name,iterations
-averageTemperatureByDeviceIdSeason,input_100,2
+function_name,dataset_size,iterations
+countDistinctTicketNumber,1GB,25
