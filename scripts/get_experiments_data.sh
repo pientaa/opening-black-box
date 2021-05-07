@@ -2,7 +2,6 @@
 #Use from main directory (opening-black-box)
 path=$(pwd)
 filename="experiments_data.zip"
-#dockr -exec -it psql -d black-box -t -A -F"," -c "select * from stage_metrics" > stage_metrics_csv
 rm -rf experiments_data
 mkdir experiments_data
 cd scripts
