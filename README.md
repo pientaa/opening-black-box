@@ -39,11 +39,13 @@ scripts/start_workers.sh
 ```
 
 ### Generate TPC-DS data
-Make sure that TPC-DS tool is available on master node - if not got to [`database/README`](https://github.com/pientaa/opening-black-box/tree/tpc-ds/database#setup-tpc-ds). 
 
-Parametrize the script with desired data size.
-Default value is 1 GB. 
-TPC-DS enables to generate data from 1 GB to 10 TB.
+Make sure that TPC-DS tool is available on master node - if not got
+to [`database/README`](https://github.com/pientaa/opening-black-box/tree/tpc-ds/database#setup-tpc-ds).
+
+Parametrize the script with desired data size. Default value is 1 GB. TPC-DS enables to generate data from 1 GB to 10
+TB.
+
 ```bash
 database/generate_tpc_ds.sh <data_size_in_GB>
 ```
@@ -135,7 +137,7 @@ Inspect docker network (`spark-network`) on the master node and make sure that i
 
 ## Run experiments
 
-Make sure you have _hosts_info.csv_ file in working directory.
+Make sure you have _hosts_info.csv_ file in `monitor-manager` directory. File should end with an empty line.
 
 | host_ip              | container_name   |
 |:--------------------------:| ------------:|
@@ -144,8 +146,8 @@ Make sure you have _hosts_info.csv_ file in working directory.
 | 192.168.55.12  | spark-worker-2  |
 | 192.168.55.13  | spark-worker-3  |
 
-
 ### Create experiments plan csv file
+
 For example:
 
 | function_name              | dataset_size   | iterations |
@@ -153,6 +155,7 @@ For example:
 | countDistinctTicketNumber  | 1GB  | 25 |
 
 ### Check if monitor-manager is running
+
 ```bash
 curl --location --request GET 'http://192.168.55.20:8888/'
 ```
@@ -161,4 +164,10 @@ curl --location --request GET 'http://192.168.55.20:8888/'
 
 ```bash
 curl --location --request POST 'http://192.168.55.20:8888/experiments'
+```
+
+### Get experiments data
+
+```bash
+scripts/get_experiments_data.sh 
 ```
