@@ -1,0 +1,40 @@
+package udf.model
+
+import java.math.BigDecimal
+
+case class CatalogSales(
+    cs_sold_date_sk: Integer,
+    cs_sold_time_sk: Integer,
+    cs_ship_date_sk: Integer,
+    cs_bill_customer_sk: Integer,
+    cs_bill_cdemo_sk: Integer,
+    cs_bill_hdemo_sk: Integer,
+    cs_bill_addr_sk: Integer,
+    cs_ship_customer_sk: Integer,
+    cs_ship_cdemo_sk: Integer,
+    cs_ship_hdemo_sk: Integer,
+    cs_ship_addr_sk: Integer,
+    cs_call_center_sk: Integer,
+    cs_catalog_page_sk: Integer,
+    cs_ship_mode_sk: Integer,
+    cs_warehouse_sk: Integer,
+    cs_item_sk: Integer,
+    cs_promo_sk: Integer,
+    cs_order_number: Integer,
+    cs_quantity: Integer,
+    cs_wholesale_cost: BigDecimal,
+    cs_list_price: BigDecimal,
+    cs_sales_price: BigDecimal,
+    cs_ext_discount_amt: BigDecimal,
+    cs_ext_sales_price: BigDecimal,
+    cs_ext_wholesale_cost: BigDecimal,
+    cs_ext_list_price: BigDecimal,
+    cs_ext_tax: BigDecimal,
+    cs_coupon_amt: BigDecimal,
+    cs_ext_ship_cost: BigDecimal,
+    cs_net_paid: BigDecimal,
+    cs_net_paid_inc_tax: BigDecimal,
+    cs_net_paid_inc_ship: BigDecimal,
+    cs_net_paid_inc_ship_tax: BigDecimal,
+    cs_net_profit: BigDecimal
+)

@@ -3,7 +3,7 @@ import org.apache.spark.sql.catalyst.encoders.ExpressionEncoder
 import org.apache.spark.sql.{Dataset, SparkSession}
 import udf.Consts.{FILTER_FROM_MONDAY_TO_THURSDAY, LOCALHOST}
 import udf._
-import udf.model.StoreSales
+import udf.model.Customer
 
 import java.util.Properties
 
@@ -40,13 +40,23 @@ object BlackBox {
     val udfName = if (args.length > 0) args(1) else FILTER_FROM_MONDAY_TO_THURSDAY
     functionName = udfName
 
-    val inputDF: Dataset[StoreSales] =
+//    val storeSales: Dataset[StoreSales] =
+//      ss.read
+//        .jdbc(url, s"public.store_sales", connectionProperties)
+//        .as[StoreSales](implicitly(ExpressionEncoder[StoreSales]))
+//
+//    UDAF
+//      .countDistinctTicketNumber(storeSales)
+//      .toDF()
+//      .show()
+
+    val customers: Dataset[Customer] =
       ss.read
-        .jdbc(url, s"public.store_sales", connectionProperties)
-        .as[StoreSales](implicitly(ExpressionEncoder[StoreSales]))
+        .jdbc(url, s"public.customer", connectionProperties)
+        .as[Customer](implicitly(ExpressionEncoder[Customer]))
 
     UDAF
-      .countDistinctTicketNumber(inputDF)
+      .foo(customers)
       .toDF()
       .show()
   }
