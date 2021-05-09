@@ -162,3 +162,9 @@ curl --location --request GET 'http://192.168.55.20:8888/'
 ```bash
 curl --location --request POST 'http://192.168.55.20:8888/experiments'
 ```
+
+## Data preprocessing
+To calculate mean value of CPU, RAM and duration of all experiment iterations (per node) run `notebook/prepare_data.ipynb`.
+
+This notebook creates individual plots for all iterations (per node) and plots for the mean values of all iterations.
+Calculated mean RAM and CPU values, with a new column containing experiment mean duration time are stored in new file `experiment_mean_data.csv`
