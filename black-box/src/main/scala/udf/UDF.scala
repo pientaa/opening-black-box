@@ -3,12 +3,10 @@ package udf
 import org.apache.spark.sql.expressions.UserDefinedFunction
 import org.apache.spark.sql.functions.udf
 
+import java.math.BigDecimal
 import java.sql.Timestamp
 import java.time._
 import java.time.format._
-
-import java.math.BigDecimal
-
 
 object UDF {
   val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
@@ -28,5 +26,6 @@ object UDF {
 
   val isYearAfter2000: UserDefinedFunction = udf((year: Integer) => year > 2000)
 
-  val isProfitNegative: UserDefinedFunction = udf((profit: BigDecimal) => profit < 0)
+  val isProfitNegative: UserDefinedFunction =
+    udf((profit: BigDecimal) => profit.compareTo(BigDecimal.valueOf(0)) < 0)
 }
