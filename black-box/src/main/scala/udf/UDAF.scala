@@ -9,15 +9,6 @@ import java.math.BigDecimal
 
 object UDAF {
 
-//  def countCatalogSalesPerYearAfter2000(df: Dataset[CS_soldDate_DD_year]): Dataset[CatalogSalesPerYear] = {
-//    df
-//      .
-//      .groupByKey(_.d_year)(Encoders.INT)
-//      .agg(
-//        UDAF.
-//      )
-//  }
-
   def countDistinctTicketNumber(df: Dataset[StoreSales]): Dataset[DistinctTicketNumberCount] = {
     df.groupByKey(_.ss_ticket_number)(Encoders.INT)
       .agg(
