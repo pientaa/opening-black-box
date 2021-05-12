@@ -1,9 +1,9 @@
 import org.apache.log4j.LogManager
 import org.apache.spark.sql.catalyst.encoders.ExpressionEncoder
 import org.apache.spark.sql.{Dataset, SparkSession}
-import udf.Consts.{FILTER_FROM_MONDAY_TO_THURSDAY, LOCALHOST}
-import udf._
-import udf.model.Customer
+import udf.Consts.{FILTER_CATALOG_SALES_WHERE_PROFIT_NEGATIVE, LOCALHOST}
+import udf.UDFFactory
+import udf.model.{CatalogSales, DateDim, StoreSales}
 
 import java.util.Properties
 
@@ -37,27 +37,32 @@ object BlackBox {
     host = if (args.length > -1) args(0) else LOCALHOST
     url = s"jdbc:postgresql://$host:5432/black-box"
 
-    val udfName = if (args.length > 0) args(1) else FILTER_FROM_MONDAY_TO_THURSDAY
+    val udfName = if (args.length > 0) args(1) else FILTER_CATALOG_SALES_WHERE_PROFIT_NEGATIVE
     functionName = udfName
 
-//    val storeSales: Dataset[StoreSales] =
-//      ss.read
-//        .jdbc(url, s"public.store_sales", connectionProperties)
-//        .as[StoreSales](implicitly(ExpressionEncoder[StoreSales]))
-//
-//    UDAF
-//      .countDistinctTicketNumber(storeSales)
-//      .toDF()
-//      .show()
-
-    val customers: Dataset[Customer] =
+    val storeSales: Dataset[StoreSales] =
       ss.read
-        .jdbc(url, s"public.customer", connectionProperties)
-        .as[Customer](implicitly(ExpressionEncoder[Customer]))
+        .jdbc(url, s"public.store_sales", connectionProperties)
+        .as[StoreSales](implicitly(ExpressionEncoder[StoreSales]))
 
-    UDAF
-      .foo(customers)
-      .toDF()
-      .show()
+    val catalogSales: Dataset[CatalogSales] =
+      ss.read
+        .jdbc(url, s"public.catalog_sales", connectionProperties)
+        .as[CatalogSales](implicitly(ExpressionEncoder[CatalogSales]))
+
+    val dateDim: Dataset[DateDim] =
+      ss.read
+        .jdbc(url, s"public.date_dim", connectionProperties)
+        .as[DateDim](implicitly(ExpressionEncoder[DateDim]))
+
+    val udfFactory =
+      new UDFFactory(storeSales = storeSales, catalogSales = catalogSales, dateDim = dateDim)
+
+    udfFactory
+      .select(functionName)
+      .write
+      .mode("overwrite")
+      .format("noop")
+      .save()
   }
 }

@@ -7,13 +7,8 @@ import java.sql.Timestamp
 import java.time._
 import java.time.format._
 
-case class Foo(
-    c_birth_country: String,
-    c_salutation: String,
-    c_last_name: String,
-    c_first_name: String,
-    c_customer_id: String
-)
+import java.math.BigDecimal
+
 
 object UDF {
   val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
@@ -30,4 +25,8 @@ object UDF {
   val durationBetween: UserDefinedFunction = udf((start: Timestamp, end: Timestamp) => {
     Duration.between(end.toLocalDateTime, start.toLocalDateTime).getSeconds
   })
+
+  val isYearAfter2000: UserDefinedFunction = udf((year: Integer) => year > 2000)
+
+  val isProfitNegative: UserDefinedFunction = udf((profit: BigDecimal) => profit < 0)
 }

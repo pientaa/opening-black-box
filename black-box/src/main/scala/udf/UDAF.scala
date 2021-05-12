@@ -1,14 +1,22 @@
 package udf
 
 import _root_.udf.model._
-import org.apache.spark.sql.catalyst.encoders.ExpressionEncoder
-import org.apache.spark.sql.expressions.{Aggregator, UserDefinedFunction}
-import org.apache.spark.sql.functions.{col, collect_set, struct, udf}
 import org.apache.spark.sql._
+import org.apache.spark.sql.catalyst.encoders.ExpressionEncoder
+import org.apache.spark.sql.expressions.Aggregator
 
 import java.math.BigDecimal
 
 object UDAF {
+
+//  def countCatalogSalesPerYearAfter2000(df: Dataset[CS_soldDate_DD_year]): Dataset[CatalogSalesPerYear] = {
+//    df
+//      .
+//      .groupByKey(_.d_year)(Encoders.INT)
+//      .agg(
+//        UDAF.
+//      )
+//  }
 
   def countDistinctTicketNumber(df: Dataset[StoreSales]): Dataset[DistinctTicketNumberCount] = {
     df.groupByKey(_.ss_ticket_number)(Encoders.INT)
@@ -29,54 +37,6 @@ object UDAF {
         case (energy: Int, count: Long) => DistinctDeviceIdCount(energy, count)
       }(ExpressionEncoder[DistinctDeviceIdCount])
   }
-
-  val sortCustomerByBirthCountryAndLastNameAndFirstName: UserDefinedFunction =
-    udf((customer_list: Seq[Row]) => {
-      customer_list
-        .map {
-          case Row(
-                c_birth_country: String,
-                c_salutation: String,
-                c_last_name: String,
-                c_first_name: String,
-                c_customer_id: String
-              ) =>
-            Foo(
-              c_birth_country,
-              c_salutation,
-              c_last_name,
-              c_first_name,
-              c_customer_id
-            )
-        }
-        .sortBy(r => (r.c_birth_country, r.c_last_name, r.c_first_name))
-    })
-
-  def foo(df: Dataset[Customer]) = {
-    df
-      .agg(
-        collect_set(
-          struct("c_birth_country", "c_salutation", "c_last_name", "c_first_name", "c_customer_id")
-        ).as("customer_list")
-      )
-      .select(sortCustomerByBirthCountryAndLastNameAndFirstName(col("customer_list")))
-  }
-
-//  SELECT c_birth_country, c_salutation, c_last_name, c_first_name, c_customer_id
-  //  FROM customer
-  //  ORDER BY c_birth_country, c_last_name, c_first_name;
-
-  //  SELECT COUNT(*) FROM (
-  //  SELECT cs_sold_date_sk, cs_bill_customer_sk, cs_item_sk
-  //  FROM catalog_sales
-  //  JOIN date_dim ON (cs_sold_date_sk=d_date_sk)
-  //  WHERE d_year=1999 AND d_dom <= 4
-  //  INTERSECT
-  //  SELECT ss_sold_date_sk, ss_customer_sk, ss_item_sk
-  //  FROM store_sales
-  //  JOIN date_dim ON (ss_sold_date_sk=d_date_sk)
-  //  WHERE d_year=1999 AND d_dom <= 4
-  //) foo;
 
   val distinctTicketNumber: TypedColumn[StoreSales, Long] =
     new Aggregator[StoreSales, Set[Integer], Long] {
