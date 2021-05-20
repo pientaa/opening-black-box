@@ -18,12 +18,8 @@ class UDFFactory(
 
       case FILTER_CATALOG_SALES_WHERE_YEAR_AFTER_2000 =>
         catalogSales
-          .join(
-            dateDim,
-            col("cs_sold_date_sk") === col("d_date_sk"),
-            "rightouter"
-          )
-          .select(col("d_date_sk"), col("d_year"))
+          .join(dateDim, col("cs_sold_date_sk") === col("d_date_sk"))
+          .select("cs_sold_date_sk", "d_date_sk", "d_year")
           .where(UDF.isYearAfter2000(col("d_year")))
 
       case FILTER_CATALOG_SALES_WHERE_PROFIT_NEGATIVE =>
