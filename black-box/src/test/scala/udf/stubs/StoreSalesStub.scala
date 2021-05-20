@@ -47,7 +47,7 @@ object StoreSalesStub {
     BigDecimal.valueOf(rnd.nextFloat() * 15.0)
   }
 
-  private def randomInteger(max: Int = 5000) = {
+  private def randomInteger(max: Integer = 5000): Integer = {
     1 + rnd.nextInt(max)
   }
 }
