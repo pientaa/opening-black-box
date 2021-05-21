@@ -16,6 +16,15 @@ object CatalogSalesStub {
     nextCatalogSales(cs_sold_date_sk = 5, cs_net_profit = BigDecimal.valueOf(45.0))
   )
 
+  val sixCatalogSales = Seq(
+    nextCatalogSales(cs_sold_date_sk = 1, cs_net_profit = BigDecimal.valueOf(-20.0)),
+    nextCatalogSales(cs_sold_date_sk = 2, cs_net_profit = BigDecimal.valueOf(-15.0)),
+    nextCatalogSales(cs_sold_date_sk = 3, cs_net_profit = BigDecimal.valueOf(20.0)),
+    nextCatalogSales(cs_sold_date_sk = 4, cs_net_profit = BigDecimal.valueOf(30.0)),
+    nextCatalogSales(cs_sold_date_sk = 5, cs_net_profit = BigDecimal.valueOf(45.0)),
+    nextCatalogSales(cs_sold_date_sk = 6, cs_net_profit = BigDecimal.valueOf(-45.0))
+  )
+
   private def nextCatalogSales(
       cs_sold_date_sk: Integer = randomInteger(),
       cs_net_profit: BigDecimal = randomBigDecimal()

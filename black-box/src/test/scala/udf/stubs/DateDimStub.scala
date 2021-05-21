@@ -18,6 +18,15 @@ object DateDimStub {
     nextDateDim(d_date_sk = 5, 2005)
   )
 
+  val sixDateDims = Seq(
+    nextDateDim(d_date_sk = 1, 1999),
+    nextDateDim(d_date_sk = 2, 1998),
+    nextDateDim(d_date_sk = 3, 2000),
+    nextDateDim(d_date_sk = 4, 2004),
+    nextDateDim(d_date_sk = 5, 2005),
+    nextDateDim(d_date_sk = 6, 2005)
+  )
+
   private def nextDateDim(d_date_sk: Integer = randomInteger(), d_year: Integer = randomInteger()) =
     DateDim(
       d_date_sk = d_date_sk,
