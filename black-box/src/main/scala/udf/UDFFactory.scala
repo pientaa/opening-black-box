@@ -2,7 +2,7 @@ package udf
 
 import org.apache.spark.sql.Dataset
 import org.apache.spark.sql.functions.col
-import udf.Consts.{COUNT_DISTINCT_TICKET_NUMBER, FILTER_CATALOG_SALES_WHERE_PROFIT_NEGATIVE, FILTER_CATALOG_SALES_WHERE_PROFIT_NEGATIVE_AND_YEAR_AFTER_2000, FILTER_CATALOG_SALES_WHERE_YEAR_AFTER_2000}
+import udf.Consts._
 import udf.model.{CatalogSales, DateDim, StoreSales}
 
 class UDFFactory(
@@ -15,6 +15,9 @@ class UDFFactory(
     name match {
       case COUNT_DISTINCT_TICKET_NUMBER =>
         UDAF.countDistinctTicketNumber(storeSales)
+
+      case MIN_WHOLE_SALE_COST_GROUPED_BY_SOLD_DATE =>
+        UDAF.min_cs_wholesale_cost(catalogSales)
 
       case FILTER_CATALOG_SALES_WHERE_YEAR_AFTER_2000 =>
         catalogSales

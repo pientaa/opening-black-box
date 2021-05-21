@@ -8,6 +8,59 @@ object CatalogSalesStub {
 
   private val rnd = new scala.util.Random
 
+  val tenCatalogSales = Seq(
+    nextCatalogSales(
+      cs_sold_date_sk = 1,
+      cs_quantity = 200,
+      cs_wholesale_cost = BigDecimal.valueOf(10.0)
+    ),
+    nextCatalogSales(
+      cs_sold_date_sk = 1,
+      cs_quantity = 200,
+      cs_wholesale_cost = BigDecimal.valueOf(20.0)
+    ),
+    nextCatalogSales(
+      cs_sold_date_sk = 1,
+      cs_quantity = 100,
+      cs_wholesale_cost = BigDecimal.valueOf(30.0)
+    ),
+    nextCatalogSales(
+      cs_sold_date_sk = 2,
+      cs_quantity = 200,
+      cs_wholesale_cost = BigDecimal.valueOf(40.0)
+    ),
+    nextCatalogSales(
+      cs_sold_date_sk = 2,
+      cs_quantity = 200,
+      cs_wholesale_cost = BigDecimal.valueOf(50.0)
+    ),
+    nextCatalogSales(
+      cs_sold_date_sk = 2,
+      cs_quantity = 100,
+      cs_wholesale_cost = BigDecimal.valueOf(60.0)
+    ),
+    nextCatalogSales(
+      cs_sold_date_sk = 3,
+      cs_quantity = 200,
+      cs_wholesale_cost = BigDecimal.valueOf(70.0)
+    ),
+    nextCatalogSales(
+      cs_sold_date_sk = 3,
+      cs_quantity = 200,
+      cs_wholesale_cost = BigDecimal.valueOf(80.0)
+    ),
+    nextCatalogSales(
+      cs_sold_date_sk = 3,
+      cs_quantity = 100,
+      cs_wholesale_cost = BigDecimal.valueOf(90.0)
+    ),
+    nextCatalogSales(
+      cs_sold_date_sk = 3,
+      cs_quantity = 100,
+      cs_wholesale_cost = BigDecimal.valueOf(100.0)
+    )
+  )
+
   val fiveCatalogSales = Seq(
     nextCatalogSales(cs_sold_date_sk = 1, cs_net_profit = BigDecimal.valueOf(-20.0)),
     nextCatalogSales(cs_sold_date_sk = 2, cs_net_profit = BigDecimal.valueOf(-15.0)),
@@ -27,7 +80,9 @@ object CatalogSalesStub {
 
   private def nextCatalogSales(
       cs_sold_date_sk: Integer = randomInteger(),
-      cs_net_profit: BigDecimal = randomBigDecimal()
+      cs_net_profit: BigDecimal = randomBigDecimal(),
+      cs_quantity: Integer = randomInteger(),
+      cs_wholesale_cost: BigDecimal = randomBigDecimal()
   ) =
     CatalogSales(
       cs_sold_date_sk = cs_sold_date_sk,
@@ -48,8 +103,8 @@ object CatalogSalesStub {
       cs_item_sk = randomInteger(),
       cs_promo_sk = randomInteger(),
       cs_order_number = randomInteger(),
-      cs_quantity = randomInteger(),
-      cs_wholesale_cost = randomBigDecimal(),
+      cs_quantity = cs_quantity,
+      cs_wholesale_cost = cs_wholesale_cost,
       cs_list_price = randomBigDecimal(),
       cs_sales_price = randomBigDecimal(),
       cs_ext_discount_amt = randomBigDecimal(),
