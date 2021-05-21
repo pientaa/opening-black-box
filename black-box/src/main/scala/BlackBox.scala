@@ -60,9 +60,11 @@ object BlackBox {
 
     udfFactory
       .select(functionName)
-      .write
-      .mode("overwrite")
-      .format("noop")
-      .save()
+      .explain()
+//      .show()
+//      .write
+//      .mode("overwrite")
+//      .format("noop")
+//      .save()
   }
 }
