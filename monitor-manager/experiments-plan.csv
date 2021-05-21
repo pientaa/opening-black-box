@@ -1,4 +1,2 @@
 function_name,dataset_size,iterations
-filterCatalogSalesWhereProfitNegative,1GB,25
-filterCatalogSalesWhereYearAfter2000,1GB,25
-countDistinctTicketNumber,1GB,25
+filterCatalogSalesWhereProfitNegativeAndYearAfter2000,1GB,25
