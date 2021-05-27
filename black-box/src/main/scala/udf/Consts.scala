@@ -8,4 +8,5 @@ object Consts {
   val FILTER_CATALOG_SALES_WHERE_PROFIT_NEGATIVE_AND_YEAR_AFTER_2000 =
     "filterCatalogSalesWhereProfitNegativeAndYearAfter2000"
   val MIN_WHOLE_SALE_COST_GROUPED_BY_SOLD_DATE = "minWholeSaleCostGroupedBySoldDate"
+  val MAX_WHOLE_SALE_COST_GROUPED_BY_SOLD_DATE = "maxWholeSaleCostGroupedBySoldDate"
 }

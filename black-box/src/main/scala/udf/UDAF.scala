@@ -8,7 +8,32 @@ import org.apache.spark.sql.expressions.Aggregator
 import java.math.BigDecimal
 
 object UDAF {
-  def min_cs_wholesale_cost(df: Dataset[CatalogSales]): Dataset[DistinctSoldDate_WholeSaleMin] = {
+
+  def max_cs_wholesale_cost(
+      df: Dataset[CatalogSales]
+  ): Dataset[CS_WholeSaleMaxGroupedBySoldDateAndQuantity] = {
+    df.groupByKey(catalogSales => (catalogSales.cs_sold_date_sk, catalogSales.cs_quantity))(
+        ExpressionEncoder[(Integer, Integer)]
+      )
+      .agg(
+        UDAF.max_cs_wholesale_cost.name("max_cs_wholesale_cost")
+      )
+      .map {
+        case (
+              (cs_sold_date_sk: Integer, cs_quantity: Integer),
+              max_cs_wholesale_cost: BigDecimal
+            ) =>
+          CS_WholeSaleMaxGroupedBySoldDateAndQuantity(
+            cs_sold_date_sk = cs_sold_date_sk,
+            cs_quantity = cs_quantity,
+            max_cs_wholesale_cost = max_cs_wholesale_cost
+          )
+      }(ExpressionEncoder[CS_WholeSaleMaxGroupedBySoldDateAndQuantity])
+  }
+
+  def min_cs_wholesale_cost(
+      df: Dataset[CatalogSales]
+  ): Dataset[CS_WholeSaleMinGroupedBySoldDateAndQuantity] = {
     df.groupByKey(catalogSales => (catalogSales.cs_sold_date_sk, catalogSales.cs_quantity))(
         ExpressionEncoder[(Integer, Integer)]
       )
@@ -20,12 +45,12 @@ object UDAF {
               (cs_sold_date_sk: Integer, cs_quantity: Integer),
               min_cs_wholesale_cost: BigDecimal
             ) =>
-          DistinctSoldDate_WholeSaleMin(
+          CS_WholeSaleMinGroupedBySoldDateAndQuantity(
             cs_sold_date_sk = cs_sold_date_sk,
             cs_quantity = cs_quantity,
             min_cs_wholesale_cost = min_cs_wholesale_cost
           )
-      }(ExpressionEncoder[DistinctSoldDate_WholeSaleMin])
+      }(ExpressionEncoder[CS_WholeSaleMinGroupedBySoldDateAndQuantity])
   }
 
   def countDistinctTicketNumber(df: Dataset[StoreSales]): Dataset[DistinctTicketNumberCount] = {

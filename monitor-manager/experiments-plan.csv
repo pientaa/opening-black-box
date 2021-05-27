@@ -1,2 +1,7 @@
 function_name,dataset_size,iterations
+filterCatalogSalesWhereYearAfter2000,1GB,25
+filterCatalogSalesWhereProfitNegative,1GB,25
 filterCatalogSalesWhereProfitNegativeAndYearAfter2000,1GB,25
+minWholeSaleCostGroupedBySoldDate,1GB,25
+maxWholeSaleCostGroupedBySoldDate,1GB,25
+countDistinctTicketNumber,1GB,25

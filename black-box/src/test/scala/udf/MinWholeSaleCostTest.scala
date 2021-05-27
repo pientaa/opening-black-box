@@ -12,21 +12,21 @@ class MinWholeSaleCostTest
     with DataFrameComparer
     with SparkSessionTestWrapper {
 
-  test("Single row test") {
+  test("min_cs_wholesale_cost test") {
     import spark.implicits._
 
     val sourceDF = UDAF
       .min_cs_wholesale_cost(CatalogSalesStub.tenCatalogSales.toDS())
       .sort("cs_sold_date_sk", "cs_quantity")
       .toDF()
-    import udf.model.DistinctSoldDate_WholeSaleMin
+    import udf.model.CS_WholeSaleMinGroupedBySoldDateAndQuantity
     val expectedDF = Seq(
-      DistinctSoldDate_WholeSaleMin(1, 100, BigDecimal.valueOf(30.0)),
-      DistinctSoldDate_WholeSaleMin(1, 200, BigDecimal.valueOf(10.0)),
-      DistinctSoldDate_WholeSaleMin(2, 100, BigDecimal.valueOf(60.0)),
-      DistinctSoldDate_WholeSaleMin(2, 200, BigDecimal.valueOf(40.0)),
-      DistinctSoldDate_WholeSaleMin(3, 100, BigDecimal.valueOf(90.0)),
-      DistinctSoldDate_WholeSaleMin(3, 200, BigDecimal.valueOf(70.0))
+      CS_WholeSaleMinGroupedBySoldDateAndQuantity(1, 100, BigDecimal.valueOf(30.0)),
+      CS_WholeSaleMinGroupedBySoldDateAndQuantity(1, 200, BigDecimal.valueOf(10.0)),
+      CS_WholeSaleMinGroupedBySoldDateAndQuantity(2, 100, BigDecimal.valueOf(60.0)),
+      CS_WholeSaleMinGroupedBySoldDateAndQuantity(2, 200, BigDecimal.valueOf(40.0)),
+      CS_WholeSaleMinGroupedBySoldDateAndQuantity(3, 100, BigDecimal.valueOf(90.0)),
+      CS_WholeSaleMinGroupedBySoldDateAndQuantity(3, 200, BigDecimal.valueOf(70.0))
     ).toDF()
 
     assertSmallDataFrameEquality(sourceDF, expectedDF)

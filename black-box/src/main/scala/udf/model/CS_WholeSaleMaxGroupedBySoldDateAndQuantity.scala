@@ -2,8 +2,8 @@ package udf.model
 
 import java.math.BigDecimal
 
-case class DistinctSoldDate_WholeSaleMin(
+case class CS_WholeSaleMaxGroupedBySoldDateAndQuantity(
     cs_sold_date_sk: Integer,
     cs_quantity: Integer,
-    min_cs_wholesale_cost: BigDecimal
+    max_cs_wholesale_cost: BigDecimal
 )

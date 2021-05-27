@@ -19,6 +19,9 @@ class UDFFactory(
       case MIN_WHOLE_SALE_COST_GROUPED_BY_SOLD_DATE =>
         UDAF.min_cs_wholesale_cost(catalogSales)
 
+      case MAX_WHOLE_SALE_COST_GROUPED_BY_SOLD_DATE =>
+        UDAF.max_cs_wholesale_cost(catalogSales)
+
       case FILTER_CATALOG_SALES_WHERE_YEAR_AFTER_2000 =>
         catalogSales
           .join(dateDim, col("cs_sold_date_sk") === col("d_date_sk"))
