@@ -22,6 +22,9 @@ class UDFFactory(
       case MAX_WHOLE_SALE_COST_GROUPED_BY_SOLD_DATE =>
         UDAF.max_cs_wholesale_cost(catalogSales)
 
+      case SUM_WHOLE_SALE_COST_GROUPED_BY_SOLD_DATE =>
+        UDAF.sum_cs_wholesale_cost(catalogSales)
+
       case AVG_WHOLE_SALE_COST_GROUPED_BY_SOLD_DATE =>
         UDAF.avg_cs_wholesale_cost(catalogSales)
 

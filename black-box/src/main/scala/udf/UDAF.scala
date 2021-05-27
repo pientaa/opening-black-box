@@ -9,6 +9,28 @@ import java.math.BigDecimal
 
 object UDAF {
 
+  def sum_cs_wholesale_cost(
+      df: Dataset[CatalogSales]
+  ): Dataset[CS_WholeSaleSumGroupedBySoldDateAndQuantity] = {
+    df.groupByKey(catalogSales => (catalogSales.cs_sold_date_sk, catalogSales.cs_quantity))(
+        ExpressionEncoder[(Integer, Integer)]
+      )
+      .agg(
+        UDAF.sum_cs_wholesale_cost.name("sum_cs_wholesale_cost")
+      )
+      .map {
+        case (
+              (cs_sold_date_sk: Integer, cs_quantity: Integer),
+              sum_cs_wholesale_cost: BigDecimal
+            ) =>
+          CS_WholeSaleSumGroupedBySoldDateAndQuantity(
+            cs_sold_date_sk = cs_sold_date_sk,
+            cs_quantity = cs_quantity,
+            sum_cs_wholesale_cost = sum_cs_wholesale_cost
+          )
+      }(ExpressionEncoder[CS_WholeSaleSumGroupedBySoldDateAndQuantity])
+  }
+
   def avg_cs_wholesale_cost(
       df: Dataset[CatalogSales]
   ): Dataset[CS_WholeSaleAvgGroupedBySoldDateAndQuantity] = {
@@ -84,6 +106,28 @@ object UDAF {
         case (ticketNumber: Integer, count: Long) => DistinctTicketNumberCount(ticketNumber, count)
       }(ExpressionEncoder[DistinctTicketNumberCount])
   }
+
+  val sum_cs_wholesale_cost: TypedColumn[CatalogSales, BigDecimal] =
+    new Aggregator[CatalogSales, Set[BigDecimal], BigDecimal] {
+
+      override def zero: Set[BigDecimal] = Set[BigDecimal]()
+
+      override def reduce(itemIds: Set[BigDecimal], catalogSales: CatalogSales): Set[BigDecimal] =
+        itemIds + catalogSales.cs_wholesale_cost
+
+      override def merge(first: Set[BigDecimal], second: Set[BigDecimal]): Set[BigDecimal] =
+        first.union(second)
+
+      override def finish(reduction: Set[BigDecimal]): BigDecimal =
+        reduction
+          .foldLeft(BigDecimal.valueOf(0)) { (acc, newValue) =>
+            acc.add(newValue)
+          }
+      override def bufferEncoder: Encoder[Set[BigDecimal]] =
+        implicitly(ExpressionEncoder[Set[BigDecimal]])
+      override def outputEncoder: Encoder[BigDecimal] =
+        implicitly(Encoders.DECIMAL)
+    }.toColumn
 
   val avg_cs_wholesale_cost: TypedColumn[CatalogSales, BigDecimal] =
     new Aggregator[CatalogSales, Set[BigDecimal], BigDecimal] {
