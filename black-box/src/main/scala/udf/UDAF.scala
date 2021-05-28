@@ -9,6 +9,28 @@ import java.math.BigDecimal
 
 object UDAF {
 
+  def count_cs_wholesale_cost(
+      df: Dataset[CatalogSales]
+  ): Dataset[CS_WholeSaleCountGroupedBySoldDateAndQuantity] = {
+    df.groupByKey(catalogSales => (catalogSales.cs_sold_date_sk, catalogSales.cs_quantity))(
+        ExpressionEncoder[(Integer, Integer)]
+      )
+      .agg(
+        UDAF.count_cs_wholesale_cost.name("count_cs_wholesale_cost")
+      )
+      .map {
+        case (
+              (cs_sold_date_sk: Integer, cs_quantity: Integer),
+              count_cs_wholesale_cost: Long
+            ) =>
+          CS_WholeSaleCountGroupedBySoldDateAndQuantity(
+            cs_sold_date_sk = cs_sold_date_sk,
+            cs_quantity = cs_quantity,
+            count_cs_wholesale_cost = count_cs_wholesale_cost
+          )
+      }(ExpressionEncoder[CS_WholeSaleCountGroupedBySoldDateAndQuantity])
+  }
+
   def sum_cs_wholesale_cost(
       df: Dataset[CatalogSales]
   ): Dataset[CS_WholeSaleSumGroupedBySoldDateAndQuantity] = {
@@ -106,6 +128,25 @@ object UDAF {
         case (ticketNumber: Integer, count: Long) => DistinctTicketNumberCount(ticketNumber, count)
       }(ExpressionEncoder[DistinctTicketNumberCount])
   }
+
+  val count_cs_wholesale_cost: TypedColumn[CatalogSales, Long] =
+    new Aggregator[CatalogSales, Set[BigDecimal], Long] {
+
+      override def zero: Set[BigDecimal] = Set[BigDecimal]()
+
+      override def reduce(itemIds: Set[BigDecimal], catalogSales: CatalogSales): Set[BigDecimal] =
+        itemIds + catalogSales.cs_wholesale_cost
+
+      override def merge(first: Set[BigDecimal], second: Set[BigDecimal]): Set[BigDecimal] =
+        first.union(second)
+
+      override def finish(reduction: Set[BigDecimal]): Long =
+        reduction.size
+      override def bufferEncoder: Encoder[Set[BigDecimal]] =
+        implicitly(ExpressionEncoder[Set[BigDecimal]])
+      override def outputEncoder: Encoder[Long] =
+        implicitly(Encoders.scalaLong)
+    }.toColumn
 
   val sum_cs_wholesale_cost: TypedColumn[CatalogSales, BigDecimal] =
     new Aggregator[CatalogSales, Set[BigDecimal], BigDecimal] {

@@ -11,4 +11,5 @@ object Consts {
   val MAX_WHOLE_SALE_COST_GROUPED_BY_SOLD_DATE = "maxWholeSaleCostGroupedBySoldDate"
   val SUM_WHOLE_SALE_COST_GROUPED_BY_SOLD_DATE = "sumWholeSaleCostGroupedBySoldDate"
   val AVG_WHOLE_SALE_COST_GROUPED_BY_SOLD_DATE = "avgWholeSaleCostGroupedBySoldDate"
+  val COUNT_WHOLE_SALE_COST_GROUPED_BY_SOLD_DATE = "countWholeSaleCostGroupedBySoldDate"
 }
