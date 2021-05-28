@@ -1,14 +1,13 @@
 package udf
 
-import _root_.udf.model._
 import org.apache.spark.sql._
 import org.apache.spark.sql.catalyst.encoders.ExpressionEncoder
 import org.apache.spark.sql.expressions.Aggregator
+import udf.model._
 
 import java.math.BigDecimal
 
 object UDAF {
-
   def cs_wholesale_cost_summary(
       df: Dataset[CatalogSales]
   ): Dataset[CS_WholesaleCostSummary] = {
@@ -47,7 +46,7 @@ object UDAF {
       df: Dataset[CatalogSales]
   ): Dataset[CS_WholeSaleCountGroupedBySoldDateAndQuantity] = {
     df.groupByKey(catalogSales => (catalogSales.cs_sold_date_sk, catalogSales.cs_quantity))(
-      ExpressionEncoder[(Option[Integer], Option[Integer])]
+        ExpressionEncoder[(Option[Integer], Option[Integer])]
       )
       .agg(
         UDAF.count_cs_wholesale_cost.name("count_cs_wholesale_cost")
@@ -69,7 +68,7 @@ object UDAF {
       df: Dataset[CatalogSales]
   ): Dataset[CS_WholeSaleSumGroupedBySoldDateAndQuantity] = {
     df.groupByKey(catalogSales => (catalogSales.cs_sold_date_sk, catalogSales.cs_quantity))(
-      ExpressionEncoder[(Option[Integer], Option[Integer])]
+        ExpressionEncoder[(Option[Integer], Option[Integer])]
       )
       .agg(
         UDAF.sum_cs_wholesale_cost.name("sum_cs_wholesale_cost")
@@ -91,7 +90,7 @@ object UDAF {
       df: Dataset[CatalogSales]
   ): Dataset[CS_WholeSaleAvgGroupedBySoldDateAndQuantity] = {
     df.groupByKey(catalogSales => (catalogSales.cs_sold_date_sk, catalogSales.cs_quantity))(
-      ExpressionEncoder[(Option[Integer], Option[Integer])]
+        ExpressionEncoder[(Option[Integer], Option[Integer])]
       )
       .agg(
         UDAF.avg_cs_wholesale_cost.name("avg_cs_wholesale_cost")
@@ -113,7 +112,7 @@ object UDAF {
       df: Dataset[CatalogSales]
   ): Dataset[CS_WholeSaleMaxGroupedBySoldDateAndQuantity] = {
     df.groupByKey(catalogSales => (catalogSales.cs_sold_date_sk, catalogSales.cs_quantity))(
-      ExpressionEncoder[(Option[Integer], Option[Integer])]
+        ExpressionEncoder[(Option[Integer], Option[Integer])]
       )
       .agg(
         UDAF.max_cs_wholesale_cost.name("max_cs_wholesale_cost")
@@ -143,7 +142,7 @@ object UDAF {
       .map {
         case (
               (cs_sold_date_sk: Option[Integer], cs_quantity: Option[Integer]),
-              min_cs_wholesale_cost: BigDecimal
+              min_cs_wholesale_cost: Option[BigDecimal]
             ) =>
           CS_WholeSaleMinGroupedBySoldDateAndQuantity(
             cs_sold_date_sk = cs_sold_date_sk,
@@ -164,103 +163,142 @@ object UDAF {
   }
 
   val count_cs_wholesale_cost: TypedColumn[CatalogSales, Long] =
-    new Aggregator[CatalogSales, Set[BigDecimal], Long] {
+    new Aggregator[CatalogSales, Set[Option[BigDecimal]], Long] {
 
-      override def zero: Set[BigDecimal] = Set[BigDecimal]()
+      override def zero: Set[Option[BigDecimal]] = Set[Option[BigDecimal]]()
 
-      override def reduce(itemIds: Set[BigDecimal], catalogSales: CatalogSales): Set[BigDecimal] =
+      override def reduce(
+          itemIds: Set[Option[BigDecimal]],
+          catalogSales: CatalogSales
+      ): Set[Option[BigDecimal]] =
         itemIds + catalogSales.cs_wholesale_cost
 
-      override def merge(first: Set[BigDecimal], second: Set[BigDecimal]): Set[BigDecimal] =
+      override def merge(
+          first: Set[Option[BigDecimal]],
+          second: Set[Option[BigDecimal]]
+      ): Set[Option[BigDecimal]] =
         first.union(second)
 
-      override def finish(reduction: Set[BigDecimal]): Long =
+      override def finish(reduction: Set[Option[BigDecimal]]): Long =
         reduction.size
-      override def bufferEncoder: Encoder[Set[BigDecimal]] =
-        implicitly(ExpressionEncoder[Set[BigDecimal]])
+      override def bufferEncoder: Encoder[Set[Option[BigDecimal]]] =
+        implicitly(ExpressionEncoder[Set[Option[BigDecimal]]])
       override def outputEncoder: Encoder[Long] =
         implicitly(Encoders.scalaLong)
     }.toColumn
 
   val sum_cs_wholesale_cost: TypedColumn[CatalogSales, BigDecimal] =
-    new Aggregator[CatalogSales, Set[BigDecimal], BigDecimal] {
+    new Aggregator[CatalogSales, Set[Option[BigDecimal]], BigDecimal] {
 
-      override def zero: Set[BigDecimal] = Set[BigDecimal]()
+      override def zero: Set[Option[BigDecimal]] = Set[Option[BigDecimal]]()
 
-      override def reduce(itemIds: Set[BigDecimal], catalogSales: CatalogSales): Set[BigDecimal] =
+      override def reduce(
+          itemIds: Set[Option[BigDecimal]],
+          catalogSales: CatalogSales
+      ): Set[Option[BigDecimal]] =
         itemIds + catalogSales.cs_wholesale_cost
 
-      override def merge(first: Set[BigDecimal], second: Set[BigDecimal]): Set[BigDecimal] =
+      override def merge(
+          first: Set[Option[BigDecimal]],
+          second: Set[Option[BigDecimal]]
+      ): Set[Option[BigDecimal]] =
         first.union(second)
 
-      override def finish(reduction: Set[BigDecimal]): BigDecimal =
+      override def finish(reduction: Set[Option[BigDecimal]]): BigDecimal =
         reduction
+          .filter(_.isDefined)
+          .map(_.get)
           .foldLeft(BigDecimal.valueOf(0)) { (acc, newValue) =>
             acc.add(newValue)
           }
-      override def bufferEncoder: Encoder[Set[BigDecimal]] =
-        implicitly(ExpressionEncoder[Set[BigDecimal]])
+      override def bufferEncoder: Encoder[Set[Option[BigDecimal]]] =
+        implicitly(ExpressionEncoder[Set[Option[BigDecimal]]])
       override def outputEncoder: Encoder[BigDecimal] =
         implicitly(Encoders.DECIMAL)
     }.toColumn
 
   val avg_cs_wholesale_cost: TypedColumn[CatalogSales, BigDecimal] =
-    new Aggregator[CatalogSales, Set[BigDecimal], BigDecimal] {
+    new Aggregator[CatalogSales, Set[Option[BigDecimal]], BigDecimal] {
 
-      override def zero: Set[BigDecimal] = Set[BigDecimal]()
+      override def zero: Set[Option[BigDecimal]] = Set[Option[BigDecimal]]()
 
-      override def reduce(itemIds: Set[BigDecimal], catalogSales: CatalogSales): Set[BigDecimal] =
+      override def reduce(
+          itemIds: Set[Option[BigDecimal]],
+          catalogSales: CatalogSales
+      ): Set[Option[BigDecimal]] =
         itemIds + catalogSales.cs_wholesale_cost
 
-      override def merge(first: Set[BigDecimal], second: Set[BigDecimal]): Set[BigDecimal] =
+      override def merge(
+          first: Set[Option[BigDecimal]],
+          second: Set[Option[BigDecimal]]
+      ): Set[Option[BigDecimal]] =
         first.union(second)
 
-      override def finish(reduction: Set[BigDecimal]): BigDecimal =
+      override def finish(reduction: Set[Option[BigDecimal]]): BigDecimal =
         reduction
+          .filter(_.isDefined)
+          .map(_.get)
           .foldLeft(BigDecimal.valueOf(0)) { (acc, newValue) =>
             acc.add(newValue)
           }
           .divide(BigDecimal.valueOf(reduction.size))
-      override def bufferEncoder: Encoder[Set[BigDecimal]] =
-        implicitly(ExpressionEncoder[Set[BigDecimal]])
+      override def bufferEncoder: Encoder[Set[Option[BigDecimal]]] =
+        implicitly(ExpressionEncoder[Set[Option[BigDecimal]]])
       override def outputEncoder: Encoder[BigDecimal] =
         implicitly(Encoders.DECIMAL)
     }.toColumn
 
   val max_cs_wholesale_cost: TypedColumn[CatalogSales, BigDecimal] =
-    new Aggregator[CatalogSales, Set[BigDecimal], BigDecimal] {
+    new Aggregator[CatalogSales, Set[Option[BigDecimal]], BigDecimal] {
 
-      override def zero: Set[BigDecimal] = Set[BigDecimal]()
+      override def zero: Set[Option[BigDecimal]] = Set[Option[BigDecimal]]()
 
-      override def reduce(itemIds: Set[BigDecimal], catalogSales: CatalogSales): Set[BigDecimal] =
+      override def reduce(
+          itemIds: Set[Option[BigDecimal]],
+          catalogSales: CatalogSales
+      ): Set[Option[BigDecimal]] =
         itemIds + catalogSales.cs_wholesale_cost
 
-      override def merge(first: Set[BigDecimal], second: Set[BigDecimal]): Set[BigDecimal] =
+      override def merge(
+          first: Set[Option[BigDecimal]],
+          second: Set[Option[BigDecimal]]
+      ): Set[Option[BigDecimal]] =
         first.union(second)
 
-      override def finish(reduction: Set[BigDecimal]): BigDecimal = reduction.max
-      override def bufferEncoder: Encoder[Set[BigDecimal]] =
-        implicitly(ExpressionEncoder[Set[BigDecimal]])
+      override def finish(reduction: Set[Option[BigDecimal]]): BigDecimal =
+        reduction.filter(_.isDefined).map(_.get).max
+      override def bufferEncoder: Encoder[Set[Option[BigDecimal]]] =
+        implicitly(ExpressionEncoder[Set[Option[BigDecimal]]])
       override def outputEncoder: Encoder[BigDecimal] =
         implicitly(Encoders.DECIMAL)
     }.toColumn
 
-  val min_cs_wholesale_cost: TypedColumn[CatalogSales, BigDecimal] =
-    new Aggregator[CatalogSales, Set[BigDecimal], BigDecimal] {
+  val min_cs_wholesale_cost: TypedColumn[CatalogSales, Option[BigDecimal]] =
+    new Aggregator[CatalogSales, Set[Option[BigDecimal]], Option[BigDecimal]] {
 
-      override def zero: Set[BigDecimal] = Set[BigDecimal]()
+      override def zero: Set[Option[BigDecimal]] = Set[Option[BigDecimal]]()
 
-      override def reduce(itemIds: Set[BigDecimal], catalogSales: CatalogSales): Set[BigDecimal] =
+      override def reduce(
+          itemIds: Set[Option[BigDecimal]],
+          catalogSales: CatalogSales
+      ): Set[Option[BigDecimal]] =
         itemIds + catalogSales.cs_wholesale_cost
 
-      override def merge(first: Set[BigDecimal], second: Set[BigDecimal]): Set[BigDecimal] =
+      override def merge(
+          first: Set[Option[BigDecimal]],
+          second: Set[Option[BigDecimal]]
+      ): Set[Option[BigDecimal]] =
         first.union(second)
 
-      override def finish(reduction: Set[BigDecimal]): BigDecimal = reduction.min
-      override def bufferEncoder: Encoder[Set[BigDecimal]] =
-        implicitly(ExpressionEncoder[Set[BigDecimal]])
-      override def outputEncoder: Encoder[BigDecimal] =
-        implicitly(Encoders.DECIMAL)
+      override def finish(reduction: Set[Option[BigDecimal]]): Option[BigDecimal] = {
+        val noNulls = reduction.filter(_.isDefined).map(_.get)
+        if (noNulls.isEmpty) null else Option(noNulls.min)
+      }
+
+      override def bufferEncoder: Encoder[Set[Option[BigDecimal]]] =
+        implicitly(ExpressionEncoder[Set[Option[BigDecimal]]])
+      override def outputEncoder: Encoder[Option[BigDecimal]] =
+        implicitly(ExpressionEncoder[Option[BigDecimal]])
     }.toColumn
 
   val distinctTicketNumber: TypedColumn[StoreSales, Long] =
