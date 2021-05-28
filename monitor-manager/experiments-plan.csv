@@ -5,4 +5,6 @@ filterCatalogSalesWhereProfitNegativeAndYearAfter2000,1GB,25
 minWholeSaleCostGroupedBySoldDate,1GB,25
 maxWholeSaleCostGroupedBySoldDate,1GB,25
 avgWholeSaleCostGroupedBySoldDate,1GB,25
+countWholeSaleCostGroupedBySoldDate,1GB,25
+summaryWholeSaleCostGroupedBySoldDate,1GB,25
 countDistinctTicketNumber,1GB,25

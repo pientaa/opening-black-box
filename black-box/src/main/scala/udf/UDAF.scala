@@ -9,6 +9,40 @@ import java.math.BigDecimal
 
 object UDAF {
 
+  def cs_wholesale_cost_summary(
+      df: Dataset[CatalogSales]
+  ): Dataset[CS_WholesaleCostSummary] = {
+    df.groupByKey(catalogSales => (catalogSales.cs_sold_date_sk, catalogSales.cs_quantity))(
+        ExpressionEncoder[(Integer, Integer)]
+      )
+      .agg(
+        UDAF.min_cs_wholesale_cost.name("min_cs_wholesale_cost"),
+        UDAF.max_cs_wholesale_cost.name("max_cs_wholesale_cost"),
+        UDAF.avg_cs_wholesale_cost.name("avg_cs_wholesale_cost"),
+        UDAF.sum_cs_wholesale_cost.name("sum_cs_wholesale_cost"),
+        UDAF.count_cs_wholesale_cost.name("count_cs_wholesale_cost")
+      )
+      .map {
+        case (
+              (cs_sold_date_sk: Integer, cs_quantity: Integer),
+              min_cs_wholesale_cost: BigDecimal,
+              max_cs_wholesale_cost: BigDecimal,
+              avg_cs_wholesale_cost: BigDecimal,
+              sum_cs_wholesale_cost: BigDecimal,
+              count_cs_wholesale_cost: Long
+            ) =>
+          CS_WholesaleCostSummary(
+            cs_sold_date_sk = cs_sold_date_sk,
+            cs_quantity = cs_quantity,
+            min_cs_wholesale_cost = min_cs_wholesale_cost,
+            max_cs_wholesale_cost = max_cs_wholesale_cost,
+            avg_cs_wholesale_cost = avg_cs_wholesale_cost,
+            sum_cs_wholesale_cost = sum_cs_wholesale_cost,
+            count_cs_wholesale_cost = count_cs_wholesale_cost
+          )
+      }(ExpressionEncoder[CS_WholesaleCostSummary])
+  }
+
   def count_cs_wholesale_cost(
       df: Dataset[CatalogSales]
   ): Dataset[CS_WholeSaleCountGroupedBySoldDateAndQuantity] = {

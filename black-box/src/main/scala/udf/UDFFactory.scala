@@ -31,6 +31,9 @@ class UDFFactory(
       case COUNT_WHOLE_SALE_COST_GROUPED_BY_SOLD_DATE =>
         UDAF.count_cs_wholesale_cost(catalogSales)
 
+      case SUMMARY_WHOLE_SALE_COST_GROUPED_BY_SOLD_DATE =>
+        UDAF.cs_wholesale_cost_summary(catalogSales)
+
       case FILTER_CATALOG_SALES_WHERE_YEAR_AFTER_2000 =>
         catalogSales
           .join(dateDim, col("cs_sold_date_sk") === col("d_date_sk"))
