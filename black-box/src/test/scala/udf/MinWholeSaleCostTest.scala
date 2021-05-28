@@ -21,12 +21,12 @@ class MinWholeSaleCostTest
       .toDF()
     import udf.model.CS_WholeSaleMinGroupedBySoldDateAndQuantity
     val expectedDF = Seq(
-      CS_WholeSaleMinGroupedBySoldDateAndQuantity(1, 100, BigDecimal.valueOf(30.0)),
-      CS_WholeSaleMinGroupedBySoldDateAndQuantity(1, 200, BigDecimal.valueOf(10.0)),
-      CS_WholeSaleMinGroupedBySoldDateAndQuantity(2, 100, BigDecimal.valueOf(60.0)),
-      CS_WholeSaleMinGroupedBySoldDateAndQuantity(2, 200, BigDecimal.valueOf(40.0)),
-      CS_WholeSaleMinGroupedBySoldDateAndQuantity(3, 100, BigDecimal.valueOf(90.0)),
-      CS_WholeSaleMinGroupedBySoldDateAndQuantity(3, 200, BigDecimal.valueOf(70.0))
+      CS_WholeSaleMinGroupedBySoldDateAndQuantity(Option(1), Option(100), BigDecimal.valueOf(30.0)),
+      CS_WholeSaleMinGroupedBySoldDateAndQuantity(Option(1), Option(200), BigDecimal.valueOf(10.0)),
+      CS_WholeSaleMinGroupedBySoldDateAndQuantity(Option(2), Option(100), BigDecimal.valueOf(60.0)),
+      CS_WholeSaleMinGroupedBySoldDateAndQuantity(Option(2), Option(200), BigDecimal.valueOf(40.0)),
+      CS_WholeSaleMinGroupedBySoldDateAndQuantity(Option(3), Option(100), BigDecimal.valueOf(90.0)),
+      CS_WholeSaleMinGroupedBySoldDateAndQuantity(Option(3), Option(200), BigDecimal.valueOf(70.0))
     ).toDF()
 
     assertSmallDataFrameEquality(sourceDF, expectedDF)

@@ -10,78 +10,78 @@ object CatalogSalesStub {
 
   val tenCatalogSales = Seq(
     nextCatalogSales(
-      cs_sold_date_sk = 1,
-      cs_quantity = 200,
+      cs_sold_date_sk = Option(1),
+      cs_quantity = Option(200),
       cs_wholesale_cost = BigDecimal.valueOf(10.0)
     ),
     nextCatalogSales(
-      cs_sold_date_sk = 1,
-      cs_quantity = 200,
+      cs_sold_date_sk = Option(1),
+      cs_quantity = Option(200),
       cs_wholesale_cost = BigDecimal.valueOf(20.0)
     ),
     nextCatalogSales(
-      cs_sold_date_sk = 1,
-      cs_quantity = 100,
+      cs_sold_date_sk = Option(1),
+      cs_quantity = Option(100),
       cs_wholesale_cost = BigDecimal.valueOf(30.0)
     ),
     nextCatalogSales(
-      cs_sold_date_sk = 2,
-      cs_quantity = 200,
+      cs_sold_date_sk = Option(2),
+      cs_quantity = Option(200),
       cs_wholesale_cost = BigDecimal.valueOf(40.0)
     ),
     nextCatalogSales(
-      cs_sold_date_sk = 2,
-      cs_quantity = 200,
+      cs_sold_date_sk = Option(2),
+      cs_quantity = Option(200),
       cs_wholesale_cost = BigDecimal.valueOf(50.0)
     ),
     nextCatalogSales(
-      cs_sold_date_sk = 2,
-      cs_quantity = 100,
+      cs_sold_date_sk = Option(2),
+      cs_quantity = Option(100),
       cs_wholesale_cost = BigDecimal.valueOf(60.0)
     ),
     nextCatalogSales(
-      cs_sold_date_sk = 3,
-      cs_quantity = 200,
+      cs_sold_date_sk = Option(3),
+      cs_quantity = Option(200),
       cs_wholesale_cost = BigDecimal.valueOf(70.0)
     ),
     nextCatalogSales(
-      cs_sold_date_sk = 3,
-      cs_quantity = 200,
+      cs_sold_date_sk = Option(3),
+      cs_quantity = Option(200),
       cs_wholesale_cost = BigDecimal.valueOf(80.0)
     ),
     nextCatalogSales(
-      cs_sold_date_sk = 3,
-      cs_quantity = 100,
+      cs_sold_date_sk = Option(3),
+      cs_quantity = Option(100),
       cs_wholesale_cost = BigDecimal.valueOf(90.0)
     ),
     nextCatalogSales(
-      cs_sold_date_sk = 3,
-      cs_quantity = 100,
+      cs_sold_date_sk = Option(3),
+      cs_quantity = Option(100),
       cs_wholesale_cost = BigDecimal.valueOf(100.0)
     )
   )
 
   val fiveCatalogSales = Seq(
-    nextCatalogSales(cs_sold_date_sk = 1, cs_net_profit = BigDecimal.valueOf(-20.0)),
-    nextCatalogSales(cs_sold_date_sk = 2, cs_net_profit = BigDecimal.valueOf(-15.0)),
-    nextCatalogSales(cs_sold_date_sk = 3, cs_net_profit = BigDecimal.valueOf(20.0)),
-    nextCatalogSales(cs_sold_date_sk = 4, cs_net_profit = BigDecimal.valueOf(30.0)),
-    nextCatalogSales(cs_sold_date_sk = 5, cs_net_profit = BigDecimal.valueOf(45.0))
+    nextCatalogSales(cs_sold_date_sk = Option(1), cs_net_profit = BigDecimal.valueOf(-20.0)),
+    nextCatalogSales(cs_sold_date_sk = Option(2), cs_net_profit = BigDecimal.valueOf(-15.0)),
+    nextCatalogSales(cs_sold_date_sk = Option(3), cs_net_profit = BigDecimal.valueOf(20.0)),
+    nextCatalogSales(cs_sold_date_sk = Option(4), cs_net_profit = BigDecimal.valueOf(30.0)),
+    nextCatalogSales(cs_sold_date_sk = Option(5), cs_net_profit = BigDecimal.valueOf(45.0))
   )
 
   val sixCatalogSales = Seq(
-    nextCatalogSales(cs_sold_date_sk = 1, cs_net_profit = BigDecimal.valueOf(-20.0)),
-    nextCatalogSales(cs_sold_date_sk = 2, cs_net_profit = BigDecimal.valueOf(-15.0)),
-    nextCatalogSales(cs_sold_date_sk = 3, cs_net_profit = BigDecimal.valueOf(20.0)),
-    nextCatalogSales(cs_sold_date_sk = 4, cs_net_profit = BigDecimal.valueOf(30.0)),
-    nextCatalogSales(cs_sold_date_sk = 5, cs_net_profit = BigDecimal.valueOf(45.0)),
-    nextCatalogSales(cs_sold_date_sk = 6, cs_net_profit = BigDecimal.valueOf(-45.0))
+    nextCatalogSales(cs_sold_date_sk = Option(1), cs_net_profit = BigDecimal.valueOf(-20.0)),
+    nextCatalogSales(cs_sold_date_sk = Option(2), cs_net_profit = BigDecimal.valueOf(-15.0)),
+    nextCatalogSales(cs_sold_date_sk = Option(3), cs_net_profit = BigDecimal.valueOf(20.0)),
+    nextCatalogSales(cs_sold_date_sk = Option(4), cs_net_profit = BigDecimal.valueOf(30.0)),
+    nextCatalogSales(cs_sold_date_sk = Option(5), cs_net_profit = BigDecimal.valueOf(45.0)),
+    nextCatalogSales(cs_sold_date_sk = Option(6), cs_net_profit = BigDecimal.valueOf(-45.0))
   )
 
   private def nextCatalogSales(
-      cs_sold_date_sk: Integer = randomInteger(),
+      cs_sold_date_sk: Option[Integer] = randomInteger(),
       cs_net_profit: BigDecimal = randomBigDecimal(),
-      cs_quantity: Integer = randomInteger(),
+      cs_quantity: Option[Integer] = randomInteger(),
       cs_wholesale_cost: BigDecimal = randomBigDecimal()
   ) =
     CatalogSales(
@@ -125,7 +125,7 @@ object CatalogSalesStub {
     BigDecimal.valueOf(rnd.nextFloat() * 15.0)
   }
 
-  private def randomInteger(max: Integer = 5000): Integer = {
-    1 + rnd.nextInt(max)
+  private def randomInteger(max: Option[Integer] = Option(5000)): Option[Integer] = {
+    Option(1 + rnd.nextInt(max.get))
   }
 }

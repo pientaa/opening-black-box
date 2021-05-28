@@ -21,12 +21,12 @@ class SumWholeSaleCostTest
       .sort("cs_sold_date_sk", "cs_quantity")
       .toDF()
     val expectedDF = Seq(
-      CS_WholeSaleSumGroupedBySoldDateAndQuantity(1, 100, BigDecimal.valueOf(30.0)),
-      CS_WholeSaleSumGroupedBySoldDateAndQuantity(1, 200, BigDecimal.valueOf(30.0)),
-      CS_WholeSaleSumGroupedBySoldDateAndQuantity(2, 100, BigDecimal.valueOf(60.0)),
-      CS_WholeSaleSumGroupedBySoldDateAndQuantity(2, 200, BigDecimal.valueOf(90.0)),
-      CS_WholeSaleSumGroupedBySoldDateAndQuantity(3, 100, BigDecimal.valueOf(190.0)),
-      CS_WholeSaleSumGroupedBySoldDateAndQuantity(3, 200, BigDecimal.valueOf(150.0))
+      CS_WholeSaleSumGroupedBySoldDateAndQuantity(Option(1), Option(100), BigDecimal.valueOf(30.0)),
+      CS_WholeSaleSumGroupedBySoldDateAndQuantity(Option(1), Option(200), BigDecimal.valueOf(30.0)),
+      CS_WholeSaleSumGroupedBySoldDateAndQuantity(Option(2), Option(100), BigDecimal.valueOf(60.0)),
+      CS_WholeSaleSumGroupedBySoldDateAndQuantity(Option(2), Option(200), BigDecimal.valueOf(90.0)),
+      CS_WholeSaleSumGroupedBySoldDateAndQuantity(Option(3), Option(100), BigDecimal.valueOf(190.0)),
+      CS_WholeSaleSumGroupedBySoldDateAndQuantity(Option(3), Option(200), BigDecimal.valueOf(150.0))
     ).toDF()
 
     assertSmallDataFrameEquality(sourceDF, expectedDF)

@@ -13,7 +13,7 @@ object UDAF {
       df: Dataset[CatalogSales]
   ): Dataset[CS_WholesaleCostSummary] = {
     df.groupByKey(catalogSales => (catalogSales.cs_sold_date_sk, catalogSales.cs_quantity))(
-        ExpressionEncoder[(Integer, Integer)]
+        ExpressionEncoder[(Option[Integer], Option[Integer])]
       )
       .agg(
         UDAF.min_cs_wholesale_cost.name("min_cs_wholesale_cost"),
@@ -24,7 +24,7 @@ object UDAF {
       )
       .map {
         case (
-              (cs_sold_date_sk: Integer, cs_quantity: Integer),
+              (cs_sold_date_sk: Option[Integer], cs_quantity: Option[Integer]),
               min_cs_wholesale_cost: BigDecimal,
               max_cs_wholesale_cost: BigDecimal,
               avg_cs_wholesale_cost: BigDecimal,
@@ -47,14 +47,14 @@ object UDAF {
       df: Dataset[CatalogSales]
   ): Dataset[CS_WholeSaleCountGroupedBySoldDateAndQuantity] = {
     df.groupByKey(catalogSales => (catalogSales.cs_sold_date_sk, catalogSales.cs_quantity))(
-        ExpressionEncoder[(Integer, Integer)]
+      ExpressionEncoder[(Option[Integer], Option[Integer])]
       )
       .agg(
         UDAF.count_cs_wholesale_cost.name("count_cs_wholesale_cost")
       )
       .map {
         case (
-              (cs_sold_date_sk: Integer, cs_quantity: Integer),
+              (cs_sold_date_sk: Option[Integer], cs_quantity: Option[Integer]),
               count_cs_wholesale_cost: Long
             ) =>
           CS_WholeSaleCountGroupedBySoldDateAndQuantity(
@@ -69,14 +69,14 @@ object UDAF {
       df: Dataset[CatalogSales]
   ): Dataset[CS_WholeSaleSumGroupedBySoldDateAndQuantity] = {
     df.groupByKey(catalogSales => (catalogSales.cs_sold_date_sk, catalogSales.cs_quantity))(
-        ExpressionEncoder[(Integer, Integer)]
+      ExpressionEncoder[(Option[Integer], Option[Integer])]
       )
       .agg(
         UDAF.sum_cs_wholesale_cost.name("sum_cs_wholesale_cost")
       )
       .map {
         case (
-              (cs_sold_date_sk: Integer, cs_quantity: Integer),
+              (cs_sold_date_sk: Option[Integer], cs_quantity: Option[Integer]),
               sum_cs_wholesale_cost: BigDecimal
             ) =>
           CS_WholeSaleSumGroupedBySoldDateAndQuantity(
@@ -91,14 +91,14 @@ object UDAF {
       df: Dataset[CatalogSales]
   ): Dataset[CS_WholeSaleAvgGroupedBySoldDateAndQuantity] = {
     df.groupByKey(catalogSales => (catalogSales.cs_sold_date_sk, catalogSales.cs_quantity))(
-        ExpressionEncoder[(Integer, Integer)]
+      ExpressionEncoder[(Option[Integer], Option[Integer])]
       )
       .agg(
         UDAF.avg_cs_wholesale_cost.name("avg_cs_wholesale_cost")
       )
       .map {
         case (
-              (cs_sold_date_sk: Integer, cs_quantity: Integer),
+              (cs_sold_date_sk: Option[Integer], cs_quantity: Option[Integer]),
               avg_cs_wholesale_cost: BigDecimal
             ) =>
           CS_WholeSaleAvgGroupedBySoldDateAndQuantity(
@@ -113,14 +113,14 @@ object UDAF {
       df: Dataset[CatalogSales]
   ): Dataset[CS_WholeSaleMaxGroupedBySoldDateAndQuantity] = {
     df.groupByKey(catalogSales => (catalogSales.cs_sold_date_sk, catalogSales.cs_quantity))(
-        ExpressionEncoder[(Integer, Integer)]
+      ExpressionEncoder[(Option[Integer], Option[Integer])]
       )
       .agg(
         UDAF.max_cs_wholesale_cost.name("max_cs_wholesale_cost")
       )
       .map {
         case (
-              (cs_sold_date_sk: Integer, cs_quantity: Integer),
+              (cs_sold_date_sk: Option[Integer], cs_quantity: Option[Integer]),
               max_cs_wholesale_cost: BigDecimal
             ) =>
           CS_WholeSaleMaxGroupedBySoldDateAndQuantity(
@@ -135,14 +135,14 @@ object UDAF {
       df: Dataset[CatalogSales]
   ): Dataset[CS_WholeSaleMinGroupedBySoldDateAndQuantity] = {
     df.groupByKey(catalogSales => (catalogSales.cs_sold_date_sk, catalogSales.cs_quantity))(
-        ExpressionEncoder[(Integer, Integer)]
+        ExpressionEncoder[(Option[Integer], Option[Integer])]
       )
       .agg(
         UDAF.min_cs_wholesale_cost.name("min_cs_wholesale_cost")
       )
       .map {
         case (
-              (cs_sold_date_sk: Integer, cs_quantity: Integer),
+              (cs_sold_date_sk: Option[Integer], cs_quantity: Option[Integer]),
               min_cs_wholesale_cost: BigDecimal
             ) =>
           CS_WholeSaleMinGroupedBySoldDateAndQuantity(

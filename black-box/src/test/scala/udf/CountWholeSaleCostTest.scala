@@ -19,12 +19,12 @@ class CountWholeSaleCostTest
       .sort("cs_sold_date_sk", "cs_quantity")
       .toDF()
     val expectedDF = Seq(
-      CS_WholeSaleCountGroupedBySoldDateAndQuantity(1, 100, 1),
-      CS_WholeSaleCountGroupedBySoldDateAndQuantity(1, 200, 2),
-      CS_WholeSaleCountGroupedBySoldDateAndQuantity(2, 100, 1),
-      CS_WholeSaleCountGroupedBySoldDateAndQuantity(2, 200, 2),
-      CS_WholeSaleCountGroupedBySoldDateAndQuantity(3, 100, 2),
-      CS_WholeSaleCountGroupedBySoldDateAndQuantity(3, 200, 2)
+      CS_WholeSaleCountGroupedBySoldDateAndQuantity(Option(1), Option(100), 1),
+      CS_WholeSaleCountGroupedBySoldDateAndQuantity(Option(1), Option(200), 2),
+      CS_WholeSaleCountGroupedBySoldDateAndQuantity(Option(2), Option(100), 1),
+      CS_WholeSaleCountGroupedBySoldDateAndQuantity(Option(2), Option(200), 2),
+      CS_WholeSaleCountGroupedBySoldDateAndQuantity(Option(3), Option(100), 2),
+      CS_WholeSaleCountGroupedBySoldDateAndQuantity(Option(3), Option(200), 2)
     ).toDF()
 
     assertSmallDataFrameEquality(sourceDF, expectedDF)

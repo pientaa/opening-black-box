@@ -21,12 +21,12 @@ class MaxWholeSaleCostTest
       .sort("cs_sold_date_sk", "cs_quantity")
       .toDF()
     val expectedDF = Seq(
-      CS_WholeSaleMaxGroupedBySoldDateAndQuantity(1, 100, BigDecimal.valueOf(30.0)),
-      CS_WholeSaleMaxGroupedBySoldDateAndQuantity(1, 200, BigDecimal.valueOf(20.0)),
-      CS_WholeSaleMaxGroupedBySoldDateAndQuantity(2, 100, BigDecimal.valueOf(60.0)),
-      CS_WholeSaleMaxGroupedBySoldDateAndQuantity(2, 200, BigDecimal.valueOf(50.0)),
-      CS_WholeSaleMaxGroupedBySoldDateAndQuantity(3, 100, BigDecimal.valueOf(100.0)),
-      CS_WholeSaleMaxGroupedBySoldDateAndQuantity(3, 200, BigDecimal.valueOf(80.0))
+      CS_WholeSaleMaxGroupedBySoldDateAndQuantity(Option(1), Option(100), BigDecimal.valueOf(30.0)),
+      CS_WholeSaleMaxGroupedBySoldDateAndQuantity(Option(1), Option(200), BigDecimal.valueOf(20.0)),
+      CS_WholeSaleMaxGroupedBySoldDateAndQuantity(Option(2), Option(100), BigDecimal.valueOf(60.0)),
+      CS_WholeSaleMaxGroupedBySoldDateAndQuantity(Option(2), Option(200), BigDecimal.valueOf(50.0)),
+      CS_WholeSaleMaxGroupedBySoldDateAndQuantity(Option(3), Option(100), BigDecimal.valueOf(100.0)),
+      CS_WholeSaleMaxGroupedBySoldDateAndQuantity(Option(3), Option(200), BigDecimal.valueOf(80.0))
     ).toDF()
 
     assertSmallDataFrameEquality(sourceDF, expectedDF)
