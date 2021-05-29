@@ -24,10 +24,10 @@ object UDAF {
       .map {
         case (
               (cs_sold_date_sk: Option[Integer], cs_quantity: Option[Integer]),
-              min_cs_wholesale_cost: BigDecimal,
-              max_cs_wholesale_cost: BigDecimal,
-              avg_cs_wholesale_cost: BigDecimal,
-              sum_cs_wholesale_cost: BigDecimal,
+              min_cs_wholesale_cost: Option[BigDecimal],
+              max_cs_wholesale_cost: Option[BigDecimal],
+              avg_cs_wholesale_cost: Option[BigDecimal],
+              sum_cs_wholesale_cost: Option[BigDecimal],
               count_cs_wholesale_cost: Long
             ) =>
           CS_WholesaleCostSummary(
@@ -120,7 +120,7 @@ object UDAF {
       .map {
         case (
               (cs_sold_date_sk: Option[Integer], cs_quantity: Option[Integer]),
-              max_cs_wholesale_cost: BigDecimal
+              max_cs_wholesale_cost: Option[BigDecimal]
             ) =>
           CS_WholeSaleMaxGroupedBySoldDateAndQuantity(
             cs_sold_date_sk = cs_sold_date_sk,
@@ -248,8 +248,8 @@ object UDAF {
         implicitly(Encoders.DECIMAL)
     }.toColumn
 
-  val max_cs_wholesale_cost: TypedColumn[CatalogSales, BigDecimal] =
-    new Aggregator[CatalogSales, Set[Option[BigDecimal]], BigDecimal] {
+  val max_cs_wholesale_cost: TypedColumn[CatalogSales, Option[BigDecimal]] =
+    new Aggregator[CatalogSales, Set[Option[BigDecimal]], Option[BigDecimal]] {
 
       override def zero: Set[Option[BigDecimal]] = Set[Option[BigDecimal]]()
 
@@ -265,12 +265,15 @@ object UDAF {
       ): Set[Option[BigDecimal]] =
         first.union(second)
 
-      override def finish(reduction: Set[Option[BigDecimal]]): BigDecimal =
-        reduction.filter(_.isDefined).map(_.get).max
+      override def finish(reduction: Set[Option[BigDecimal]]): Option[BigDecimal] = {
+        val noNulls = reduction.filter(_.isDefined).map(_.get)
+        if (noNulls.isEmpty) null else Option(noNulls.max)
+      }
+
       override def bufferEncoder: Encoder[Set[Option[BigDecimal]]] =
         implicitly(ExpressionEncoder[Set[Option[BigDecimal]]])
-      override def outputEncoder: Encoder[BigDecimal] =
-        implicitly(Encoders.DECIMAL)
+      override def outputEncoder: Encoder[Option[BigDecimal]] =
+        implicitly(ExpressionEncoder[Option[BigDecimal]])
     }.toColumn
 
   val min_cs_wholesale_cost: TypedColumn[CatalogSales, Option[BigDecimal]] =
