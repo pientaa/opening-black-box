@@ -31,4 +31,21 @@ class MaxWholeSaleCostTest
 
     assertSmallDataFrameEquality(sourceDF, expectedDF)
   }
+
+  test("max_cs_wholesale_cost null test") {
+    import spark.implicits._
+
+    val sourceDF = UDAF
+      .min_cs_wholesale_cost(CatalogSalesStub.threeCatalogSales.toDS())
+      .sort("cs_sold_date_sk", "cs_quantity")
+      .toDF()
+    import udf.model.CS_WholeSaleMinGroupedBySoldDateAndQuantity
+    val expectedDF = Seq(
+      CS_WholeSaleMinGroupedBySoldDateAndQuantity(null, null, Option(BigDecimal.valueOf(10.0))),
+      CS_WholeSaleMinGroupedBySoldDateAndQuantity(null, Option(200), Option(BigDecimal.valueOf(10.0))),
+      CS_WholeSaleMinGroupedBySoldDateAndQuantity(Option(1), null, Option(BigDecimal.valueOf(10.0)))
+    ).toDF()
+
+    assertSmallDataFrameEquality(sourceDF, expectedDF)
+  }
 }
