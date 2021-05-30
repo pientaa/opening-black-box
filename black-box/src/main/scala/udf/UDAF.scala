@@ -5,7 +5,7 @@ import org.apache.spark.sql.catalyst.encoders.ExpressionEncoder
 import org.apache.spark.sql.expressions.Aggregator
 import udf.model._
 
-import java.math.BigDecimal
+import java.math.{BigDecimal, RoundingMode}
 
 object UDAF {
   def cs_wholesale_cost_summary(
@@ -243,7 +243,7 @@ object UDAF {
           Option(
             noNulls
               .foldLeft(BigDecimal.valueOf(0)) { (acc, newValue) => acc.add(newValue) }
-              .divide(BigDecimal.valueOf(reduction.size))
+              .divide(BigDecimal.valueOf(noNulls.size), 2, RoundingMode.HALF_UP)
           )
       }
 
