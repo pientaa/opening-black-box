@@ -76,7 +76,7 @@ object UDAF {
       .map {
         case (
               (cs_sold_date_sk: Option[Integer], cs_quantity: Option[Integer]),
-              sum_cs_wholesale_cost: BigDecimal
+              sum_cs_wholesale_cost: Option[BigDecimal]
             ) =>
           CS_WholeSaleSumGroupedBySoldDateAndQuantity(
             cs_sold_date_sk = cs_sold_date_sk,
@@ -187,8 +187,8 @@ object UDAF {
         implicitly(Encoders.scalaLong)
     }.toColumn
 
-  val sum_cs_wholesale_cost: TypedColumn[CatalogSales, BigDecimal] =
-    new Aggregator[CatalogSales, Set[Option[BigDecimal]], BigDecimal] {
+  val sum_cs_wholesale_cost: TypedColumn[CatalogSales, Option[BigDecimal]] =
+    new Aggregator[CatalogSales, Set[Option[BigDecimal]], Option[BigDecimal]] {
 
       override def zero: Set[Option[BigDecimal]] = Set[Option[BigDecimal]]()
 
@@ -204,17 +204,19 @@ object UDAF {
       ): Set[Option[BigDecimal]] =
         first.union(second)
 
-      override def finish(reduction: Set[Option[BigDecimal]]): BigDecimal =
-        reduction
-          .filter(_.isDefined)
-          .map(_.get)
-          .foldLeft(BigDecimal.valueOf(0)) { (acc, newValue) =>
+      override def finish(reduction: Set[Option[BigDecimal]]): Option[BigDecimal] = {
+        val noNulls = reduction.filter(_.isDefined).map(_.get)
+        if (noNulls.isEmpty) null
+        else
+          Option(noNulls.foldLeft(BigDecimal.valueOf(0)) { (acc, newValue) =>
             acc.add(newValue)
-          }
+          })
+      }
+
       override def bufferEncoder: Encoder[Set[Option[BigDecimal]]] =
         implicitly(ExpressionEncoder[Set[Option[BigDecimal]]])
-      override def outputEncoder: Encoder[BigDecimal] =
-        implicitly(Encoders.DECIMAL)
+      override def outputEncoder: Encoder[Option[BigDecimal]] =
+        implicitly(ExpressionEncoder[Option[BigDecimal]])
     }.toColumn
 
   val avg_cs_wholesale_cost: TypedColumn[CatalogSales, Option[BigDecimal]] =
