@@ -40,10 +40,21 @@ class UDFFactory(
           .select("cs_sold_date_sk", "d_date_sk", "d_year")
           .where(UDF.isYearAfter2000(col("d_year")))
 
+      case FILTER_STORE_SALES_WHERE_YEAR_AFTER_2000 =>
+        storeSales
+          .join(dateDim, col("ss_sold_date_sk") === col("d_date_sk"))
+          .select("ss_sold_date_sk", "d_date_sk", "d_year")
+          .where(UDF.isYearAfter2000(col("d_year")))
+
       case FILTER_CATALOG_SALES_WHERE_PROFIT_NEGATIVE =>
         catalogSales
           .select(col("cs_sold_date_sk"), col("cs_net_profit"))
           .where(UDF.isProfitNegative(col("cs_net_profit")))
+
+      case FILTER_STORE_SALES_WHERE_PROFIT_NEGATIVE =>
+        storeSales
+          .select(col("ss_sold_date_sk"), col("ss_net_profit"))
+          .where(UDF.isProfitNegative(col("ss_net_profit")))
 
       case FILTER_CATALOG_SALES_WHERE_PROFIT_NEGATIVE_AND_YEAR_AFTER_2000 =>
         catalogSales
@@ -51,6 +62,14 @@ class UDFFactory(
           .where(UDF.isProfitNegative(col("cs_net_profit")))
           .join(dateDim, col("cs_sold_date_sk") === col("d_date_sk"))
           .select("cs_sold_date_sk", "d_date_sk", "d_year")
+          .where(UDF.isYearAfter2000(col("d_year")))
+
+      case FILTER_STORE_SALES_WHERE_PROFIT_NEGATIVE_AND_YEAR_AFTER_2000 =>
+        storeSales
+          .select(col("ss_sold_date_sk"), col("ss_net_profit"))
+          .where(UDF.isProfitNegative(col("ss_net_profit")))
+          .join(dateDim, col("ss_sold_date_sk") === col("d_date_sk"))
+          .select("ss_sold_date_sk", "d_date_sk", "d_year")
           .where(UDF.isYearAfter2000(col("d_year")))
     }
   }

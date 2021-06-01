@@ -1,7 +1,10 @@
 function_name,dataset_size,iterations
 filterCatalogSalesWhereYearAfter2000,1GB,25
+filterStoreSalesWhereYearAfter2000,1GB,25
 filterCatalogSalesWhereProfitNegative,1GB,25
+filterStoreSalesWhereProfitNegative,1GB,25
 filterCatalogSalesWhereProfitNegativeAndYearAfter2000,1GB,25
+filterStoreSalesWhereProfitNegativeAndYearAfter2000,1GB,25
 minWholeSaleCostGroupedBySoldDate,1GB,25
 maxWholeSaleCostGroupedBySoldDate,1GB,25
 avgWholeSaleCostGroupedBySoldDate,1GB,25

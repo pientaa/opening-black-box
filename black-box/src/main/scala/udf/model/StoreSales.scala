@@ -25,5 +25,5 @@ case class StoreSales(
     ss_coupon_amt: BigDecimal,
     ss_net_paid: BigDecimal,
     ss_net_paid_inc_tax: BigDecimal,
-    ss_net_profit: BigDecimal
+    ss_net_profit: Option[BigDecimal]
 )
