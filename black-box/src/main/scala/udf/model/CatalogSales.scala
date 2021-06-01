@@ -1,0 +1,40 @@
+package udf.model
+
+import java.math.BigDecimal
+
+case class CatalogSales(
+    cs_sold_date_sk: Option[Integer],
+    cs_sold_time_sk: Option[Integer],
+    cs_ship_date_sk: Option[Integer],
+    cs_bill_customer_sk: Option[Integer],
+    cs_bill_cdemo_sk: Option[Integer],
+    cs_bill_hdemo_sk: Option[Integer],
+    cs_bill_addr_sk: Option[Integer],
+    cs_ship_customer_sk: Option[Integer],
+    cs_ship_cdemo_sk: Option[Integer],
+    cs_ship_hdemo_sk: Option[Integer],
+    cs_ship_addr_sk: Option[Integer],
+    cs_call_center_sk: Option[Integer],
+    cs_catalog_page_sk: Option[Integer],
+    cs_ship_mode_sk: Option[Integer],
+    cs_warehouse_sk: Option[Integer],
+    cs_item_sk: Option[Integer],
+    cs_promo_sk: Option[Integer],
+    cs_order_number: Option[Integer],
+    cs_quantity: Option[Integer],
+    cs_wholesale_cost: Option[BigDecimal],
+    cs_list_price: Option[BigDecimal],
+    cs_sales_price: Option[BigDecimal],
+    cs_ext_discount_amt: Option[BigDecimal],
+    cs_ext_sales_price: Option[BigDecimal],
+    cs_ext_wholesale_cost: Option[BigDecimal],
+    cs_ext_list_price: Option[BigDecimal],
+    cs_ext_tax: Option[BigDecimal],
+    cs_coupon_amt: Option[BigDecimal],
+    cs_ext_ship_cost: Option[BigDecimal],
+    cs_net_paid: Option[BigDecimal],
+    cs_net_paid_inc_tax: Option[BigDecimal],
+    cs_net_paid_inc_ship: Option[BigDecimal],
+    cs_net_paid_inc_ship_tax: Option[BigDecimal],
+    cs_net_profit: Option[BigDecimal]
+)

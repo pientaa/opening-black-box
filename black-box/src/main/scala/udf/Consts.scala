@@ -1,19 +1,16 @@
 package udf
 
 object Consts {
-  val LOCALHOST = "localhost"
-
-  val FILTER_FROM_MONDAY_TO_THURSDAY = "filterFromMondayToThursday"
-  val SELECT_ID_ENERGY_OUTSIDE_TEMPERATURE_SEASON = "selectIdEnergyOutsideTemperatureSeason"
-  val FILTER_ENERGY_GREATER_THAN_10 = "filterEnergyGreaterThan10"
-  val FILTER_FROM_MONDAY_TO_THURSDAY_AND_ENERGY_GREATER_THAN_10 = "filterFromMondayToThursdayAndEnergyGreaterThan10"
-  val FILTER_FROM_MONDAY_TO_THURSDAY_OR_ENERGY_GREATER_THAN_10 = "filterFromMondayToThursdayOrEnergyGreaterThan10"
-  val FILTER_FROM_MONDAY_TO_THURSDAY_AND_ENERGY_GREATER_THAN_10_AND_DAY_LENGTH_BETWEEN_10_AND_11 = "filterFromMondayToThursdayAndEnergyGreaterThan10AndDayLengthBetween10And11"
-  val FILTER_FROM_MONDAY_TO_THURSDAY_OR_ENERGY_GREATER_THAN_10_AND_DAY_LENGTH_BETWEEN_10_AND_11 = "filterFromMondayToThursdayOrEnergyGreaterThan10AndDayLengthBetween10And11"
-  val FILTER_FROM_MONDAY_TO_THURSDAY_AND_SELECT_ID_ENERGY_OUTSIDE_TEMPERATURE_SEASON = "filterMondayToThursdayAndSelectIdEnergyOutsideTemperatureSeason"
-  val FILTER_DEVICE_ID_5019_AND_AUTUMN_OR_FRIDAY = "filterDeviceId5019AndAutumnOrFriday"
-  val FILTER_SUNDAY_BANK_HOLIDAYS_OR_ENERGY_GREATER_THAN_300_OR_DAY_LENGTH_GREATER_THAN_12 = "filterSundayBankHolidaysOrEnergyGreaterThan30OrDayLengthGreaterThan12"
-  val FILTER_SUNDAY_BANK_HOLIDAYS_AND_ENERGY_GREATER_THAN_300_OR_DAY_LENGTH_GREATER_THAN_12 = "filterSundayBankHolidaysAndEnergyGreaterThan30AndDayLengthGreaterThan12"
-  val FILTER_SUNDAY_BANK_HOLIDAYS_OR_ENERGY_GREATER_THAN_300_OR_DAY_LENGTH_GREATER_THAN_12_OR_DEVICE_ID_GREATER_THAN_5026 = "filterSundayBankHolidaysOrEnergyGreaterThan30OrDayLengthGreaterThan12OrDeviceIdGreaterThan5026"
-  val AVERAGE_TEMPERATURE_BY_DEVICE_ID_SEASON = "averageTemperatureByDeviceIdSeason"
+  val LOCALHOST                                  = "localhost"
+  val COUNT_DISTINCT_TICKET_NUMBER               = "countDistinctTicketNumber"
+  val FILTER_CATALOG_SALES_WHERE_YEAR_AFTER_2000 = "filterCatalogSalesWhereYearAfter2000"
+  val FILTER_CATALOG_SALES_WHERE_PROFIT_NEGATIVE = "filterCatalogSalesWhereProfitNegative"
+  val FILTER_CATALOG_SALES_WHERE_PROFIT_NEGATIVE_AND_YEAR_AFTER_2000 =
+    "filterCatalogSalesWhereProfitNegativeAndYearAfter2000"
+  val MIN_WHOLE_SALE_COST_GROUPED_BY_SOLD_DATE = "minWholeSaleCostGroupedBySoldDate"
+  val MAX_WHOLE_SALE_COST_GROUPED_BY_SOLD_DATE = "maxWholeSaleCostGroupedBySoldDate"
+  val SUM_WHOLE_SALE_COST_GROUPED_BY_SOLD_DATE = "sumWholeSaleCostGroupedBySoldDate"
+  val AVG_WHOLE_SALE_COST_GROUPED_BY_SOLD_DATE = "avgWholeSaleCostGroupedBySoldDate"
+  val COUNT_WHOLE_SALE_COST_GROUPED_BY_SOLD_DATE = "countWholeSaleCostGroupedBySoldDate"
+  val SUMMARY_WHOLE_SALE_COST_GROUPED_BY_SOLD_DATE = "summaryWholeSaleCostGroupedBySoldDate"
 }

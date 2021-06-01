@@ -1,5 +1,5 @@
 #!/bin/bash
-function=${1:-dayOfWeek}
+function=${1:-countDistinctTicketNumber}
 echo $host
 echo $function
 
