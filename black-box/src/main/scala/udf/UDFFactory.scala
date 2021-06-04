@@ -34,6 +34,24 @@ class UDFFactory(
       case SUMMARY_WHOLE_SALE_COST_GROUPED_BY_SOLD_DATE =>
         UDAF.cs_wholesale_cost_summary(catalogSales)
 
+      case MIN_NET_PROFIT_GROUPED_BY_SOLD_DATE =>
+        UDAF.min_cs_net_profit(catalogSales)
+
+      case MAX_NET_PROFIT_GROUPED_BY_SOLD_DATE =>
+        UDAF.max_cs_net_profit(catalogSales)
+
+      case SUM_NET_PROFIT_GROUPED_BY_SOLD_DATE =>
+        UDAF.sum_cs_net_profit(catalogSales)
+
+      case AVG_NET_PROFIT_GROUPED_BY_SOLD_DATE =>
+        UDAF.avg_cs_net_profit(catalogSales)
+
+      case COUNT_NET_PROFIT_GROUPED_BY_SOLD_DATE =>
+        UDAF.count_cs_net_profit(catalogSales)
+
+      case SUMMARY_NET_PROFIT_GROUPED_BY_SOLD_DATE =>
+        UDAF.cs_net_profit_summary(catalogSales)
+
       case FILTER_CATALOG_SALES_WHERE_YEAR_AFTER_2000 =>
         catalogSales
           .join(dateDim, col("cs_sold_date_sk") === col("d_date_sk"))
