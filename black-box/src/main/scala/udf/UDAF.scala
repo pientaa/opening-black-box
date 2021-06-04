@@ -3,7 +3,7 @@ package udf
 import org.apache.spark.sql._
 import org.apache.spark.sql.catalyst.encoders.ExpressionEncoder
 import org.apache.spark.sql.expressions.Aggregator
-import udf.model._
+import udf.model.{CatalogSales, _}
 
 import java.math.{BigDecimal, RoundingMode}
 
