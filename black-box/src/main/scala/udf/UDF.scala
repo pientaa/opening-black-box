@@ -27,5 +27,9 @@ object UDF {
   val isYearAfter2000: UserDefinedFunction = udf((year: Integer) => year > 2000)
 
   val isProfitNegative: UserDefinedFunction =
-    udf((profit: BigDecimal) => profit.compareTo(BigDecimal.valueOf(0)) < 0)
+    udf((profit: BigDecimal) =>
+      if (profit != null)
+        profit.compareTo(BigDecimal.valueOf(0)) < 0
+      else false
+    )
 }

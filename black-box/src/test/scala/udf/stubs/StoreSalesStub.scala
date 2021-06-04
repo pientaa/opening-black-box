@@ -16,9 +16,22 @@ object StoreSalesStub {
     nextStoreSales(ticketNumber = 3)
   )
 
-  private def nextStoreSales(ticketNumber: Integer = randomInteger()) =
+  val sixCatalogSales = Seq(
+    nextStoreSales(ss_sold_date_sk = 1, ss_net_profit = Option(BigDecimal.valueOf(-20.0))),
+    nextStoreSales(ss_sold_date_sk = 2, ss_net_profit = Option(BigDecimal.valueOf(-15.0))),
+    nextStoreSales(ss_sold_date_sk = 3, ss_net_profit = Option(BigDecimal.valueOf(20.0))),
+    nextStoreSales(ss_sold_date_sk = 4, ss_net_profit = Option(BigDecimal.valueOf(30.0))),
+    nextStoreSales(ss_sold_date_sk = 5, ss_net_profit = Option(BigDecimal.valueOf(45.0))),
+    nextStoreSales(ss_sold_date_sk = 6, ss_net_profit = Option(BigDecimal.valueOf(-45.0)))
+  )
+
+  private def nextStoreSales(
+      ss_sold_date_sk: Integer = randomInteger(),
+      ticketNumber: Integer = randomInteger(),
+      ss_net_profit: Option[BigDecimal] = Option(randomBigDecimal())
+  ) =
     StoreSales(
-      ss_sold_date_sk = randomInteger(),
+      ss_sold_date_sk = ss_sold_date_sk,
       ss_sold_time_sk = randomInteger(),
       ss_item_sk = randomInteger(),
       ss_customer_sk = randomInteger(),
@@ -40,7 +53,7 @@ object StoreSalesStub {
       ss_coupon_amt = randomBigDecimal(),
       ss_net_paid = randomBigDecimal(),
       ss_net_paid_inc_tax = randomBigDecimal(),
-      ss_net_profit = randomBigDecimal()
+      ss_net_profit = ss_net_profit
     )
 
   private def randomBigDecimal(): BigDecimal = {
