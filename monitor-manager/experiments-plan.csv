@@ -18,3 +18,8 @@ avgNetProfitGroupedBySoldDate,1GB,25
 countNetProfitGroupedBySoldDate,1GB,25
 summaryNetProfitGroupedBySoldDate,1GB,25
 countDistinctTicketNumber,1GB,25
+minNetProfitGroupedBySoldDateWhereProfitNegative,1GB,25
+maxNetProfitGroupedBySoldDateWhereProfitNegative,1GB,25
+sumNetProfitGroupedBySoldDateWhereProfitNegative,1GB,25
+avgNetProfitGroupedBySoldDateWhereProfitNegative,1GB,25
+countNetProfitGroupedBySoldDateWhereProfitNegative,1GB,25
