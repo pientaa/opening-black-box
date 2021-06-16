@@ -1,6 +1,7 @@
 package udf
 
 import com.github.mrpowers.spark.fast.tests.DataFrameComparer
+import org.apache.spark.sql.functions.col
 import org.scalatest.{FunSuite, Matchers}
 import udf.stubs.CatalogSalesStub
 
@@ -44,6 +45,25 @@ class MinNetProfitTest
       CS_NetProfitMinGroupedBySoldDateAndQuantity(null, null, Option(BigDecimal.valueOf(10.0))),
       CS_NetProfitMinGroupedBySoldDateAndQuantity(null, Option(200), Option(BigDecimal.valueOf(10.0))),
       CS_NetProfitMinGroupedBySoldDateAndQuantity(Option(1), null, Option(BigDecimal.valueOf(10.0)))
+    ).toDF()
+
+    assertSmallDataFrameEquality(sourceDF, expectedDF)
+  }
+
+  test("max_cs_net_profit where negative test") {
+    import spark.implicits._
+    val sourceDF =
+      UDAF.min_cs_net_profit(
+        CatalogSalesStub.sevenCatalogSalesWithNegativeValues.toDS()
+          .where(UDF.isProfitNegative(col("cs_net_profit")))
+      )
+      .sort("cs_sold_date_sk", "cs_quantity")
+      .toDF()
+
+    import udf.model.CS_NetProfitMinGroupedBySoldDateAndQuantity
+    val expectedDF = Seq(
+      CS_NetProfitMinGroupedBySoldDateAndQuantity(Option(1), Option(100), Option(BigDecimal.valueOf(-30.0))),
+      CS_NetProfitMinGroupedBySoldDateAndQuantity(Option(1), Option(200), Option(BigDecimal.valueOf(-20.0))),
     ).toDF()
 
     assertSmallDataFrameEquality(sourceDF, expectedDF)

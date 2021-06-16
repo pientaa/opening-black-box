@@ -52,6 +52,36 @@ class UDFFactory(
       case SUMMARY_NET_PROFIT_GROUPED_BY_SOLD_DATE =>
         UDAF.cs_net_profit_summary(catalogSales)
 
+      case MIN_NET_PROFIT_GROUPED_BY_SOLD_DATE_WHERE_PROFIT_NEGATIVE =>
+        UDAF.min_cs_net_profit(
+          catalogSales
+            .where(UDF.isProfitNegative(col("cs_net_profit")))
+        )
+
+      case MAX_NET_PROFIT_GROUPED_BY_SOLD_DATE_WHERE_PROFIT_NEGATIVE =>
+        UDAF.max_cs_net_profit(
+          catalogSales
+            .where(UDF.isProfitNegative(col("cs_net_profit")))
+        )
+
+      case SUM_NET_PROFIT_GROUPED_BY_SOLD_DATE_WHERE_PROFIT_NEGATIVE =>
+        UDAF.sum_cs_net_profit(
+          catalogSales
+            .where(UDF.isProfitNegative(col("cs_net_profit")))
+        )
+
+      case AVG_NET_PROFIT_GROUPED_BY_SOLD_DATE_WHERE_PROFIT_NEGATIVE =>
+        UDAF.avg_cs_net_profit(
+          catalogSales
+            .where(UDF.isProfitNegative(col("cs_net_profit")))
+        )
+
+      case COUNT_NET_PROFIT_GROUPED_BY_SOLD_DATE_WHERE_PROFIT_NEGATIVE =>
+        UDAF.count_cs_net_profit(
+          catalogSales
+            .where(UDF.isProfitNegative(col("cs_net_profit")))
+        )
+
       case FILTER_CATALOG_SALES_WHERE_YEAR_AFTER_2000 =>
         catalogSales
           .join(dateDim, col("cs_sold_date_sk") === col("d_date_sk"))
