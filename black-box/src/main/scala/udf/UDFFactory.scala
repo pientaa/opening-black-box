@@ -1,14 +1,16 @@
 package udf
 
-import org.apache.spark.sql.Dataset
+import org.apache.spark.sql.catalyst.encoders.ExpressionEncoder
 import org.apache.spark.sql.functions.col
+import org.apache.spark.sql.{Dataset, SparkSession}
 import udf.Consts._
 import udf.model.{CatalogSales, DateDim, StoreSales}
 
 class UDFFactory(
     val storeSales: Dataset[StoreSales],
     val catalogSales: Dataset[CatalogSales],
-    val dateDim: Dataset[DateDim]
+    val dateDim: Dataset[DateDim],
+    val spark: SparkSession
 ) {
 
   def select(name: String) = {
@@ -51,6 +53,81 @@ class UDFFactory(
 
       case SUMMARY_NET_PROFIT_GROUPED_BY_SOLD_DATE =>
         UDAF.cs_net_profit_summary(catalogSales)
+
+      case MIN_NET_PROFIT_GROUPED_BY_SOLD_DATE_WHERE_PROFIT_NEGATIVE =>
+        UDAF.min_cs_net_profit(
+          catalogSales
+            .where(UDF.isProfitNegative(col("cs_net_profit")))
+        )
+
+      case MAX_NET_PROFIT_GROUPED_BY_SOLD_DATE_WHERE_PROFIT_NEGATIVE =>
+        UDAF.max_cs_net_profit(
+          catalogSales
+            .where(UDF.isProfitNegative(col("cs_net_profit")))
+        )
+
+      case SUM_NET_PROFIT_GROUPED_BY_SOLD_DATE_WHERE_PROFIT_NEGATIVE =>
+        UDAF.sum_cs_net_profit(
+          catalogSales
+            .where(UDF.isProfitNegative(col("cs_net_profit")))
+        )
+
+      case AVG_NET_PROFIT_GROUPED_BY_SOLD_DATE_WHERE_PROFIT_NEGATIVE =>
+        UDAF.avg_cs_net_profit(
+          catalogSales
+            .where(UDF.isProfitNegative(col("cs_net_profit")))
+        )
+
+      case MIN_NET_PROFIT_GROUPED_BY_SOLD_DATE_WHERE_YEAR_AFTER_2000 =>
+        UDAF.min_cs_net_profit(
+          catalogSales
+            .join(dateDim, col("cs_sold_date_sk") === col("d_date_sk"))
+            .where(UDF.isYearAfter2000(col("d_year")))
+            .select(catalogSales.columns.map(m => col(m)): _*)
+            .as[CatalogSales](implicitly(ExpressionEncoder[CatalogSales]))
+        )
+
+      case MAX_NET_PROFIT_GROUPED_BY_SOLD_DATE_WHERE_YEAR_AFTER_2000 =>
+        UDAF.max_cs_net_profit(
+          catalogSales
+            .join(dateDim, col("cs_sold_date_sk") === col("d_date_sk"))
+            .where(UDF.isYearAfter2000(col("d_year")))
+            .select(catalogSales.columns.map(m => col(m)): _*)
+            .as[CatalogSales](implicitly(ExpressionEncoder[CatalogSales]))
+        )
+
+      case SUM_NET_PROFIT_GROUPED_BY_SOLD_DATE_WHERE_YEAR_AFTER_2000 =>
+        UDAF.sum_cs_net_profit(
+          catalogSales
+            .join(dateDim, col("cs_sold_date_sk") === col("d_date_sk"))
+            .where(UDF.isYearAfter2000(col("d_year")))
+            .select(catalogSales.columns.map(m => col(m)): _*)
+            .as[CatalogSales](implicitly(ExpressionEncoder[CatalogSales]))
+        )
+
+      case AVG_NET_PROFIT_GROUPED_BY_SOLD_DATE_WHERE_YEAR_AFTER_2000 =>
+        UDAF.avg_cs_net_profit(
+          catalogSales
+            .join(dateDim, col("cs_sold_date_sk") === col("d_date_sk"))
+            .where(UDF.isYearAfter2000(col("d_year")))
+            .select(catalogSales.columns.map(m => col(m)): _*)
+            .as[CatalogSales](implicitly(ExpressionEncoder[CatalogSales]))
+        )
+
+      case COUNT_NET_PROFIT_GROUPED_BY_SOLD_DATE_WHERE_YEAR_AFTER_2000 =>
+        UDAF.count_cs_net_profit(
+          catalogSales
+            .join(dateDim, col("cs_sold_date_sk") === col("d_date_sk"))
+            .where(UDF.isYearAfter2000(col("d_year")))
+            .select(catalogSales.columns.map(m => col(m)): _*)
+            .as[CatalogSales](implicitly(ExpressionEncoder[CatalogSales]))
+        )
+
+      case COUNT_NET_PROFIT_GROUPED_BY_SOLD_DATE_WHERE_PROFIT_NEGATIVE =>
+        UDAF.count_cs_net_profit(
+          catalogSales
+            .where(UDF.isProfitNegative(col("cs_net_profit")))
+        )
 
       case FILTER_CATALOG_SALES_WHERE_YEAR_AFTER_2000 =>
         catalogSales

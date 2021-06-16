@@ -20,7 +20,7 @@ class FilterFunctionsTest
 
   test("FILTER_CATALOG_SALES_WHERE_YEAR_AFTER_2000 test") {
     val outputDF =
-      new UDFFactory(storeSales = storeSales, catalogSales = catalogSales, dateDim = dateDim)
+      new UDFFactory(storeSales = storeSales, catalogSales = catalogSales, dateDim = dateDim, spark = spark)
         .select(FILTER_CATALOG_SALES_WHERE_YEAR_AFTER_2000)
         .toDF()
 
@@ -42,7 +42,7 @@ class FilterFunctionsTest
 
   test("FILTER_CATALOG_SALES_WHERE_PROFIT_NEGATIVE test") {
     val outputDF =
-      new UDFFactory(storeSales = storeSales, catalogSales = catalogSales, dateDim = dateDim)
+      new UDFFactory(storeSales = storeSales, catalogSales = catalogSales, dateDim = dateDim, spark = spark)
         .select(FILTER_CATALOG_SALES_WHERE_PROFIT_NEGATIVE)
         .toDF()
 
@@ -62,7 +62,7 @@ class FilterFunctionsTest
 
   test("FILTER_CATALOG_SALES_WHERE_PROFIT_NEGATIVE_AND_YEAR_AFTER_2000 test, empty seq") {
     val outputDF =
-      new UDFFactory(storeSales = storeSales, catalogSales = catalogSales, dateDim = dateDim)
+      new UDFFactory(storeSales = storeSales, catalogSales = catalogSales, dateDim = dateDim, spark = spark)
         .select(FILTER_CATALOG_SALES_WHERE_PROFIT_NEGATIVE_AND_YEAR_AFTER_2000)
         .toDF()
 
@@ -80,7 +80,8 @@ class FilterFunctionsTest
       new UDFFactory(
         storeSales = storeSales,
         catalogSales = CatalogSalesStub.sixCatalogSales.toDS(),
-        dateDim = DateDimStub.sixDateDims.toDS()
+        dateDim = DateDimStub.sixDateDims.toDS(),
+        spark = spark
       ).select(FILTER_CATALOG_SALES_WHERE_PROFIT_NEGATIVE_AND_YEAR_AFTER_2000)
         .toDF()
 
@@ -100,7 +101,8 @@ class FilterFunctionsTest
       new UDFFactory(
         storeSales = StoreSalesStub.sixCatalogSales.toDS(),
         catalogSales = catalogSales,
-        dateDim = dateDim
+        dateDim = dateDim,
+        spark = spark
       ).select(FILTER_STORE_SALES_WHERE_PROFIT_NEGATIVE)
         .toDF()
 
@@ -127,7 +129,8 @@ class FilterFunctionsTest
       new UDFFactory(
         storeSales = StoreSalesStub.sixCatalogSales.toDS(),
         catalogSales = catalogSales,
-        dateDim = DateDimStub.sixDateDims.toDS()
+        dateDim = DateDimStub.sixDateDims.toDS(),
+        spark = spark
       ).select(FILTER_STORE_SALES_WHERE_YEAR_AFTER_2000)
         .toDF()
 
@@ -160,7 +163,8 @@ class FilterFunctionsTest
       new UDFFactory(
         storeSales = StoreSalesStub.sixCatalogSales.toDS(),
         catalogSales = catalogSales,
-        dateDim = DateDimStub.sixDateDims.toDS()
+        dateDim = DateDimStub.sixDateDims.toDS(),
+        spark = spark
       ).select(FILTER_STORE_SALES_WHERE_PROFIT_NEGATIVE_AND_YEAR_AFTER_2000)
         .toDF()
 
