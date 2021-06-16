@@ -22,6 +22,9 @@ object BlackBox {
   ss.sparkContext.setLogLevel("ERROR")
   ss.sparkContext.setLogLevel("WARN")
 
+  val myListener = new CustomListener()
+  ss.sparkContext.addSparkListener(myListener)
+
   val connectionProperties = new Properties()
   connectionProperties.put("user", "postgres")
   connectionProperties.put("password", "postgres")
