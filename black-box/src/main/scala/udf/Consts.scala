@@ -36,5 +36,16 @@ object Consts {
   val COUNT_NET_PROFIT_GROUPED_BY_SOLD_DATE_WHERE_PROFIT_NEGATIVE =
     "countNetProfitGroupedBySoldDateWhereProfitNegative"
 
+  val MIN_NET_PROFIT_GROUPED_BY_SOLD_DATE_WHERE_YEAR_AFTER_2000 =
+    "minNetProfitGroupedBySoldDateWhereYearAfter2000"
+  val MAX_NET_PROFIT_GROUPED_BY_SOLD_DATE_WHERE_YEAR_AFTER_2000 =
+    "maxNetProfitGroupedBySoldDateWhereYearAfter2000"
+  val SUM_NET_PROFIT_GROUPED_BY_SOLD_DATE_WHERE_YEAR_AFTER_2000 =
+    "sumNetProfitGroupedBySoldDateWhereYearAfter2000"
+  val AVG_NET_PROFIT_GROUPED_BY_SOLD_DATE_WHERE_YEAR_AFTER_2000 =
+    "avgNetProfitGroupedBySoldDateWhereYearAfter2000"
+  val COUNT_NET_PROFIT_GROUPED_BY_SOLD_DATE_WHERE_YEAR_AFTER_2000 =
+    "countNetProfitGroupedBySoldDateWhereYearAfter2000"
+
   val COUNT_DISTINCT_TICKET_NUMBER = "countDistinctTicketNumber"
 }
