@@ -53,7 +53,7 @@ object BlackBox {
         .as[DateDim](implicitly(ExpressionEncoder[DateDim]))
 
     val udfFactory =
-      new UDFFactory(storeSales = storeSales, catalogSales = catalogSales, dateDim = dateDim)
+      new UDFFactory(storeSales = storeSales, catalogSales = catalogSales, dateDim = dateDim, spark = ss)
 
     udfFactory
       .select(functionName)

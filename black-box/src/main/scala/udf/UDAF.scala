@@ -307,7 +307,7 @@ object UDAF {
       }(ExpressionEncoder[DistinctTicketNumberCount])
   }
 
-  val count_cs_wholesale_cost: TypedColumn[CatalogSales, Long] =
+  private val count_cs_wholesale_cost: TypedColumn[CatalogSales, Long] =
     new Aggregator[CatalogSales, Set[Option[BigDecimal]], Long] {
 
       override def zero: Set[Option[BigDecimal]] = Set[Option[BigDecimal]]()
@@ -332,7 +332,7 @@ object UDAF {
         implicitly(Encoders.scalaLong)
     }.toColumn
 
-  val sum_cs_wholesale_cost: TypedColumn[CatalogSales, Option[BigDecimal]] =
+  private val sum_cs_wholesale_cost: TypedColumn[CatalogSales, Option[BigDecimal]] =
     new Aggregator[CatalogSales, Set[Option[BigDecimal]], Option[BigDecimal]] {
 
       override def zero: Set[Option[BigDecimal]] = Set[Option[BigDecimal]]()
@@ -364,7 +364,7 @@ object UDAF {
         implicitly(ExpressionEncoder[Option[BigDecimal]])
     }.toColumn
 
-  val avg_cs_wholesale_cost: TypedColumn[CatalogSales, Option[BigDecimal]] =
+  private val avg_cs_wholesale_cost: TypedColumn[CatalogSales, Option[BigDecimal]] =
     new Aggregator[CatalogSales, Set[Option[BigDecimal]], Option[BigDecimal]] {
 
       override def zero: Set[Option[BigDecimal]] = Set[Option[BigDecimal]]()
@@ -398,7 +398,7 @@ object UDAF {
         implicitly(ExpressionEncoder[Option[BigDecimal]])
     }.toColumn
 
-  val max_cs_wholesale_cost: TypedColumn[CatalogSales, Option[BigDecimal]] =
+  private val max_cs_wholesale_cost: TypedColumn[CatalogSales, Option[BigDecimal]] =
     new Aggregator[CatalogSales, Set[Option[BigDecimal]], Option[BigDecimal]] {
 
       override def zero: Set[Option[BigDecimal]] = Set[Option[BigDecimal]]()
@@ -426,7 +426,7 @@ object UDAF {
         implicitly(ExpressionEncoder[Option[BigDecimal]])
     }.toColumn
 
-  val min_cs_wholesale_cost: TypedColumn[CatalogSales, Option[BigDecimal]] =
+  private val min_cs_wholesale_cost: TypedColumn[CatalogSales, Option[BigDecimal]] =
     new Aggregator[CatalogSales, Set[Option[BigDecimal]], Option[BigDecimal]] {
 
       override def zero: Set[Option[BigDecimal]] = Set[Option[BigDecimal]]()
@@ -454,7 +454,7 @@ object UDAF {
         implicitly(ExpressionEncoder[Option[BigDecimal]])
     }.toColumn
 
-  val count_cs_net_profit: TypedColumn[CatalogSales, Long] =
+  private val count_cs_net_profit: TypedColumn[CatalogSales, Long] =
     new Aggregator[CatalogSales, Set[Option[BigDecimal]], Long] {
 
       override def zero: Set[Option[BigDecimal]] = Set[Option[BigDecimal]]()
@@ -479,7 +479,7 @@ object UDAF {
         implicitly(Encoders.scalaLong)
     }.toColumn
 
-  val sum_cs_net_profit: TypedColumn[CatalogSales, Option[BigDecimal]] =
+  private val sum_cs_net_profit: TypedColumn[CatalogSales, Option[BigDecimal]] =
     new Aggregator[CatalogSales, Set[Option[BigDecimal]], Option[BigDecimal]] {
 
       override def zero: Set[Option[BigDecimal]] = Set[Option[BigDecimal]]()
@@ -511,7 +511,7 @@ object UDAF {
         implicitly(ExpressionEncoder[Option[BigDecimal]])
     }.toColumn
 
-  val avg_cs_net_profit: TypedColumn[CatalogSales, Option[BigDecimal]] =
+  private val avg_cs_net_profit: TypedColumn[CatalogSales, Option[BigDecimal]] =
     new Aggregator[CatalogSales, Set[Option[BigDecimal]], Option[BigDecimal]] {
 
       override def zero: Set[Option[BigDecimal]] = Set[Option[BigDecimal]]()
@@ -545,7 +545,7 @@ object UDAF {
         implicitly(ExpressionEncoder[Option[BigDecimal]])
     }.toColumn
 
-  val max_cs_net_profit: TypedColumn[CatalogSales, Option[BigDecimal]] =
+  private val max_cs_net_profit: TypedColumn[CatalogSales, Option[BigDecimal]] =
     new Aggregator[CatalogSales, Set[Option[BigDecimal]], Option[BigDecimal]] {
 
       override def zero: Set[Option[BigDecimal]] = Set[Option[BigDecimal]]()
@@ -573,7 +573,7 @@ object UDAF {
         implicitly(ExpressionEncoder[Option[BigDecimal]])
     }.toColumn
 
-  val min_cs_net_profit: TypedColumn[CatalogSales, Option[BigDecimal]] =
+  private val min_cs_net_profit: TypedColumn[CatalogSales, Option[BigDecimal]] =
     new Aggregator[CatalogSales, Set[Option[BigDecimal]], Option[BigDecimal]] {
 
       override def zero: Set[Option[BigDecimal]] = Set[Option[BigDecimal]]()
@@ -601,7 +601,7 @@ object UDAF {
         implicitly(ExpressionEncoder[Option[BigDecimal]])
     }.toColumn
 
-  val distinctTicketNumber: TypedColumn[StoreSales, Long] =
+  private val distinctTicketNumber: TypedColumn[StoreSales, Long] =
     new Aggregator[StoreSales, Set[Integer], Long] {
 
       override def zero: Set[Integer] = Set[Integer]()
