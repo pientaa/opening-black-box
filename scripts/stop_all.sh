@@ -44,8 +44,8 @@ function stop_master() {
       sshpass -f "password.env" ssh magisterka@192.168.55.20 "docker rm -f spark-master;"
       sshpass -f "password.env" ssh magisterka@192.168.55.20 "docker swarm leave --force;"
       sshpass -f "password.env" ssh magisterka@192.168.55.20 "docker network prune --force;"
-      sshpass -f "password.env" ssh magisterka@192.168.55.20 'kill $(ps aux | grep system-monitor.py | head -n 1 | awk '"'{print $2}'"') ;'
-      sshpass -f "password.env" ssh magisterka@192.168.55.20 'kill $(ps aux | grep monitor-manager.py | head -n 1 | awk '"'{print $2}'"') ;'
+      sshpass -f "password.env" ssh magisterka@192.168.55.20 'kill $(ps aux | grep system-monitor | head -n 1 | awk '"'{print $2}'"') ;'
+      sshpass -f "password.env" ssh magisterka@192.168.55.20 'kill $(ps aux | grep monitor-manager | head -n 1 | awk '"'{print $2}'"') ;'
 }
 
 function stop_workers() {
@@ -56,7 +56,7 @@ function stop_workers() {
       sshpass -f "password.env" ssh magisterka@${available_workers[$i]} "docker swarm leave --force;"
       sshpass -f "password.env" ssh magisterka@${available_workers[$i]} "docker network prune --force;"
 #      There is a problem with awk in this line - actually it does the job (kills the process) but somehow awk doesn't work
-      sshpass -f "password.env" ssh magisterka@${available_workers[$i]} 'kill $(ps aux | grep system-monitor.py | head -n 1 | awk '"'{print $2}'"') ;'
+      sshpass -f "password.env" ssh magisterka@${available_workers[$i]} 'kill $(ps aux | grep system-monitor | head -n 1 | awk '"'{print $2}'"') ;'
     done
 }
 
