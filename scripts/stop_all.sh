@@ -44,8 +44,7 @@ function stop_master() {
       sshpass -f "password.env" ssh magisterka@192.168.55.20 "docker rm -f spark-master;"
       sshpass -f "password.env" ssh magisterka@192.168.55.20 "docker swarm leave --force;"
       sshpass -f "password.env" ssh magisterka@192.168.55.20 "docker network prune --force;"
-      sshpass -f "password.env" ssh magisterka@192.168.55.20 'kill $(ps aux | grep system-monitor) ;'
-      sshpass -f "password.env" ssh magisterka@192.168.55.20 'kill $(ps aux | grep monitor-manager) ;'
+      sshpass -f "password.env" ssh magisterka@192.168.55.20 "~/opening-black-box/scripts/stop-system-monitor.sh"
 }
 
 function stop_workers() {
