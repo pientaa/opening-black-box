@@ -44,7 +44,7 @@ function stop_master() {
       sshpass -f "password.env" ssh magisterka@192.168.55.20 "docker rm -f spark-master;"
       sshpass -f "password.env" ssh magisterka@192.168.55.20 "docker swarm leave --force;"
       sshpass -f "password.env" ssh magisterka@192.168.55.20 "docker network prune --force;"
-      sshpass -f "password.env" ssh magisterka@192.168.55.20 "~/opening-black-box/scripts/stop-system-monitor.sh"
+      sshpass -f "password.env" ssh magisterka@192.168.55.20 "chmod 755 opening-black-box/scripts/stop-system-monitor.sh ; ./opening-black-box/scripts/stop-system-monitor.sh ;"
 }
 
 function stop_workers() {
@@ -54,8 +54,7 @@ function stop_workers() {
       sshpass -f "password.env" ssh magisterka@${available_workers[$i]} "docker rm -f spark-worker-${index};"
       sshpass -f "password.env" ssh magisterka@${available_workers[$i]} "docker swarm leave --force;"
       sshpass -f "password.env" ssh magisterka@${available_workers[$i]} "docker network prune --force;"
-#      There is a problem with awk in this line - actually it does the job (kills the process) but somehow awk doesn't work
-      sshpass -f "password.env" ssh magisterka@${available_workers[$i]} 'kill $(ps aux | grep system-monitor) ;'
+      sshpass -f "password.env" ssh magisterka@${available_workers[$i]} "chmod 755 opening-black-box/scripts/stop-system-monitor.sh ; ./opening-black-box/scripts/stop-system-monitor.sh ;"
     done
 }
 
