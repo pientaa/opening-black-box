@@ -32,7 +32,7 @@ def system_monitor(hosts_info, function_name):
     submit_response = requests.post("http://192.168.55.20:5000/submit", json={"function_name": function_name})
     submit_response = json.loads(submit_response.text)
     driver_id = submit_response["submissionId"]
-    logging.info('Submit driver ID {} '.format(driver_id))
+    logging.info('Submit driver ID {0} | function {1}'.format(driver_id, function_name))
 
     for index, row in hosts_info.iterrows():
         url = "http://" + str(row['host_ip']) + ":8063/monitor"

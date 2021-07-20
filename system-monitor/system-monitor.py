@@ -66,7 +66,7 @@ def start_monitor():
     pids_col.stdout.close()
     pids_col.kill()
 
-    return 'monitoring started', 202
+    return 'monitoring started {}'.format(function_name), 202
 
 
 if __name__ == "__main__":
