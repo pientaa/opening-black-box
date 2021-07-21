@@ -1,5 +1,6 @@
 import org.apache.log4j.LogManager
 import org.apache.spark.sql.catalyst.encoders.ExpressionEncoder
+import org.apache.spark.sql.internal.SQLConf.SHUFFLE_PARTITIONS
 import org.apache.spark.sql.{Dataset, SparkSession}
 import udf.Consts.{FILTER_CATALOG_SALES_WHERE_PROFIT_NEGATIVE, LOCALHOST}
 import udf.UDFFactory
@@ -17,10 +18,12 @@ object BlackBox {
     .config("spark.jars", "/opt/spark-apps/black-box-assembly-1.0.jar")
     .config("spark.submit.deployMode", "cluster")
     .config("spark.cores.max", "4")
+    .config("spark.sql.objectHashAggregate.sortBased.fallbackThreshold", "4096")
     .getOrCreate()
 
   ss.sparkContext.setLogLevel("ERROR")
   ss.sparkContext.setLogLevel("WARN")
+  ss.sessionState.conf.setConf(SHUFFLE_PARTITIONS, 100000)
 
   val connectionProperties = new Properties()
   connectionProperties.put("user", "postgres")
@@ -41,19 +44,27 @@ object BlackBox {
       ss.read
         .jdbc(url, s"public.store_sales", connectionProperties)
         .as[StoreSales](implicitly(ExpressionEncoder[StoreSales]))
+        .repartition(100000)
 
     val catalogSales: Dataset[CatalogSales] =
       ss.read
         .jdbc(url, s"public.catalog_sales", connectionProperties)
         .as[CatalogSales](implicitly(ExpressionEncoder[CatalogSales]))
+        .repartition(100000)
 
     val dateDim: Dataset[DateDim] =
       ss.read
         .jdbc(url, s"public.date_dim", connectionProperties)
         .as[DateDim](implicitly(ExpressionEncoder[DateDim]))
+        .repartition(100000)
 
     val udfFactory =
-      new UDFFactory(storeSales = storeSales, catalogSales = catalogSales, dateDim = dateDim, spark = ss)
+      new UDFFactory(
+        storeSales = storeSales,
+        catalogSales = catalogSales,
+        dateDim = dateDim,
+        spark = ss
+      )
 
     udfFactory
       .select(functionName)
