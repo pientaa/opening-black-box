@@ -15,7 +15,7 @@ def submit():
         "appResource": "/opt/spark-apps/black-box-assembly-1.0.jar",
         "sparkProperties": {
             "spark.master": "spark://spark-master:7077",
-            "spark.driver.memory": "8g",
+            "spark.driver.memory": "6g",
             "spark.driver.cores": "2",
             "spark.app.name": "BlackBox",
             "spark.submit.deployMode": "cluster",
