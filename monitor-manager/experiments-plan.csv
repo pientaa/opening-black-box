@@ -1,4 +1,7 @@
 function_name,dataset_size,iterations
+minNetProfitGroupedBySoldDate,2GB,25
+sumWholeSaleCostGroupedBySoldDate,2GB,25
+avgWholeSaleCostGroupedBySoldDate,2GB,25
 summaryWholeSaleCostGroupedBySoldDate,2GB,25
 filterCatalogSalesWhereProfitNegativeAndYearAfter2000,2GB,25
 filterStoreSalesWhereProfitNegativeAndYearAfter2000,2GB,25
