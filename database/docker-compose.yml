@@ -6,31 +6,31 @@ services:
     image: pienta/black-box-db
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-      - ./tpc-data/2GB/dbgen_version.dat:/var/lib/postgresql/data/dbgen_version.dat
-      - ./tpc-data/2GB/customer_address.dat:/var/lib/postgresql/data/customer_address.dat
-      - ./tpc-data/2GB/customer_demographics.dat:/var/lib/postgresql/data/customer_demographics.dat
-      - ./tpc-data/2GB/date_dim.dat:/var/lib/postgresql/data/date_dim.dat
-      - ./tpc-data/2GB/warehouse.dat:/var/lib/postgresql/data/warehouse.dat
-      - ./tpc-data/2GB/ship_mode.dat:/var/lib/postgresql/data/ship_mode.dat
-      - ./tpc-data/2GB/time_dim.dat:/var/lib/postgresql/data/time_dim.dat
-      - ./tpc-data/2GB/reason.dat:/var/lib/postgresql/data/reason.dat
-      - ./tpc-data/2GB/income_band.dat:/var/lib/postgresql/data/income_band.dat
-      - ./tpc-data/2GB/item.dat:/var/lib/postgresql/data/item.dat
-      - ./tpc-data/2GB/store.dat:/var/lib/postgresql/data/store.dat
-      - ./tpc-data/2GB/call_center.dat:/var/lib/postgresql/data/call_center.dat
-      - ./tpc-data/2GB/customer.dat:/var/lib/postgresql/data/customer.dat
-      - ./tpc-data/2GB/web_site.dat:/var/lib/postgresql/data/web_site.dat
-      - ./tpc-data/2GB/store_returns.dat:/var/lib/postgresql/data/store_returns.dat
-      - ./tpc-data/2GB/household_demographics.dat:/var/lib/postgresql/data/household_demographics.dat
-      - ./tpc-data/2GB/web_page.dat:/var/lib/postgresql/data/web_page.dat
-      - ./tpc-data/2GB/promotion.dat:/var/lib/postgresql/data/promotion.dat
-      - ./tpc-data/2GB/catalog_page.dat:/var/lib/postgresql/data/catalog_page.dat
-      - ./tpc-data/2GB/inventory.dat:/var/lib/postgresql/data/inventory.dat
-      - ./tpc-data/2GB/catalog_returns.dat:/var/lib/postgresql/data/catalog_returns.dat
-      - ./tpc-data/2GB/web_returns.dat:/var/lib/postgresql/data/web_returns.dat
-      - ./tpc-data/2GB/web_sales.dat:/var/lib/postgresql/data/web_sales.dat
-      - ./tpc-data/2GB/catalog_sales.dat:/var/lib/postgresql/data/catalog_sales.dat
-      - ./tpc-data/2GB/store_sales.dat:/var/lib/postgresql/data/store_sales.dat
+      - ./tpc-data/1GB/dbgen_version.dat:/var/lib/postgresql/data/dbgen_version.dat
+      - ./tpc-data/1GB/customer_address.dat:/var/lib/postgresql/data/customer_address.dat
+      - ./tpc-data/1GB/customer_demographics.dat:/var/lib/postgresql/data/customer_demographics.dat
+      - ./tpc-data/1GB/date_dim.dat:/var/lib/postgresql/data/date_dim.dat
+      - ./tpc-data/1GB/warehouse.dat:/var/lib/postgresql/data/warehouse.dat
+      - ./tpc-data/1GB/ship_mode.dat:/var/lib/postgresql/data/ship_mode.dat
+      - ./tpc-data/1GB/time_dim.dat:/var/lib/postgresql/data/time_dim.dat
+      - ./tpc-data/1GB/reason.dat:/var/lib/postgresql/data/reason.dat
+      - ./tpc-data/1GB/income_band.dat:/var/lib/postgresql/data/income_band.dat
+      - ./tpc-data/1GB/item.dat:/var/lib/postgresql/data/item.dat
+      - ./tpc-data/1GB/store.dat:/var/lib/postgresql/data/store.dat
+      - ./tpc-data/1GB/call_center.dat:/var/lib/postgresql/data/call_center.dat
+      - ./tpc-data/1GB/customer.dat:/var/lib/postgresql/data/customer.dat
+      - ./tpc-data/1GB/web_site.dat:/var/lib/postgresql/data/web_site.dat
+      - ./tpc-data/1GB/store_returns.dat:/var/lib/postgresql/data/store_returns.dat
+      - ./tpc-data/1GB/household_demographics.dat:/var/lib/postgresql/data/household_demographics.dat
+      - ./tpc-data/1GB/web_page.dat:/var/lib/postgresql/data/web_page.dat
+      - ./tpc-data/1GB/promotion.dat:/var/lib/postgresql/data/promotion.dat
+      - ./tpc-data/1GB/catalog_page.dat:/var/lib/postgresql/data/catalog_page.dat
+      - ./tpc-data/1GB/inventory.dat:/var/lib/postgresql/data/inventory.dat
+      - ./tpc-data/1GB/catalog_returns.dat:/var/lib/postgresql/data/catalog_returns.dat
+      - ./tpc-data/1GB/web_returns.dat:/var/lib/postgresql/data/web_returns.dat
+      - ./tpc-data/1GB/web_sales.dat:/var/lib/postgresql/data/web_sales.dat
+      - ./tpc-data/1GB/catalog_sales.dat:/var/lib/postgresql/data/catalog_sales.dat
+      - ./tpc-data/1GB/store_sales.dat:/var/lib/postgresql/data/store_sales.dat
     build:
       context: .
       dockerfile: Dockerfile
