@@ -1,16 +1,4 @@
 function_name,dataset_size,iterations
-minNetProfitGroupedBySoldDate,2GB,25
-sumWholeSaleCostGroupedBySoldDate,2GB,25
-avgWholeSaleCostGroupedBySoldDate,2GB,25
-summaryWholeSaleCostGroupedBySoldDate,2GB,25
-filterCatalogSalesWhereProfitNegativeAndYearAfter2000,2GB,25
-filterStoreSalesWhereProfitNegativeAndYearAfter2000,2GB,25
-summaryNetProfitGroupedBySoldDate,2GB,25
-filterStoreSalesWhereProfitNegative,2GB,25
-avgNetProfitGroupedBySoldDate,2GB,25
-maxWholeSaleCostGroupedBySoldDate,2GB,25
-filterCatalogSalesWhereYearAfter2000,2GB,25
-minWholeSaleCostGroupedBySoldDate,2GB,25
 filterCatalogSalesWhereProfitNegative,2GB,25
 countNetProfitGroupedBySoldDate,2GB,25
 maxNetProfitGroupedBySoldDate,2GB,25
