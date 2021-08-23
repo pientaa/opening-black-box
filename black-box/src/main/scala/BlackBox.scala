@@ -16,7 +16,7 @@ object BlackBox {
     .master("spark://spark-master:7077")
     .config("spark.jars", "/opt/spark-apps/black-box-assembly-1.0.jar")
     .config("spark.submit.deployMode", "cluster")
-    .config("spark.cores.max", "4")
+    .config("spark.sql.objectHashAggregate.sortBased.fallbackThreshold", "4096")
     .getOrCreate()
 
   ss.sparkContext.setLogLevel("ERROR")
@@ -56,12 +56,17 @@ object BlackBox {
         .as[DateDim](implicitly(ExpressionEncoder[DateDim]))
 
     val udfFactory =
-      new UDFFactory(storeSales = storeSales, catalogSales = catalogSales, dateDim = dateDim, spark = ss)
+      new UDFFactory(
+        storeSales = storeSales,
+        catalogSales = catalogSales,
+        dateDim = dateDim,
+        spark = ss
+      )
 
     udfFactory
       .select(functionName)
       //      .explain()
-      //      .show()
+      //            .show()
       .write
       .mode("overwrite")
       .format("noop")

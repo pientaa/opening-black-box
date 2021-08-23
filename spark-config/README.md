@@ -115,7 +115,7 @@ curl -X POST http://10.5.0.2:6066/v1/submissions/create --header "Content-Type:a
   "appResource": "/opt/spark-apps/black-box-assembly-1.0.jar",
   "sparkProperties": {
     "spark.master": "spark://spark-master:7077",
-    "spark.driver.memory": "4g",
+    "spark.driver.memory": "6g",
     "spark.driver.cores": "2",
     "spark.app.name": "BlackBox",
     "spark.submit.deployMode": "cluster",
