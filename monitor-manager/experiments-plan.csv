@@ -2,7 +2,6 @@ function_name,dataset_size,iterations
 minNetProfitGroupedBySoldDate,1GB,25
 sumWholeSaleCostGroupedBySoldDate,1GB,25
 avgWholeSaleCostGroupedBySoldDate,1GB,25
-countDistinctTicketNumber,1GB,25
 summaryWholeSaleCostGroupedBySoldDate,1GB,25
 filterCatalogSalesWhereProfitNegativeAndYearAfter2000,1GB,25
 filterStoreSalesWhereProfitNegativeAndYearAfter2000,1GB,25
